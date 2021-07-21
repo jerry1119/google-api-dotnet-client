@@ -358,9 +358,9 @@ namespace Google.Apis.ServiceControl.v1
         /// should cache the check results and reuse them for 60 seconds. In case of any server errors, the client
         /// should rely on the cached results for much longer time to avoid outage. WARNING: There is general 60s delay
         /// for the configuration and policy propagation, therefore callers MUST NOT depend on the `Check` method having
-        /// the latest policy information. NOTE: the CheckRequest has the size limit of 64KB. This method requires the
-        /// `servicemanagement.services.check` permission on the specified service. For more information, see [Cloud
-        /// IAM](https://cloud.google.com/iam).
+        /// the latest policy information. NOTE: the CheckRequest has the size limit (wire-format byte size) of 1MB.
+        /// This method requires the `servicemanagement.services.check` permission on the specified service. For more
+        /// information, see [Cloud IAM](https://cloud.google.com/iam).
         /// </summary>
         /// <param name="body">The body of the request.</param>
         /// <param name="serviceName">
@@ -379,9 +379,9 @@ namespace Google.Apis.ServiceControl.v1
         /// should cache the check results and reuse them for 60 seconds. In case of any server errors, the client
         /// should rely on the cached results for much longer time to avoid outage. WARNING: There is general 60s delay
         /// for the configuration and policy propagation, therefore callers MUST NOT depend on the `Check` method having
-        /// the latest policy information. NOTE: the CheckRequest has the size limit of 64KB. This method requires the
-        /// `servicemanagement.services.check` permission on the specified service. For more information, see [Cloud
-        /// IAM](https://cloud.google.com/iam).
+        /// the latest policy information. NOTE: the CheckRequest has the size limit (wire-format byte size) of 1MB.
+        /// This method requires the `servicemanagement.services.check` permission on the specified service. For more
+        /// information, see [Cloud IAM](https://cloud.google.com/iam).
         /// </summary>
         public class CheckRequest : ServiceControlBaseServiceRequest<Google.Apis.ServiceControl.v1.Data.CheckResponse>
         {
@@ -2124,8 +2124,10 @@ namespace Google.Apis.ServiceControl.v1.Data
         public virtual FirstPartyPrincipal FirstPartyPrincipal { get; set; }
 
         /// <summary>
-        /// A string representing the principal_subject associated with the identity. See go/3pical for more info on how
-        /// principal_subject is formatted.
+        /// A string representing the principal_subject associated with the identity. For most identities, the format
+        /// will be `principal://iam.googleapis.com/{identity pool name}/subject/{subject)` except for some GKE
+        /// identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the legacy format
+        /// `serviceAccount:{identity pool name}[{subject}]`
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("principalSubject")]
         public virtual string PrincipalSubject { get; set; }
@@ -2139,8 +2141,8 @@ namespace Google.Apis.ServiceControl.v1.Data
     }
 
     /// <summary>
-    /// The context of a span, attached to Exemplars in Distribution values during aggregation. It contains the name of
-    /// a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
+    /// The context of a span. This is attached to an Exemplar in Distribution values during aggregation. It contains
+    /// the name of a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
     /// </summary>
     public class SpanContext : Google.Apis.Requests.IDirectResponseSchema
     {

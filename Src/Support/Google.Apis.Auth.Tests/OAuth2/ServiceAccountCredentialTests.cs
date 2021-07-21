@@ -142,7 +142,7 @@ lK1DcBvq+IFLucBdi0/9hXE=
         [Fact]
         public async Task ValidLocallySignedAccessToken_FromX509Certificate()
         {
-#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETCOREAPP2_0
+#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETCOREAPP2_0 || NET461
             const string sPfx = @"
 MIIGMQIBAzCCBfcGCSqGSIb3DQEHAaCCBegEggXkMIIF4DCCAt8GCSqGSIb3DQEHBqCCAtAwggLM
 AgEAMIICxQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQImgNbotR3pnACAggAgIICmMHYqn7R
@@ -261,7 +261,7 @@ ZUp8AsbVqF6rbLiiUfJMo2btGclQu4DEVyS+ymFA65tXDLUuR9EDqJYdqHNZJ5B8
                 Clock = clock
             }.FromPrivateKey(PrivateKey);
             var cred = new ServiceAccountCredential(initializer);
-            Assert.False(cred.HasScopes); // Must be false for the remainder of this test to be valid.
+            Assert.False(cred.HasExplicitScopes); // Must be false for the remainder of this test to be valid.
             // Check JWTs removed from cache once cache fills up.
             var jwt0 = await cred.GetAccessTokenForRequestAsync("uri0");
             for (int i = 0; i < ServiceAccountCredential.JwtCacheMaxSize; i++)
@@ -286,7 +286,7 @@ ZUp8AsbVqF6rbLiiUfJMo2btGclQu4DEVyS+ymFA65tXDLUuR9EDqJYdqHNZJ5B8
                 Clock = clock
             }.FromPrivateKey(PrivateKey);
             var cred = new ServiceAccountCredential(initializer);
-            Assert.False(cred.HasScopes); // Must be false for the remainder of this test to be valid.
+            Assert.False(cred.HasExplicitScopes); // Must be false for the remainder of this test to be valid.
             // Check JWTs are only cached until the expiry minus the expiry window.
             var jwt0 = await cred.GetAccessTokenForRequestAsync("uri");
             clock.UtcNow += ServiceAccountCredential.JwtLifetime - ServiceAccountCredential.JwtCacheExpiryWindow - TimeSpan.FromSeconds(1);
@@ -373,9 +373,23 @@ ZUp8AsbVqF6rbLiiUfJMo2btGclQu4DEVyS+ymFA65tXDLUuR9EDqJYdqHNZJ5B8
             Assert.Equal(svc1.DefaultExponentialBackOffPolicy, svc2.DefaultExponentialBackOffPolicy);
             Assert.Same(svc1.ProjectId, svc2.ProjectId);
             Assert.NotSame(svc1.User, svc2.User);
-            Assert.Same(svc1.Scopes, svc2.Scopes);
+            Assert.Collection(svc1.Scopes, scope => Assert.Equal("scope1", scope));
+            Assert.Collection(svc2.Scopes, scope => Assert.Equal("scope1", scope));
             Assert.Equal("user1", svc1.User);
             Assert.Equal("user2", svc2.User);
+        }
+
+        [Fact]
+        public void WithHttpClientFactory()
+        {
+            var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer("MyId").FromPrivateKey(PrivateKey));
+            var factory = new HttpClientFactory();
+            var credentialWithFactory = Assert.IsType<ServiceAccountCredential>(((IGoogleCredential)credential).WithHttpClientFactory(factory));
+
+            Assert.NotSame(credential, credentialWithFactory);
+            Assert.NotSame(credential.HttpClient, credentialWithFactory.HttpClient);
+            Assert.NotSame(credential.HttpClientFactory, credentialWithFactory.HttpClientFactory);
+            Assert.Same(factory, credentialWithFactory.HttpClientFactory);
         }
 
         [Fact]

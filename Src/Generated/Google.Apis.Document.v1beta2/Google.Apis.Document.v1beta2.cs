@@ -875,6 +875,28 @@ namespace Google.Apis.Document.v1beta2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The common metadata about the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Cloud Storage URI containing the output artifacts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsUri")]
+        public virtual string GcsUri { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The long running operation metadata for set default processor version method.</summary>
     public class GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1418,6 +1440,10 @@ namespace Google.Apis.Document.v1beta2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageTable> Tables { get; set; }
@@ -1461,6 +1487,10 @@ namespace Google.Apis.Document.v1beta2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta1BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -1471,7 +1501,8 @@ namespace Google.Apis.Document.v1beta2.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -1554,6 +1585,10 @@ namespace Google.Apis.Document.v1beta2.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -1832,6 +1867,13 @@ namespace Google.Apis.Document.v1beta2.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -2524,6 +2566,10 @@ namespace Google.Apis.Document.v1beta2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageTable> Tables { get; set; }
@@ -2567,6 +2613,10 @@ namespace Google.Apis.Document.v1beta2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta2BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -2577,7 +2627,8 @@ namespace Google.Apis.Document.v1beta2.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -2660,6 +2711,10 @@ namespace Google.Apis.Document.v1beta2.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -2938,6 +2993,13 @@ namespace Google.Apis.Document.v1beta2.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -3568,6 +3630,57 @@ namespace Google.Apis.Document.v1beta2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
         public virtual object UpdateTime { get; set; }
 
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for delete processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for disable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the disable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for enable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the enable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }

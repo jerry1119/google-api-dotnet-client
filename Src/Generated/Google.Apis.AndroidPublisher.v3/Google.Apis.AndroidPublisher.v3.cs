@@ -3996,6 +3996,14 @@ namespace Google.Apis.AndroidPublisher.v3
             [Google.Apis.Util.RequestParameterAttribute("editId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string EditId { get; private set; }
 
+            /// <summary>
+            /// Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review
+            /// from the Google Play Console UI. These changes will be added to any other changes that are not yet sent
+            /// for review.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("changesNotSentForReview", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<bool> ChangesNotSentForReview { get; set; }
+
             /// <summary>Gets the method name.</summary>
             public override string MethodName => "commit";
 
@@ -4022,6 +4030,14 @@ namespace Google.Apis.AndroidPublisher.v3
                     Name = "editId",
                     IsRequired = true,
                     ParameterType = "path",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("changesNotSentForReview", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "changesNotSentForReview",
+                    IsRequired = false,
+                    ParameterType = "query",
                     DefaultValue = null,
                     Pattern = null,
                 });
@@ -7880,7 +7896,9 @@ namespace Google.Apis.AndroidPublisher.v3.Data
         public virtual string ObfuscatedExternalProfileId { get; set; }
 
         /// <summary>
-        /// The order id of the latest recurring order associated with the purchase of the subscription.
+        /// The order id of the latest recurring order associated with the purchase of the subscription. If the
+        /// subscription was canceled because payment was declined, this will be the order id from the payment declined
+        /// order.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("orderId")]
         public virtual string OrderId { get; set; }
@@ -7893,9 +7911,9 @@ namespace Google.Apis.AndroidPublisher.v3.Data
         public virtual System.Nullable<int> PaymentState { get; set; }
 
         /// <summary>
-        /// Price of the subscription, not including tax. Price is expressed in micro-units, where 1,000,000 micro-units
-        /// represents one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is
-        /// 1990000.
+        /// Price of the subscription, For tax exclusive countries, the price doesn't include tax. For tax inclusive
+        /// countries, the price includes tax. Price is expressed in micro-units, where 1,000,000 micro-units represents
+        /// one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is 1990000.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("priceAmountMicros")]
         public virtual System.Nullable<long> PriceAmountMicros { get; set; }

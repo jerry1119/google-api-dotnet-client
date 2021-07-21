@@ -837,6 +837,15 @@ namespace Google.Apis.CloudLifeSciences.v2beta.Data
         [Newtonsoft.Json.JsonPropertyAttribute("enableFuse")]
         public virtual System.Nullable<bool> EnableFuse { get; set; }
 
+        /// <summary>
+        /// The encrypted environment to pass into the container. This environment is merged with values specified in
+        /// the google.cloud.lifesciences.v2beta.Pipeline message, overwriting any duplicate values. The secret must
+        /// decrypt to a JSON-encoded dictionary where key-value pairs serve as environment variable names and their
+        /// values. The decoded environment variables can overwrite the values specified by the `environment` field.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("encryptedEnvironment")]
+        public virtual Secret EncryptedEnvironment { get; set; }
+
         /// <summary>If specified, overrides the `ENTRYPOINT` specified in the container.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("entrypoint")]
         public virtual string Entrypoint { get; set; }
@@ -1406,6 +1415,15 @@ namespace Google.Apis.CloudLifeSciences.v2beta.Data
         public virtual System.Collections.Generic.IList<Action> Actions { get; set; }
 
         /// <summary>
+        /// The encrypted environment to pass into every action. Each action can also specify its own encrypted
+        /// environment. The secret must decrypt to a JSON-encoded dictionary where key-value pairs serve as environment
+        /// variable names and their values. The decoded environment variables can overwrite the values specified by the
+        /// `environment` field.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("encryptedEnvironment")]
+        public virtual Secret EncryptedEnvironment { get; set; }
+
+        /// <summary>
         /// The environment to pass into every action. Each action can also specify additional environment variables but
         /// cannot delete an entry from this map (though they can overwrite it with a different value).
         /// </summary>
@@ -1694,6 +1712,13 @@ namespace Google.Apis.CloudLifeSciences.v2beta.Data
         /// <summary>If true, allocate a preemptible VM.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("preemptible")]
         public virtual System.Nullable<bool> Preemptible { get; set; }
+
+        /// <summary>
+        /// If specified, the VM will only be allocated inside the matching reservation. It will fail if the VM
+        /// parameters don't match the reservation.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("reservation")]
+        public virtual string Reservation { get; set; }
 
         /// <summary>
         /// The service account to install on the VM. This account does not need any permissions other than those

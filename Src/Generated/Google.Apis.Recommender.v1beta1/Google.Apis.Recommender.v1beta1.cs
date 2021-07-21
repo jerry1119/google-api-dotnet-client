@@ -394,14 +394,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers
                     /// to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.
@@ -412,8 +413,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListInsightsResponse>
                     {
@@ -425,10 +426,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
-                        /// 3. `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// INSIGHT_TYPE_ID refers to supported insight types:
@@ -438,8 +440,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields:
-                        /// state Eg: `state:"DISMISSED" or state:"ACTIVE"
+                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields: *
+                        /// `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR
+                        /// stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL
+                        /// OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity =
+                        /// HIGH)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -659,14 +665,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
                     /// supported recommenders: https://cloud.google.com/recommender/docs/recommenders.
@@ -677,8 +684,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListRecommendationsResponse>
                     {
@@ -690,10 +697,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// RECOMMENDER_ID refers to supported recommenders:
@@ -703,8 +711,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Filter expression to restrict the recommendations returned. Supported filter fields:
-                        /// state_info.state Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+                        /// Filter expression to restrict the recommendations returned. Supported filter fields: *
+                        /// `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE
+                        /// OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+                        /// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority =
+                        /// P1 OR priority = P2)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -1096,14 +1108,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers
                     /// to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.
@@ -1114,8 +1127,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListInsightsResponse>
                     {
@@ -1127,10 +1140,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
-                        /// 3. `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// INSIGHT_TYPE_ID refers to supported insight types:
@@ -1140,8 +1154,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields:
-                        /// state Eg: `state:"DISMISSED" or state:"ACTIVE"
+                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields: *
+                        /// `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR
+                        /// stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL
+                        /// OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity =
+                        /// HIGH)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -1361,14 +1379,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
                     /// supported recommenders: https://cloud.google.com/recommender/docs/recommenders.
@@ -1379,8 +1398,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListRecommendationsResponse>
                     {
@@ -1392,10 +1411,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// RECOMMENDER_ID refers to supported recommenders:
@@ -1405,8 +1425,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Filter expression to restrict the recommendations returned. Supported filter fields:
-                        /// state_info.state Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+                        /// Filter expression to restrict the recommendations returned. Supported filter fields: *
+                        /// `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE
+                        /// OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+                        /// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority =
+                        /// P1 OR priority = P2)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -1798,14 +1822,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers
                     /// to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.
@@ -1816,8 +1841,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListInsightsResponse>
                     {
@@ -1829,10 +1854,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
-                        /// 3. `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// INSIGHT_TYPE_ID refers to supported insight types:
@@ -1842,8 +1868,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields:
-                        /// state Eg: `state:"DISMISSED" or state:"ACTIVE"
+                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields: *
+                        /// `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR
+                        /// stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL
+                        /// OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity =
+                        /// HIGH)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -2063,14 +2093,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
                     /// supported recommenders: https://cloud.google.com/recommender/docs/recommenders.
@@ -2081,8 +2112,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListRecommendationsResponse>
                     {
@@ -2094,10 +2125,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// RECOMMENDER_ID refers to supported recommenders:
@@ -2107,8 +2139,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Filter expression to restrict the recommendations returned. Supported filter fields:
-                        /// state_info.state Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+                        /// Filter expression to restrict the recommendations returned. Supported filter fields: *
+                        /// `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE
+                        /// OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+                        /// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority =
+                        /// P1 OR priority = P2)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -2500,14 +2536,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers
                     /// to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.
@@ -2518,8 +2555,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the
-                    /// specified insight type.
+                    /// Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission
+                    /// for the specified insight type.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListInsightsResponse>
                     {
@@ -2531,10 +2568,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
-                        /// 3. `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// INSIGHT_TYPE_ID refers to supported insight types:
@@ -2544,8 +2582,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields:
-                        /// state Eg: `state:"DISMISSED" or state:"ACTIVE"
+                        /// Optional. Filter expression to restrict the insights returned. Supported filter fields: *
+                        /// `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR
+                        /// stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL
+                        /// OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity =
+                        /// HIGH)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -2765,14 +2807,15 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     /// <param name="parent">
-                    /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                    /// Required. The container resource on which to execute the request. Acceptable formats: *
+                    /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                    /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                     /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION
                     /// here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
                     /// supported recommenders: https://cloud.google.com/recommender/docs/recommenders.
@@ -2783,8 +2826,8 @@ namespace Google.Apis.Recommender.v1beta1
                     }
 
                     /// <summary>
-                    /// Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for
-                    /// the specified recommender.
+                    /// Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM
+                    /// permission for the specified recommender.
                     /// </summary>
                     public class ListRequest : RecommenderBaseServiceRequest<Google.Apis.Recommender.v1beta1.Data.GoogleCloudRecommenderV1beta1ListRecommendationsResponse>
                     {
@@ -2796,10 +2839,11 @@ namespace Google.Apis.Recommender.v1beta1
                         }
 
                         /// <summary>
-                        /// Required. The container resource on which to execute the request. Acceptable formats: 1.
-                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 2.
-                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 3.
-                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` 4.
+                        /// Required. The container resource on which to execute the request. Acceptable formats: *
+                        /// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
+                        /// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` *
                         /// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
                         /// LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/
                         /// RECOMMENDER_ID refers to supported recommenders:
@@ -2809,8 +2853,12 @@ namespace Google.Apis.Recommender.v1beta1
                         public virtual string Parent { get; private set; }
 
                         /// <summary>
-                        /// Filter expression to restrict the recommendations returned. Supported filter fields:
-                        /// state_info.state Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+                        /// Filter expression to restrict the recommendations returned. Supported filter fields: *
+                        /// `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE
+                        /// OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+                        /// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority =
+                        /// P1 OR priority = P2)` (These expressions are based on the filter language described at
+                        /// https://google.aip.dev/160)
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -3112,6 +3160,10 @@ namespace Google.Apis.Recommender.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("costProjection")]
         public virtual GoogleCloudRecommenderV1beta1CostProjection CostProjection { get; set; }
 
+        /// <summary>Use with CategoryType.SECURITY</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("securityProjection")]
+        public virtual GoogleCloudRecommenderV1beta1SecurityProjection SecurityProjection { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -3162,6 +3214,10 @@ namespace Google.Apis.Recommender.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("observationPeriod")]
         public virtual object ObservationPeriod { get; set; }
+
+        /// <summary>Insight's severity.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("severity")]
+        public virtual string Severity { get; set; }
 
         /// <summary>Information state and metadata.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("stateInfo")]
@@ -3305,7 +3361,7 @@ namespace Google.Apis.Recommender.v1beta1.Data
     public class GoogleCloudRecommenderV1beta1Operation : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Type of this operation. Contains one of 'and', 'remove', 'replace', 'move', 'copy', 'test' and 'custom'
+        /// Type of this operation. Contains one of 'add', 'remove', 'replace', 'move', 'copy', 'test' and 'custom'
         /// operations. This field is case-insensitive and always populated.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("action")]
@@ -3444,6 +3500,10 @@ namespace Google.Apis.Recommender.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("primaryImpact")]
         public virtual GoogleCloudRecommenderV1beta1Impact PrimaryImpact { get; set; }
 
+        /// <summary>Recommendation's priority.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("priority")]
+        public virtual string Priority { get; set; }
+
         /// <summary>
         /// Contains an identifier for a subtype of recommendations produced for the same recommender. Subtype is a
         /// function of content and impact, meaning a new subtype might be added when significant changes to `content`
@@ -3468,6 +3528,10 @@ namespace Google.Apis.Recommender.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("operationGroups")]
         public virtual System.Collections.Generic.IList<GoogleCloudRecommenderV1beta1OperationGroup> OperationGroups { get; set; }
+
+        /// <summary>Condensed overview information about the recommendation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("overview")]
+        public virtual System.Collections.Generic.IDictionary<string, object> Overview { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -3497,6 +3561,17 @@ namespace Google.Apis.Recommender.v1beta1.Data
         /// <summary>A map of metadata for the state, provided by user or automations systems.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("stateMetadata")]
         public virtual System.Collections.Generic.IDictionary<string, string> StateMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Contains various ways of describing the impact on Security.</summary>
+    public class GoogleCloudRecommenderV1beta1SecurityProjection : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>This field can be used by the recommender to define details specific to security impact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("details")]
+        public virtual System.Collections.Generic.IDictionary<string, object> Details { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

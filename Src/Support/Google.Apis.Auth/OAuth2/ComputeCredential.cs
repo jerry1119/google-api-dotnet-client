@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Http;
 using Google.Apis.Util;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -64,7 +66,13 @@ namespace Google.Apis.Auth.OAuth2
         /// Gets the OIDC Token URL.
         /// </summary>
         public string OidcTokenUrl { get; }
-        
+
+        /// <inheritdoc/>
+        bool IGoogleCredential.HasExplicitScopes => false;
+
+        /// <inheritdoc/>
+        bool IGoogleCredential.SupportsExplicitScopes => false;
+
         /// <summary>
         /// An initializer class for the Compute credential. It uses <see cref="GoogleAuthConsts.ComputeTokenUrl"/>
         /// as the token server URL (optionally overriding the host using the GCE_METADATA_HOST environment variable).
@@ -104,6 +112,17 @@ namespace Google.Apis.Auth.OAuth2
         /// <inheritdoc/>
         IGoogleCredential IGoogleCredential.WithQuotaProject(string quotaProject) =>
             new ComputeCredential(new Initializer(this) { QuotaProject = quotaProject });
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.MaybeWithScopes(IEnumerable<string> scopes) => this;
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.WithUserForDomainWideDelegation(string user) =>
+            throw new InvalidOperationException($"{nameof(ComputeCredential)} does not support Domain-Wide Delegation");
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.WithHttpClientFactory(IHttpClientFactory httpClientFactory) =>
+            new ComputeCredential(new Initializer(this) { HttpClientFactory = httpClientFactory });
 
         #region ServiceCredential overrides
 

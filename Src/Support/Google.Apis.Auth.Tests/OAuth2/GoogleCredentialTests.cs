@@ -476,5 +476,68 @@ TOgrHXgWf1cxYf5cB8DfC3NoaYZ4D3Wh9Qjn3cl36CXfSKEnPK49DkrGZz1avAjV
             string quotaProject = Assert.Single(headerValues.Value);
             Assert.Equal(expectedValue, quotaProject);
         }
+
+        [Fact]
+        public void Impersonate()
+        {
+            var sourceCredential = GoogleCredential.FromJson(DummyServiceAccountCredentialFileContents);
+
+            var credential = sourceCredential.Impersonate(new ImpersonatedCredential.Initializer("principal")
+            {
+                DelegateAccounts = new string[] { "delegate" },
+                Scopes = new string[] { "scope" },
+                Lifetime = TimeSpan.FromHours(2)
+            });
+
+            var impersonatedCredential = Assert.IsType<ImpersonatedCredential>(credential.UnderlyingCredential);
+            Assert.Collection(impersonatedCredential.DelegateAccounts, del => Assert.Equal("delegate", del));
+            Assert.Collection(impersonatedCredential.Scopes, scope => Assert.Equal("scope", scope));
+            Assert.Equal("principal", impersonatedCredential.TargetPrincipal);
+            Assert.Equal(TimeSpan.FromHours(2), impersonatedCredential.Lifetime);
+        }
+
+        [Fact]
+        public void CreateScoped_Impersonated()
+        {
+            var sourceCredential = GoogleCredential.FromJson(DummyServiceAccountCredentialFileContents);
+            var unscopedCredential = sourceCredential.Impersonate(new ImpersonatedCredential.Initializer("principal"));
+
+            var scopedCredential = unscopedCredential.CreateScoped("new_scope");
+
+            Assert.NotSame(unscopedCredential, scopedCredential);
+            Assert.NotSame(unscopedCredential.UnderlyingCredential, scopedCredential.UnderlyingCredential);
+            var impersonatedCredential = Assert.IsType<ImpersonatedCredential>(scopedCredential.UnderlyingCredential);
+            Assert.Collection(impersonatedCredential.Scopes, scope => Assert.Equal("new_scope", scope));
+        }
+
+        [Fact]
+        public void CreateWithQuotaProject_Impersonated()
+        {
+            var sourceCredential = GoogleCredential.FromJson(DummyServiceAccountCredentialFileContents);
+
+            var credential = sourceCredential.Impersonate(new ImpersonatedCredential.Initializer("principal"));
+            var credentialWithQuotaProject = credential.CreateWithQuotaProject("new_project");
+
+            Assert.NotSame(credential, credentialWithQuotaProject);
+            Assert.NotSame(credential.UnderlyingCredential, credentialWithQuotaProject.UnderlyingCredential);
+            Assert.Equal("new_project", credentialWithQuotaProject.QuotaProject);
+        }
+
+        [Fact]
+        public async Task SignBlobAsync()
+        {
+            var credential = GoogleCredential.FromJson(DummyServiceAccountCredentialFileContents);
+            var signature = await credential.SignBlobAsync(Encoding.ASCII.GetBytes("toSign"));
+            Assert.Equal("VvQqmCec5sESTXmt3ojPodmqZhV30MffzuyCvz6DatyW4uO9IMLWbUmynPYNNnn6w0EIVV0CyrARd56VLxgL+DVdsX726W3dfY13nNJo7i8PyV8R2i8yRLimqqraa1fDb29V2n+FsS0OzBPibDscViQHVlu0PBRApsVsjGG+eB4=", signature);
+        }
+
+        [Fact]
+        public async Task SignBlobAsync_UnsupportedCredential()
+        {
+            var initializer = new ComputeCredential.Initializer("http://will.be.ignored", "http://will.be.ignored");
+            var computeCredential = new ComputeCredential(initializer);
+            var googleCredential = GoogleCredential.FromComputeCredential(computeCredential);
+            await Assert.ThrowsAsync<InvalidOperationException>(() => googleCredential.SignBlobAsync(Encoding.ASCII.GetBytes("toSign")));
+        }
     }
 }

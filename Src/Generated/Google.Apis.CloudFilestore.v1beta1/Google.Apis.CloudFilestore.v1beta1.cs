@@ -1602,6 +1602,10 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
 
+        /// <summary>Output only. Reserved for future use.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("satisfiesPzs")]
+        public virtual System.Nullable<bool> SatisfiesPzs { get; set; }
+
         /// <summary>
         /// Name of the file share in the source Cloud Filestore instance that the backup is created from.
         /// </summary>
@@ -1739,7 +1743,10 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("capacityGb")]
         public virtual System.Nullable<long> CapacityGb { get; set; }
 
-        /// <summary>The name of the file share (must be 16 characters or less).</summary>
+        /// <summary>
+        /// The name of the file share (must be 32 characters or less for High Scale SSD tier, 16 characters or less for
+        /// all other tiers).
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
 
@@ -1802,7 +1809,7 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
         /// <summary>
         /// Unique name of the resource. It uses the form:
         /// `projects/{project_id|project_number}/locations/{location_id}/instances/{instance_id}` Note: Either
-        /// project_id or project_number and be used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
+        /// project_id or project_number can be used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -1954,6 +1961,13 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("nodeId")]
         public virtual string NodeId { get; set; }
 
+        /// <summary>
+        /// If present, this will override eligibility for the node coming from instance or exclusions for specified
+        /// SLIs.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
+        public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -2058,13 +2072,6 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
     public class GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Optional. Global per-instance SLI eligibility which applies to all defined SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("eligibility")]
-        public virtual GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility Eligibility { get; set; }
-
-        /// <summary>
         /// List of SLO exclusion windows. When multiple entries in the list match (matching the exclusion time-window
         /// against current time point) the exclusion reason used in the first matching entry will be published. It is
         /// not needed to include expired exclusion in this list, as only the currently applicable exclusions are taken
@@ -2084,10 +2091,7 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("nodes")]
         public virtual System.Collections.Generic.IList<GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata> Nodes { get; set; }
 
-        /// <summary>
-        /// Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
+        /// <summary>Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
         public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
 
@@ -2341,6 +2345,13 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
     public class NetworkConfig : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
+        /// The network connect mode of the Filestore instance. If not provided, the connect mode defaults to
+        /// DIRECT_PEERING.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("connectMode")]
+        public virtual string ConnectMode { get; set; }
+
+        /// <summary>
         /// Output only. IPv4 addresses in the format {octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the
         /// format {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block 7}:{block 8}.
         /// </summary>
@@ -2467,35 +2478,35 @@ namespace Google.Apis.CloudFilestore.v1beta1.Data
     /// <summary>Represents the metadata of the long-running operation.</summary>
     public class OperationMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>[Output only] API version used to start the operation.</summary>
+        /// <summary>Output only. API version used to start the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("apiVersion")]
         public virtual string ApiVersion { get; set; }
 
         /// <summary>
-        /// [Output only] Identifies whether the user has requested cancellation of the operation. Operations that have
+        /// Output only. Identifies whether the user has requested cancellation of the operation. Operations that have
         /// successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to
         /// `Code.CANCELLED`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("cancelRequested")]
         public virtual System.Nullable<bool> CancelRequested { get; set; }
 
-        /// <summary>[Output only] The time the operation was created.</summary>
+        /// <summary>Output only. The time the operation was created.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
         public virtual object CreateTime { get; set; }
 
-        /// <summary>[Output only] The time the operation finished running.</summary>
+        /// <summary>Output only. The time the operation finished running.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("endTime")]
         public virtual object EndTime { get; set; }
 
-        /// <summary>[Output only] Human-readable status of the operation, if any.</summary>
+        /// <summary>Output only. Human-readable status of the operation, if any.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("statusDetail")]
         public virtual string StatusDetail { get; set; }
 
-        /// <summary>[Output only] Server-defined resource path for the target of the operation.</summary>
+        /// <summary>Output only. Server-defined resource path for the target of the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target")]
         public virtual string Target { get; set; }
 
-        /// <summary>[Output only] Name of the verb executed by the operation.</summary>
+        /// <summary>Output only. Name of the verb executed by the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("verb")]
         public virtual string Verb { get; set; }
 

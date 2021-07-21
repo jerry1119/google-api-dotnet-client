@@ -353,28 +353,33 @@ namespace Google.Apis.CloudSecurityToken.v1beta.Data
         public virtual string Scope { get; set; }
 
         /// <summary>
-        /// Required. The input token. This token is a either an external credential issued by a workload identity pool
+        /// Required. The input token. This token is either an external credential issued by a workload identity pool
         /// provider, or a short-lived access token issued by Google. If the token is an OIDC JWT, it must use the JWT
         /// format defined in [RFC 7523](https://tools.ietf.org/html/rfc7523), and the `subject_token_type` must be
-        /// `urn:ietf:params:oauth:token-type:jwt`. The following headers are required: - `kid`: The identifier of the
-        /// signing key securing the JWT. - `alg`: The cryptographic algorithm securing the JWT. Must be `RS256`. The
-        /// following payload fields are required. For more information, see [RFC 7523, Section
-        /// 3](https://tools.ietf.org/html/rfc7523#section-3): - `iss`: The issuer of the token. The issuer must provide
-        /// a discovery document at the URL `/.well-known/openid-configuration`, where `` is the value of this field.
-        /// The document must be formatted according to section 4.2 of the [OIDC 1.0 Discovery
+        /// either `urn:ietf:params:oauth:token-type:jwt` or `urn:ietf:params:oauth:token-type:id_token`. The following
+        /// headers are required: - `kid`: The identifier of the signing key securing the JWT. - `alg`: The
+        /// cryptographic algorithm securing the JWT. Must be `RS256` or `ES256`. The following payload fields are
+        /// required. For more information, see [RFC 7523, Section 3](https://tools.ietf.org/html/rfc7523#section-3): -
+        /// `iss`: The issuer of the token. The issuer must provide a discovery document at the URL
+        /// `/.well-known/openid-configuration`, where `` is the value of this field. The document must be formatted
+        /// according to section 4.2 of the [OIDC 1.0 Discovery
         /// specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse). -
         /// `iat`: The issue time, in seconds, since the Unix epoch. Must be in the past. - `exp`: The expiration time,
         /// in seconds, since the Unix epoch. Must be less than 48 hours after `iat`. Shorter expiration times are more
         /// secure. If possible, we recommend setting an expiration time less than 6 hours. - `sub`: The identity
-        /// asserted in the JWT. - `aud`: Configured by the mapper policy. The default value is the service account's
-        /// unique ID. Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example payload: ``` { "iss":
-        /// "https://accounts.google.com", "iat": 1517963104, "exp": 1517966704, "aud": "113475438248934895348", "sub":
-        /// "113475438248934895348", "my_claims": { "additional_claim": "value" } } ``` If `subject_token` is for AWS,
-        /// it must be a serialized `GetCallerIdentity` token. This token contains the same information as a request to
-        /// the AWS [`GetCallerIdentity()`](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity)
-        /// method, as well as the AWS
-        /// [signature](https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html) for the request
-        /// information. Use Signature Version 4. Format the request as URL-encoded JSON, and set the
+        /// asserted in the JWT. - `aud`: For workload identity pools, this must be a value specified in the allowed
+        /// audiences for the workload identity pool provider, or one of the audiences allowed by default if no
+        /// audiences were specified. See
+        /// https://cloud.google.com/iam/docs/reference/rest/v1/projects.locations.workloadIdentityPools.providers#oidc
+        /// Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example payload: ``` { "iss":
+        /// "https://accounts.google.com", "iat": 1517963104, "exp": 1517966704, "aud":
+        /// "//iam.googleapis.com/projects/1234567890123/locations/global/workloadIdentityPools/my-pool/providers/my-provider",
+        /// "sub": "113475438248934895348", "my_claims": { "additional_claim": "value" } } ``` If `subject_token` is for
+        /// AWS, it must be a serialized `GetCallerIdentity` token. This token contains the same information as a
+        /// request to the AWS
+        /// [`GetCallerIdentity()`](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity) method,
+        /// as well as the AWS [signature](https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html)
+        /// for the request information. Use Signature Version 4. Format the request as URL-encoded JSON, and set the
         /// `subject_token_type` parameter to `urn:ietf:params:aws:token-type:aws4_request`. The following parameters
         /// are required: - `url`: The URL of the AWS STS endpoint for `GetCallerIdentity()`, such as
         /// `https://sts.amazonaws.com?Action=GetCallerIdentity&amp;amp;Version=2011-06-15`. Regional endpoints are also
@@ -406,8 +411,8 @@ namespace Google.Apis.CloudSecurityToken.v1beta.Data
 
         /// <summary>
         /// Required. An identifier that indicates the type of the security token in the `subject_token` parameter.
-        /// Supported values are `urn:ietf:params:oauth:token-type:jwt`, `urn:ietf:params:aws:token-type:aws4_request`,
-        /// and `urn:ietf:params:oauth:token-type:access_token`.
+        /// Supported values are `urn:ietf:params:oauth:token-type:jwt`, `urn:ietf:params:oauth:token-type:id_token`,
+        /// `urn:ietf:params:aws:token-type:aws4_request`, and `urn:ietf:params:oauth:token-type:access_token`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("subjectTokenType")]
         public virtual string SubjectTokenType { get; set; }

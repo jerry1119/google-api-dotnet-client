@@ -12,9 +12,9 @@
  "baseUrl": "https://notebooks.googleapis.com/",
  "batchPath": "batch",
  "canonicalName": "AI Platform Notebooks",
- "description": "AI Platform Notebooks API is used to manage notebook resources in Google Cloud.",
+ "description": "Notebooks API is used to manage notebook resources in Google Cloud.",
  "discoveryVersion": "v1",
- "documentationLink": "https://cloud.google.com/ai-platform/notebooks/docs/",
+ "documentationLink": "https://cloud.google.com/notebooks/docs/",
  "fullyEncodeReservedExpansion": true,
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -395,7 +395,7 @@
          ],
          "parameters": {
           "filter": {
-           "description": "Filter applied to resulting executions.",
+           "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified schedule_id. Format: \"schedule_id=\"",
            "location": "query",
            "type": "string"
           },
@@ -943,6 +943,34 @@
           "https://www.googleapis.com/auth/cloud-platform"
          ]
         },
+        "updateConfig": {
+         "description": "Update Notebook Instance configurations.",
+         "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:updateConfig",
+         "httpMethod": "PATCH",
+         "id": "notebooks.projects.locations.instances.updateConfig",
+         "parameterOrder": [
+          "name"
+         ],
+         "parameters": {
+          "name": {
+           "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+           "location": "path",
+           "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+           "required": true,
+           "type": "string"
+          }
+         },
+         "path": "v1/{+name}:updateConfig",
+         "request": {
+          "$ref": "UpdateInstanceConfigRequest"
+         },
+         "response": {
+          "$ref": "Operation"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+         ]
+        },
         "updateShieldedInstanceConfig": {
          "description": "Updates the Shielded instance configuration of a single Instance.",
          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:updateShieldedInstanceConfig",
@@ -1273,6 +1301,34 @@
           "https://www.googleapis.com/auth/cloud-platform"
          ]
         },
+        "reportEvent": {
+         "description": "Report and process a runtime event.",
+         "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:reportEvent",
+         "httpMethod": "POST",
+         "id": "notebooks.projects.locations.runtimes.reportEvent",
+         "parameterOrder": [
+          "name"
+         ],
+         "parameters": {
+          "name": {
+           "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`",
+           "location": "path",
+           "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+           "required": true,
+           "type": "string"
+          }
+         },
+         "path": "v1/{+name}:reportEvent",
+         "request": {
+          "$ref": "ReportRuntimeEventRequest"
+         },
+         "response": {
+          "$ref": "Operation"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+         ]
+        },
         "reset": {
          "description": "Resets a Managed Notebook Runtime.",
          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:reset",
@@ -1553,7 +1609,7 @@
    }
   }
  },
- "revision": "20210417",
+ "revision": "20210713",
  "rootUrl": "https://notebooks.googleapis.com/",
  "schemas": {
   "AcceleratorConfig": {
@@ -1761,6 +1817,30 @@
    },
    "type": "object"
   },
+  "Event": {
+   "description": "The definition of an Event for a managed / semi-managed notebook instance.",
+   "id": "Event",
+   "properties": {
+    "reportTime": {
+     "description": "Event report time.",
+     "format": "google-datetime",
+     "type": "string"
+    },
+    "type": {
+     "description": "Event type.",
+     "enum": [
+      "EVENT_TYPE_UNSPECIFIED",
+      "IDLE"
+     ],
+     "enumDescriptions": [
+      "Event is not specified.",
+      "The instance / runtime is idle"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
   "Execution": {
    "description": "The definition of a single executed notebook.",
    "id": "Execution",
@@ -1784,6 +1864,11 @@
      "$ref": "ExecutionTemplate",
      "description": "execute metadata including name, hardware spec, region, labels, etc."
     },
+    "jobUri": {
+     "description": "Output only. The URI of the external job used to execute the notebook.",
+     "readOnly": true,
+     "type": "string"
+    },
     "name": {
      "description": "Output only. The resource name of the execute. Format: `projects/{project_id}/locations/{location}/execution/{execution_id}",
      "readOnly": true,
@@ -1803,7 +1888,9 @@
       "SUCCEEDED",
       "FAILED",
       "CANCELLING",
-      "CANCELLED"
+      "CANCELLED",
+      "EXPIRED",
+      "INITIALIZING"
      ],
      "enumDescriptions": [
       "The job state is unspecified.",
@@ -1813,7 +1900,9 @@
       "The job completed successfully.",
       "The job failed. `error_message` should contain the details of the failure.",
       "The job is being cancelled. `error_message` should describe the reason for the cancellation.",
-      "The job has been cancelled. `error_message` should describe the reason for the cancellation."
+      "The job has been cancelled. `error_message` should describe the reason for the cancellation.",
+      "The jobs has become expired (added for uCAIP jobs) https://cloud.google.com/vertex-ai/docs/reference/rest/v1/JobState",
+      "The Execution is being created."
      ],
      "readOnly": true,
      "type": "string"
@@ -1867,7 +1956,7 @@
      "type": "string"
     },
     "scaleTier": {
-     "description": "Required. Scale tier of the hardware used for notebook execution.",
+     "description": "Required. Scale tier of the hardware used for notebook execution. DEPRECATED Will be discontinued. As right now only CUSTOM is supported.",
      "enum": [
       "SCALE_TIER_UNSPECIFIED",
       "BASIC",
@@ -2126,6 +2215,10 @@
      "readOnly": true,
      "type": "string"
     },
+    "reservationAffinity": {
+     "$ref": "ReservationAffinity",
+     "description": "Optional. The optional reservation affinity. Setting this field will apply the specified [Zonal Compute Reservation](https://cloud.google.com/compute/docs/instances/reserving-zonal-resources) to this notebook instance."
+    },
     "serviceAccount": {
      "description": "The service account on this instance, giving access to other Google Cloud services. You can use any service account within the same project, but you must have the service account user permission to use the instance. If not specified, the [Compute Engine default service account](https://cloud.google.com/compute/docs/access/service-accounts#default_service_account) is used.",
      "type": "string"
@@ -2197,6 +2290,21 @@
     "vmImage": {
      "$ref": "VmImage",
      "description": "Use a Compute Engine VM image to start the notebook instance."
+    }
+   },
+   "type": "object"
+  },
+  "InstanceConfig": {
+   "description": "Notebook instance configurations that can be updated.",
+   "id": "InstanceConfig",
+   "properties": {
+    "enableHealthMonitoring": {
+     "description": "Verifies core internal services are running. More info: go/notebooks-health",
+     "type": "boolean"
+    },
+    "notebookUpgradeSchedule": {
+     "description": "Cron expression in UTC timezone, used to schedule instance auto upgrade. Please follow the [cron format](https://en.wikipedia.org/wiki/Cron).",
+     "type": "string"
     }
    },
    "type": "object"
@@ -2660,6 +2768,55 @@
    },
    "type": "object"
   },
+  "ReportRuntimeEventRequest": {
+   "description": "Request for reporting a Managed Notebook Event.",
+   "id": "ReportRuntimeEventRequest",
+   "properties": {
+    "event": {
+     "$ref": "Event",
+     "description": "Required. The Event to be reported."
+    },
+    "vmId": {
+     "description": "Required. The VM hardware token for authenticating the VM. https://cloud.google.com/compute/docs/instances/verifying-instance-identity",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReservationAffinity": {
+   "description": "Reservation Affinity for consuming Zonal reservation.",
+   "id": "ReservationAffinity",
+   "properties": {
+    "consumeReservationType": {
+     "description": "Optional. Type of reservation to consume",
+     "enum": [
+      "TYPE_UNSPECIFIED",
+      "NO_RESERVATION",
+      "ANY_RESERVATION",
+      "SPECIFIC_RESERVATION"
+     ],
+     "enumDescriptions": [
+      "Default type.",
+      "Do not consume from any allocated capacity.",
+      "Consume any reservation available.",
+      "Must consume from a specific reservation. Must specify key value fields for specifying the reservations."
+     ],
+     "type": "string"
+    },
+    "key": {
+     "description": "Optional. Corresponds to the label key of reservation resource.",
+     "type": "string"
+    },
+    "values": {
+     "description": "Optional. Corresponds to the label values of reservation resource.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
   "ResetInstanceRequest": {
    "description": "Request for reseting a notebook instance",
    "id": "ResetInstanceRequest",
@@ -2896,11 +3053,11 @@
      "type": "boolean"
     },
     "idleShutdown": {
-     "description": "Runtime will automatically shutdown after idle_shutdown_time. Default: False",
+     "description": "Runtime will automatically shutdown after idle_shutdown_time. Default: True",
      "type": "boolean"
     },
     "idleShutdownTimeout": {
-     "description": "Time in minutes to wait before shuting down runtime. Default: 90 minutes",
+     "description": "Time in minutes to wait before shuting down runtime. Default: 180 minutes",
      "format": "int32",
      "type": "integer"
     },
@@ -2938,7 +3095,7 @@
      "type": "string"
     },
     "displayName": {
-     "description": "Output only. Display name used for UI purposes. Name can only contain alphanumeric characters, hyphens \u2018-\u2019, and underscores \u2018_\u2019.",
+     "description": "Output only. Display name used for UI purposes. Name can only contain alphanumeric characters, hyphens '-', and underscores '_'.",
      "readOnly": true,
      "type": "string"
     },
@@ -2965,14 +3122,18 @@
       "ENABLED",
       "PAUSED",
       "DISABLED",
-      "UPDATE_FAILED"
+      "UPDATE_FAILED",
+      "INITIALIZING",
+      "DELETING"
      ],
      "enumDescriptions": [
       "Unspecified state.",
       "The job is executing normally.",
       "The job is paused by the user. It will not execute. A user can intentionally pause the job using PauseJobRequest.",
       "The job is disabled by the system due to error. The user cannot directly set a job to be disabled.",
-      "The job state resulting from a failed CloudScheduler.UpdateJob operation. To recover a job from this state, retry CloudScheduler.UpdateJob until a successful response is received."
+      "The job state resulting from a failed CloudScheduler.UpdateJob operation. To recover a job from this state, retry CloudScheduler.UpdateJob until a successful response is received.",
+      "The schedule resource is being created.",
+      "The schedule resource is being deleted."
      ],
      "type": "string"
     },
@@ -3222,6 +3383,17 @@
    "description": "Request for created scheduled notebooks",
    "id": "TriggerScheduleRequest",
    "properties": {},
+   "type": "object"
+  },
+  "UpdateInstanceConfigRequest": {
+   "description": "Request for updating instance configurations.",
+   "id": "UpdateInstanceConfigRequest",
+   "properties": {
+    "config": {
+     "$ref": "InstanceConfig",
+     "description": "The instance configurations to be updated."
+    }
+   },
    "type": "object"
   },
   "UpdateShieldedInstanceConfigRequest": {

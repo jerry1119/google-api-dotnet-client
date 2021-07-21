@@ -346,7 +346,11 @@ namespace Google.Apis.Dialogflow.v2
                         this.service = service;
                     }
 
-                    /// <summary>Creates multiple new entities in the specified entity type. Operation </summary>
+                    /// <summary>
+                    /// Creates multiple new entities in the specified entity type. Note: You should always train an
+                    /// agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the entity type to create entities in. Format:
@@ -357,7 +361,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchCreateRequest(service, body, parent);
                     }
 
-                    /// <summary>Creates multiple new entities in the specified entity type. Operation </summary>
+                    /// <summary>
+                    /// Creates multiple new entities in the specified entity type. Note: You should always train an
+                    /// agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchCreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchCreate request.</summary>
@@ -405,7 +413,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Deletes entities in the specified entity type. Operation </summary>
+                    /// <summary>
+                    /// Deletes entities in the specified entity type. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the entity type to delete entries for. Format:
@@ -416,7 +428,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchDeleteRequest(service, body, parent);
                     }
 
-                    /// <summary>Deletes entities in the specified entity type. Operation </summary>
+                    /// <summary>
+                    /// Deletes entities in the specified entity type. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchDelete request.</summary>
@@ -466,7 +482,9 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Updates or creates multiple entities in the specified entity type. This method does not affect
-                    /// entities in the entity type that aren't explicitly specified in the request. Operation
+                    /// entities in the entity type that aren't explicitly specified in the request. Note: You should
+                    /// always train an agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                     /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
@@ -480,7 +498,9 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Updates or creates multiple entities in the specified entity type. This method does not affect
-                    /// entities in the entity type that aren't explicitly specified in the request. Operation
+                    /// entities in the entity type that aren't explicitly specified in the request. Note: You should
+                    /// always train an agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                     /// </summary>
                     public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
@@ -530,7 +550,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Deletes entity types in the specified agent. Operation </summary>
+                /// <summary>
+                /// Deletes entity types in the specified agent. Note: You should always train an agent prior to sending
+                /// it queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The name of the agent to delete all entities types for. Format: `projects//agent`.
@@ -540,7 +563,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new BatchDeleteRequest(service, body, parent);
                 }
 
-                /// <summary>Deletes entity types in the specified agent. Operation </summary>
+                /// <summary>
+                /// Deletes entity types in the specified agent. Note: You should always train an agent prior to sending
+                /// it queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new BatchDelete request.</summary>
@@ -587,7 +613,11 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Updates/Creates multiple entity types in the specified agent. Operation </summary>
+                /// <summary>
+                /// Updates/Creates multiple entity types in the specified agent. Note: You should always train an agent
+                /// prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The name of the agent to update or create entity types in. Format: `projects//agent`.
@@ -597,7 +627,11 @@ namespace Google.Apis.Dialogflow.v2
                     return new BatchUpdateRequest(service, body, parent);
                 }
 
-                /// <summary>Updates/Creates multiple entity types in the specified agent. Operation </summary>
+                /// <summary>
+                /// Updates/Creates multiple entity types in the specified agent. Note: You should always train an agent
+                /// prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new BatchUpdate request.</summary>
@@ -644,7 +678,11 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Creates an entity type in the specified agent.</summary>
+                /// <summary>
+                /// Creates an entity type in the specified agent. Note: You should always train an agent prior to
+                /// sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The agent to create a entity type for. Format: `projects//agent`.
@@ -654,7 +692,11 @@ namespace Google.Apis.Dialogflow.v2
                     return new CreateRequest(service, body, parent);
                 }
 
-                /// <summary>Creates an entity type in the specified agent.</summary>
+                /// <summary>
+                /// Creates an entity type in the specified agent. Note: You should always train an agent prior to
+                /// sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2EntityType>
                 {
                     /// <summary>Constructs a new Create request.</summary>
@@ -715,7 +757,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Deletes the specified entity type.</summary>
+                /// <summary>
+                /// Deletes the specified entity type. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="name">
                 /// Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.
                 /// </param>
@@ -724,7 +769,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new DeleteRequest(service, name);
                 }
 
-                /// <summary>Deletes the specified entity type.</summary>
+                /// <summary>
+                /// Deletes the specified entity type. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleProtobufEmpty>
                 {
                     /// <summary>Constructs a new Delete request.</summary>
@@ -919,7 +967,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Updates the specified entity type.</summary>
+                /// <summary>
+                /// Updates the specified entity type. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
                 /// The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and
@@ -930,7 +981,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new PatchRequest(service, body, name);
                 }
 
-                /// <summary>Updates the specified entity type.</summary>
+                /// <summary>
+                /// Updates the specified entity type. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2EntityType>
                 {
                     /// <summary>Constructs a new Patch request.</summary>
@@ -1045,7 +1099,10 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>Returns the list of all intents in the specified agent.</summary>
                     /// <param name="parent">
-                    /// Required. The agent to list all intents from. Format: `projects//agent`.
+                    /// Required. The agent to list all intents from. Format: `projects//agent` or
+                    /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                    /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                    /// Note: training phrases of the intents will not be returned for non-draft environment.
                     /// </param>
                     public virtual ListRequest List(string parent)
                     {
@@ -1062,7 +1119,12 @@ namespace Google.Apis.Dialogflow.v2
                             InitParameters();
                         }
 
-                        /// <summary>Required. The agent to list all intents from. Format: `projects//agent`.</summary>
+                        /// <summary>
+                        /// Required. The agent to list all intents from. Format: `projects//agent` or
+                        /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                        /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                        /// Note: training phrases of the intents will not be returned for non-draft environment.
+                        /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Parent { get; private set; }
 
@@ -2183,7 +2245,7 @@ namespace Google.Apis.Dialogflow.v2
                 /// <summary>Deletes the specified agent environment.</summary>
                 /// <param name="name">
                 /// Required. The name of the environment to delete. / Format: - `projects//agent/environments/` -
-                /// `projects//locations//agent/environments/`
+                /// `projects//locations//agent/environments/` The environment ID for the default environment is `-`.
                 /// </param>
                 public virtual DeleteRequest Delete(string name)
                 {
@@ -2202,7 +2264,8 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Required. The name of the environment to delete. / Format: - `projects//agent/environments/` -
-                    /// `projects//locations//agent/environments/`
+                    /// `projects//locations//agent/environments/` The environment ID for the default environment is
+                    /// `-`.
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Name { get; private set; }
@@ -2234,7 +2297,7 @@ namespace Google.Apis.Dialogflow.v2
                 /// <summary>Retrieves the specified agent environment.</summary>
                 /// <param name="name">
                 /// Required. The name of the environment. Supported formats: - `projects//agent/environments/` -
-                /// `projects//locations//agent/environments/`
+                /// `projects//locations//agent/environments/` The environment ID for the default environment is `-`.
                 /// </param>
                 public virtual GetRequest Get(string name)
                 {
@@ -2253,7 +2316,8 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Required. The name of the environment. Supported formats: - `projects//agent/environments/` -
-                    /// `projects//locations//agent/environments/`
+                    /// `projects//locations//agent/environments/` The environment ID for the default environment is
+                    /// `-`.
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Name { get; private set; }
@@ -2285,7 +2349,8 @@ namespace Google.Apis.Dialogflow.v2
                 /// <summary>Gets the history of the specified environment.</summary>
                 /// <param name="parent">
                 /// Required. The name of the environment to retrieve history for. Supported formats: -
-                /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID for
+                /// the default environment is `-`.
                 /// </param>
                 public virtual GetHistoryRequest GetHistory(string parent)
                 {
@@ -2304,7 +2369,8 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Required. The name of the environment to retrieve history for. Supported formats: -
-                    /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                    /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID
+                    /// for the default environment is `-`.
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Parent { get; private set; }
@@ -2360,7 +2426,7 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Returns the list of all non-draft environments of the specified agent.</summary>
+                /// <summary>Returns the list of all non-default environments of the specified agent.</summary>
                 /// <param name="parent">
                 /// Required. The agent to list all environments from. Format: - `projects//agent` -
                 /// `projects//locations//agent`
@@ -2370,7 +2436,7 @@ namespace Google.Apis.Dialogflow.v2
                     return new ListRequest(service, parent);
                 }
 
-                /// <summary>Returns the list of all non-draft environments of the specified agent.</summary>
+                /// <summary>Returns the list of all non-default environments of the specified agent.</summary>
                 public class ListRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2ListEnvironmentsResponse>
                 {
                     /// <summary>Constructs a new List request.</summary>
@@ -2442,16 +2508,17 @@ namespace Google.Apis.Dialogflow.v2
                 /// Updates the specified agent environment. This method allows you to deploy new agent versions into
                 /// the environment. When an environment is pointed to a new agent version by setting
                 /// `environment.agent_version`, the environment is temporarily set to the `LOADING` state. During that
-                /// time, the environment keeps on serving the previous version of the agent. After the new agent
+                /// time, the environment continues serving the previous version of the agent. After the new agent
                 /// version is done loading, the environment is set back to the `RUNNING` state. You can use "-" as
-                /// Environment ID in environment name to update version in "draft" environment. WARNING: this will
-                /// negate all recent changes to draft and can't be undone. You may want to save the draft to a version
-                /// before calling this function.
+                /// Environment ID in environment name to update an agent version in the default environment. WARNING:
+                /// this will negate all recent changes to the draft agent and can't be undone. You may want to save the
+                /// draft agent to a version before calling this method.
                 /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
                 /// Output only. The unique identifier of this agent environment. Supported formats: -
-                /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID for
+                /// the default environment is `-`.
                 /// </param>
                 public virtual PatchRequest Patch(Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Environment body, string name)
                 {
@@ -2462,11 +2529,11 @@ namespace Google.Apis.Dialogflow.v2
                 /// Updates the specified agent environment. This method allows you to deploy new agent versions into
                 /// the environment. When an environment is pointed to a new agent version by setting
                 /// `environment.agent_version`, the environment is temporarily set to the `LOADING` state. During that
-                /// time, the environment keeps on serving the previous version of the agent. After the new agent
+                /// time, the environment continues serving the previous version of the agent. After the new agent
                 /// version is done loading, the environment is set back to the `RUNNING` state. You can use "-" as
-                /// Environment ID in environment name to update version in "draft" environment. WARNING: this will
-                /// negate all recent changes to draft and can't be undone. You may want to save the draft to a version
-                /// before calling this function.
+                /// Environment ID in environment name to update an agent version in the default environment. WARNING:
+                /// this will negate all recent changes to the draft agent and can't be undone. You may want to save the
+                /// draft agent to a version before calling this method.
                 /// </summary>
                 public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Environment>
                 {
@@ -2480,15 +2547,17 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>
                     /// Output only. The unique identifier of this agent environment. Supported formats: -
-                    /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                    /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID
+                    /// for the default environment is `-`.
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Name { get; private set; }
 
                     /// <summary>
-                    /// Optional. This field is used to prevent accidental overwrite of the draft environment, which is
-                    /// an operation that cannot be undone. To confirm that the caller desires this overwrite, this
-                    /// field must be explicitly set to true when updating the draft environment (environment ID = `-`).
+                    /// Optional. This field is used to prevent accidental overwrite of the default environment, which
+                    /// is an operation that cannot be undone. To confirm that the caller desires this overwrite, this
+                    /// field must be explicitly set to true when updating the default environment (environment ID =
+                    /// `-`).
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("allowLoadToDraftAndDiscardChanges", Google.Apis.Util.RequestParameterType.Query)]
                     public virtual System.Nullable<bool> AllowLoadToDraftAndDiscardChanges { get; set; }
@@ -2561,7 +2630,10 @@ namespace Google.Apis.Dialogflow.v2
                     this.service = service;
                 }
 
-                /// <summary>Deletes intents in the specified agent. Operation </summary>
+                /// <summary>
+                /// Deletes intents in the specified agent. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The name of the agent to delete all entities types for. Format: `projects//agent`.
@@ -2571,7 +2643,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new BatchDeleteRequest(service, body, parent);
                 }
 
-                /// <summary>Deletes intents in the specified agent. Operation </summary>
+                /// <summary>
+                /// Deletes intents in the specified agent. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new BatchDelete request.</summary>
@@ -2618,7 +2693,11 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Updates/Creates multiple intents in the specified agent. Operation </summary>
+                /// <summary>
+                /// Updates/Creates multiple intents in the specified agent. Note: You should always train an agent
+                /// prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The name of the agent to update or create intents in. Format: `projects//agent`.
@@ -2628,7 +2707,11 @@ namespace Google.Apis.Dialogflow.v2
                     return new BatchUpdateRequest(service, body, parent);
                 }
 
-                /// <summary>Updates/Creates multiple intents in the specified agent. Operation </summary>
+                /// <summary>
+                /// Updates/Creates multiple intents in the specified agent. Note: You should always train an agent
+                /// prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new BatchUpdate request.</summary>
@@ -2675,7 +2758,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Creates an intent in the specified agent.</summary>
+                /// <summary>
+                /// Creates an intent in the specified agent. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">Required. The agent to create a intent for. Format: `projects//agent`.</param>
                 public virtual CreateRequest Create(Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Intent body, string parent)
@@ -2683,7 +2769,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new CreateRequest(service, body, parent);
                 }
 
-                /// <summary>Creates an intent in the specified agent.</summary>
+                /// <summary>
+                /// Creates an intent in the specified agent. Note: You should always train an agent prior to sending it
+                /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Intent>
                 {
                     /// <summary>Constructs a new Create request.</summary>
@@ -2768,7 +2857,11 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Deletes the specified intent and its direct or indirect followup intents.</summary>
+                /// <summary>
+                /// Deletes the specified intent and its direct or indirect followup intents. Note: You should always
+                /// train an agent prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="name">
                 /// Required. The name of the intent to delete. If this intent has direct or indirect followup intents,
                 /// we also delete them. Format: `projects//agent/intents/`.
@@ -2778,7 +2871,11 @@ namespace Google.Apis.Dialogflow.v2
                     return new DeleteRequest(service, name);
                 }
 
-                /// <summary>Deletes the specified intent and its direct or indirect followup intents.</summary>
+                /// <summary>
+                /// Deletes the specified intent and its direct or indirect followup intents. Note: You should always
+                /// train an agent prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleProtobufEmpty>
                 {
                     /// <summary>Constructs a new Delete request.</summary>
@@ -2906,7 +3003,10 @@ namespace Google.Apis.Dialogflow.v2
 
                 /// <summary>Returns the list of all intents in the specified agent.</summary>
                 /// <param name="parent">
-                /// Required. The agent to list all intents from. Format: `projects//agent`.
+                /// Required. The agent to list all intents from. Format: `projects//agent` or
+                /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents for.
+                /// Format: `projects//agent/environments/` or `projects//locations//agent/environments/`. Note:
+                /// training phrases of the intents will not be returned for non-draft environment.
                 /// </param>
                 public virtual ListRequest List(string parent)
                 {
@@ -2923,7 +3023,12 @@ namespace Google.Apis.Dialogflow.v2
                         InitParameters();
                     }
 
-                    /// <summary>Required. The agent to list all intents from. Format: `projects//agent`.</summary>
+                    /// <summary>
+                    /// Required. The agent to list all intents from. Format: `projects//agent` or
+                    /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                    /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                    /// Note: training phrases of the intents will not be returned for non-draft environment.
+                    /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Parent { get; private set; }
 
@@ -3018,7 +3123,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Updates the specified intent.</summary>
+                /// <summary>
+                /// Updates the specified intent. Note: You should always train an agent prior to sending it queries.
+                /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
                 /// Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and
@@ -3029,7 +3137,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new PatchRequest(service, body, name);
                 }
 
-                /// <summary>Updates the specified intent.</summary>
+                /// <summary>
+                /// Updates the specified intent. Note: You should always train an agent prior to sending it queries.
+                /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Intent>
                 {
                     /// <summary>Constructs a new Patch request.</summary>
@@ -5125,7 +5236,7 @@ namespace Google.Apis.Dialogflow.v2
                 }
             }
 
-            /// <summary>Exports the specified agent to a ZIP file. Operation </summary>
+            /// <summary>Exports the specified agent to a ZIP file.</summary>
             /// <param name="body">The body of the request.</param>
             /// <param name="parent">
             /// Required. The project that the agent to export is associated with. Format: `projects/`.
@@ -5135,7 +5246,7 @@ namespace Google.Apis.Dialogflow.v2
                 return new ExportRequest(service, body, parent);
             }
 
-            /// <summary>Exports the specified agent to a ZIP file. Operation </summary>
+            /// <summary>Exports the specified agent to a ZIP file.</summary>
             public class ExportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
             {
                 /// <summary>Constructs a new Export request.</summary>
@@ -5301,9 +5412,10 @@ namespace Google.Apis.Dialogflow.v2
             /// existing ones. Intents and entity types with the same name are replaced with the new versions from
             /// ImportAgentRequest. After the import, the imported draft agent will be trained automatically (unless
             /// disabled in agent settings). However, once the import is done, training may not be completed yet. Please
-            /// call TrainAgent and wait for the operation it returns in order to train explicitly. Operation An
-            /// operation which tracks when importing is complete. It only tracks when the draft agent is updated not
-            /// when it is done training.
+            /// call TrainAgent and wait for the operation it returns in order to train explicitly. An operation which
+            /// tracks when importing is complete. It only tracks when the draft agent is updated not when it is done
+            /// training. Note: You should always train an agent prior to sending it queries. See the [training
+            /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
             /// </summary>
             /// <param name="body">The body of the request.</param>
             /// <param name="parent">
@@ -5319,9 +5431,10 @@ namespace Google.Apis.Dialogflow.v2
             /// existing ones. Intents and entity types with the same name are replaced with the new versions from
             /// ImportAgentRequest. After the import, the imported draft agent will be trained automatically (unless
             /// disabled in agent settings). However, once the import is done, training may not be completed yet. Please
-            /// call TrainAgent and wait for the operation it returns in order to train explicitly. Operation An
-            /// operation which tracks when importing is complete. It only tracks when the draft agent is updated not
-            /// when it is done training.
+            /// call TrainAgent and wait for the operation it returns in order to train explicitly. An operation which
+            /// tracks when importing is complete. It only tracks when the draft agent is updated not when it is done
+            /// training. Note: You should always train an agent prior to sending it queries. See the [training
+            /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
             /// </summary>
             public class ImportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
             {
@@ -5374,8 +5487,9 @@ namespace Google.Apis.Dialogflow.v2
             /// intents and entity types in the older version are deleted. After the restore, the restored draft agent
             /// will be trained automatically (unless disabled in agent settings). However, once the restore is done,
             /// training may not be completed yet. Please call TrainAgent and wait for the operation it returns in order
-            /// to train explicitly. Operation An operation which tracks when restoring is complete. It only tracks when
-            /// the draft agent is updated not when it is done training.
+            /// to train explicitly. An operation which tracks when restoring is complete. It only tracks when the draft
+            /// agent is updated not when it is done training. Note: You should always train an agent prior to sending
+            /// it queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
             /// </summary>
             /// <param name="body">The body of the request.</param>
             /// <param name="parent">
@@ -5391,8 +5505,9 @@ namespace Google.Apis.Dialogflow.v2
             /// intents and entity types in the older version are deleted. After the restore, the restored draft agent
             /// will be trained automatically (unless disabled in agent settings). However, once the restore is done,
             /// training may not be completed yet. Please call TrainAgent and wait for the operation it returns in order
-            /// to train explicitly. Operation An operation which tracks when restoring is complete. It only tracks when
-            /// the draft agent is updated not when it is done training.
+            /// to train explicitly. An operation which tracks when restoring is complete. It only tracks when the draft
+            /// agent is updated not when it is done training. Note: You should always train an agent prior to sending
+            /// it queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
             /// </summary>
             public class RestoreRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
             {
@@ -5521,7 +5636,10 @@ namespace Google.Apis.Dialogflow.v2
                 }
             }
 
-            /// <summary>Trains the specified agent. Operation </summary>
+            /// <summary>
+            /// Trains the specified agent. Note: You should always train an agent prior to sending it queries. See the
+            /// [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+            /// </summary>
             /// <param name="body">The body of the request.</param>
             /// <param name="parent">
             /// Required. The project that the agent to train is associated with. Format: `projects/`.
@@ -5531,7 +5649,10 @@ namespace Google.Apis.Dialogflow.v2
                 return new TrainRequest(service, body, parent);
             }
 
-            /// <summary>Trains the specified agent. Operation </summary>
+            /// <summary>
+            /// Trains the specified agent. Note: You should always train an agent prior to sending it queries. See the
+            /// [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+            /// </summary>
             public class TrainRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
             {
                 /// <summary>Constructs a new Train request.</summary>
@@ -7937,7 +8058,11 @@ namespace Google.Apis.Dialogflow.v2
                             this.service = service;
                         }
 
-                        /// <summary>Creates multiple new entities in the specified entity type. Operation </summary>
+                        /// <summary>
+                        /// Creates multiple new entities in the specified entity type. Note: You should always train an
+                        /// agent prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                        /// </summary>
                         /// <param name="body">The body of the request.</param>
                         /// <param name="parent">
                         /// Required. The name of the entity type to create entities in. Format:
@@ -7948,7 +8073,11 @@ namespace Google.Apis.Dialogflow.v2
                             return new BatchCreateRequest(service, body, parent);
                         }
 
-                        /// <summary>Creates multiple new entities in the specified entity type. Operation </summary>
+                        /// <summary>
+                        /// Creates multiple new entities in the specified entity type. Note: You should always train an
+                        /// agent prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                        /// </summary>
                         public class BatchCreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                         {
                             /// <summary>Constructs a new BatchCreate request.</summary>
@@ -7996,7 +8125,11 @@ namespace Google.Apis.Dialogflow.v2
                             }
                         }
 
-                        /// <summary>Deletes entities in the specified entity type. Operation </summary>
+                        /// <summary>
+                        /// Deletes entities in the specified entity type. Note: You should always train an agent prior
+                        /// to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                        /// </summary>
                         /// <param name="body">The body of the request.</param>
                         /// <param name="parent">
                         /// Required. The name of the entity type to delete entries for. Format:
@@ -8007,7 +8140,11 @@ namespace Google.Apis.Dialogflow.v2
                             return new BatchDeleteRequest(service, body, parent);
                         }
 
-                        /// <summary>Deletes entities in the specified entity type. Operation </summary>
+                        /// <summary>
+                        /// Deletes entities in the specified entity type. Note: You should always train an agent prior
+                        /// to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                        /// </summary>
                         public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                         {
                             /// <summary>Constructs a new BatchDelete request.</summary>
@@ -8057,8 +8194,9 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Updates or creates multiple entities in the specified entity type. This method does not
-                        /// affect entities in the entity type that aren't explicitly specified in the request.
-                        /// Operation
+                        /// affect entities in the entity type that aren't explicitly specified in the request. Note:
+                        /// You should always train an agent prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                         /// </summary>
                         /// <param name="body">The body of the request.</param>
                         /// <param name="parent">
@@ -8072,8 +8210,9 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Updates or creates multiple entities in the specified entity type. This method does not
-                        /// affect entities in the entity type that aren't explicitly specified in the request.
-                        /// Operation
+                        /// affect entities in the entity type that aren't explicitly specified in the request. Note:
+                        /// You should always train an agent prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                         /// </summary>
                         public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                         {
@@ -8123,7 +8262,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Deletes entity types in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Deletes entity types in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the agent to delete all entities types for. Format: `projects//agent`.
@@ -8133,7 +8276,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchDeleteRequest(service, body, parent);
                     }
 
-                    /// <summary>Deletes entity types in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Deletes entity types in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchDelete request.</summary>
@@ -8180,7 +8327,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Updates/Creates multiple entity types in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Updates/Creates multiple entity types in the specified agent. Note: You should always train an
+                    /// agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the agent to update or create entity types in. Format: `projects//agent`.
@@ -8190,7 +8341,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchUpdateRequest(service, body, parent);
                     }
 
-                    /// <summary>Updates/Creates multiple entity types in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Updates/Creates multiple entity types in the specified agent. Note: You should always train an
+                    /// agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchUpdate request.</summary>
@@ -8238,7 +8393,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Creates an entity type in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an entity type in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The agent to create a entity type for. Format: `projects//agent`.
@@ -8248,7 +8407,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new CreateRequest(service, body, parent);
                     }
 
-                    /// <summary>Creates an entity type in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an entity type in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2EntityType>
                     {
                         /// <summary>Constructs a new Create request.</summary>
@@ -8311,7 +8474,10 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Deletes the specified entity type.</summary>
+                    /// <summary>
+                    /// Deletes the specified entity type. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="name">
                     /// Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.
                     /// </param>
@@ -8320,7 +8486,10 @@ namespace Google.Apis.Dialogflow.v2
                         return new DeleteRequest(service, name);
                     }
 
-                    /// <summary>Deletes the specified entity type.</summary>
+                    /// <summary>
+                    /// Deletes the specified entity type. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleProtobufEmpty>
                     {
                         /// <summary>Constructs a new Delete request.</summary>
@@ -8519,7 +8688,10 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Updates the specified entity type.</summary>
+                    /// <summary>
+                    /// Updates the specified entity type. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and
@@ -8530,7 +8702,10 @@ namespace Google.Apis.Dialogflow.v2
                         return new PatchRequest(service, body, name);
                     }
 
-                    /// <summary>Updates the specified entity type.</summary>
+                    /// <summary>
+                    /// Updates the specified entity type. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2EntityType>
                     {
                         /// <summary>Constructs a new Patch request.</summary>
@@ -8622,7 +8797,152 @@ namespace Google.Apis.Dialogflow.v2
                     public EnvironmentsResource(Google.Apis.Services.IClientService service)
                     {
                         this.service = service;
+                        Intents = new IntentsResource(service);
                         Users = new UsersResource(service);
+                    }
+
+                    /// <summary>Gets the Intents resource.</summary>
+                    public virtual IntentsResource Intents { get; }
+
+                    /// <summary>The "intents" collection of methods.</summary>
+                    public class IntentsResource
+                    {
+                        private const string Resource = "intents";
+
+                        /// <summary>The service which this resource belongs to.</summary>
+                        private readonly Google.Apis.Services.IClientService service;
+
+                        /// <summary>Constructs a new resource.</summary>
+                        public IntentsResource(Google.Apis.Services.IClientService service)
+                        {
+                            this.service = service;
+                        }
+
+                        /// <summary>Returns the list of all intents in the specified agent.</summary>
+                        /// <param name="parent">
+                        /// Required. The agent to list all intents from. Format: `projects//agent` or
+                        /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                        /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                        /// Note: training phrases of the intents will not be returned for non-draft environment.
+                        /// </param>
+                        public virtual ListRequest List(string parent)
+                        {
+                            return new ListRequest(service, parent);
+                        }
+
+                        /// <summary>Returns the list of all intents in the specified agent.</summary>
+                        public class ListRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2ListIntentsResponse>
+                        {
+                            /// <summary>Constructs a new List request.</summary>
+                            public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                            {
+                                Parent = parent;
+                                InitParameters();
+                            }
+
+                            /// <summary>
+                            /// Required. The agent to list all intents from. Format: `projects//agent` or
+                            /// `projects//locations//agent`. Alternatively, you can specify the environment to list
+                            /// intents for. Format: `projects//agent/environments/` or
+                            /// `projects//locations//agent/environments/`. Note: training phrases of the intents will
+                            /// not be returned for non-draft environment.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                            public virtual string Parent { get; private set; }
+
+                            /// <summary>Optional. The resource view to apply to the returned intent.</summary>
+                            [Google.Apis.Util.RequestParameterAttribute("intentView", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual System.Nullable<IntentViewEnum> IntentView { get; set; }
+
+                            /// <summary>Optional. The resource view to apply to the returned intent.</summary>
+                            public enum IntentViewEnum
+                            {
+                                /// <summary>Training phrases field is not populated in the response.</summary>
+                                [Google.Apis.Util.StringValueAttribute("INTENT_VIEW_UNSPECIFIED")]
+                                INTENTVIEWUNSPECIFIED = 0,
+
+                                /// <summary>All fields are populated.</summary>
+                                [Google.Apis.Util.StringValueAttribute("INTENT_VIEW_FULL")]
+                                INTENTVIEWFULL = 1,
+                            }
+
+                            /// <summary>
+                            /// Optional. The language used to access language-specific data. If not specified, the
+                            /// agent's default language is used. For more information, see [Multilingual intent and
+                            /// entity
+                            /// data](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("languageCode", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string LanguageCode { get; set; }
+
+                            /// <summary>
+                            /// Optional. The maximum number of items to return in a single page. By default 100 and at
+                            /// most 1000.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual System.Nullable<int> PageSize { get; set; }
+
+                            /// <summary>
+                            /// Optional. The next_page_token value returned from a previous list request.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string PageToken { get; set; }
+
+                            /// <summary>Gets the method name.</summary>
+                            public override string MethodName => "list";
+
+                            /// <summary>Gets the HTTP method.</summary>
+                            public override string HttpMethod => "GET";
+
+                            /// <summary>Gets the REST path.</summary>
+                            public override string RestPath => "v2/{+parent}/intents";
+
+                            /// <summary>Initializes List parameter list.</summary>
+                            protected override void InitParameters()
+                            {
+                                base.InitParameters();
+                                RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "parent",
+                                    IsRequired = true,
+                                    ParameterType = "path",
+                                    DefaultValue = null,
+                                    Pattern = @"^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+$",
+                                });
+                                RequestParameters.Add("intentView", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "intentView",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("languageCode", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "languageCode",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageSize",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageToken",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                            }
+                        }
                     }
 
                     /// <summary>Gets the Users resource.</summary>
@@ -9648,7 +9968,8 @@ namespace Google.Apis.Dialogflow.v2
                     /// <summary>Deletes the specified agent environment.</summary>
                     /// <param name="name">
                     /// Required. The name of the environment to delete. / Format: - `projects//agent/environments/` -
-                    /// `projects//locations//agent/environments/`
+                    /// `projects//locations//agent/environments/` The environment ID for the default environment is
+                    /// `-`.
                     /// </param>
                     public virtual DeleteRequest Delete(string name)
                     {
@@ -9667,7 +9988,8 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Required. The name of the environment to delete. / Format: - `projects//agent/environments/`
-                        /// - `projects//locations//agent/environments/`
+                        /// - `projects//locations//agent/environments/` The environment ID for the default environment
+                        /// is `-`.
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Name { get; private set; }
@@ -9699,7 +10021,8 @@ namespace Google.Apis.Dialogflow.v2
                     /// <summary>Retrieves the specified agent environment.</summary>
                     /// <param name="name">
                     /// Required. The name of the environment. Supported formats: - `projects//agent/environments/` -
-                    /// `projects//locations//agent/environments/`
+                    /// `projects//locations//agent/environments/` The environment ID for the default environment is
+                    /// `-`.
                     /// </param>
                     public virtual GetRequest Get(string name)
                     {
@@ -9718,7 +10041,8 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Required. The name of the environment. Supported formats: - `projects//agent/environments/`
-                        /// - `projects//locations//agent/environments/`
+                        /// - `projects//locations//agent/environments/` The environment ID for the default environment
+                        /// is `-`.
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Name { get; private set; }
@@ -9750,7 +10074,8 @@ namespace Google.Apis.Dialogflow.v2
                     /// <summary>Gets the history of the specified environment.</summary>
                     /// <param name="parent">
                     /// Required. The name of the environment to retrieve history for. Supported formats: -
-                    /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                    /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID
+                    /// for the default environment is `-`.
                     /// </param>
                     public virtual GetHistoryRequest GetHistory(string parent)
                     {
@@ -9769,7 +10094,8 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Required. The name of the environment to retrieve history for. Supported formats: -
-                        /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                        /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment
+                        /// ID for the default environment is `-`.
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Parent { get; private set; }
@@ -9827,7 +10153,7 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Returns the list of all non-draft environments of the specified agent.</summary>
+                    /// <summary>Returns the list of all non-default environments of the specified agent.</summary>
                     /// <param name="parent">
                     /// Required. The agent to list all environments from. Format: - `projects//agent` -
                     /// `projects//locations//agent`
@@ -9837,7 +10163,7 @@ namespace Google.Apis.Dialogflow.v2
                         return new ListRequest(service, parent);
                     }
 
-                    /// <summary>Returns the list of all non-draft environments of the specified agent.</summary>
+                    /// <summary>Returns the list of all non-default environments of the specified agent.</summary>
                     public class ListRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2ListEnvironmentsResponse>
                     {
                         /// <summary>Constructs a new List request.</summary>
@@ -9911,16 +10237,17 @@ namespace Google.Apis.Dialogflow.v2
                     /// Updates the specified agent environment. This method allows you to deploy new agent versions
                     /// into the environment. When an environment is pointed to a new agent version by setting
                     /// `environment.agent_version`, the environment is temporarily set to the `LOADING` state. During
-                    /// that time, the environment keeps on serving the previous version of the agent. After the new
+                    /// that time, the environment continues serving the previous version of the agent. After the new
                     /// agent version is done loading, the environment is set back to the `RUNNING` state. You can use
-                    /// "-" as Environment ID in environment name to update version in "draft" environment. WARNING:
-                    /// this will negate all recent changes to draft and can't be undone. You may want to save the draft
-                    /// to a version before calling this function.
+                    /// "-" as Environment ID in environment name to update an agent version in the default environment.
+                    /// WARNING: this will negate all recent changes to the draft agent and can't be undone. You may
+                    /// want to save the draft agent to a version before calling this method.
                     /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// Output only. The unique identifier of this agent environment. Supported formats: -
-                    /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                    /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID
+                    /// for the default environment is `-`.
                     /// </param>
                     public virtual PatchRequest Patch(Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Environment body, string name)
                     {
@@ -9931,11 +10258,11 @@ namespace Google.Apis.Dialogflow.v2
                     /// Updates the specified agent environment. This method allows you to deploy new agent versions
                     /// into the environment. When an environment is pointed to a new agent version by setting
                     /// `environment.agent_version`, the environment is temporarily set to the `LOADING` state. During
-                    /// that time, the environment keeps on serving the previous version of the agent. After the new
+                    /// that time, the environment continues serving the previous version of the agent. After the new
                     /// agent version is done loading, the environment is set back to the `RUNNING` state. You can use
-                    /// "-" as Environment ID in environment name to update version in "draft" environment. WARNING:
-                    /// this will negate all recent changes to draft and can't be undone. You may want to save the draft
-                    /// to a version before calling this function.
+                    /// "-" as Environment ID in environment name to update an agent version in the default environment.
+                    /// WARNING: this will negate all recent changes to the draft agent and can't be undone. You may
+                    /// want to save the draft agent to a version before calling this method.
                     /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Environment>
                     {
@@ -9949,16 +10276,17 @@ namespace Google.Apis.Dialogflow.v2
 
                         /// <summary>
                         /// Output only. The unique identifier of this agent environment. Supported formats: -
-                        /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+                        /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment
+                        /// ID for the default environment is `-`.
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Name { get; private set; }
 
                         /// <summary>
-                        /// Optional. This field is used to prevent accidental overwrite of the draft environment, which
-                        /// is an operation that cannot be undone. To confirm that the caller desires this overwrite,
-                        /// this field must be explicitly set to true when updating the draft environment (environment
-                        /// ID = `-`).
+                        /// Optional. This field is used to prevent accidental overwrite of the default environment,
+                        /// which is an operation that cannot be undone. To confirm that the caller desires this
+                        /// overwrite, this field must be explicitly set to true when updating the default environment
+                        /// (environment ID = `-`).
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("allowLoadToDraftAndDiscardChanges", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual System.Nullable<bool> AllowLoadToDraftAndDiscardChanges { get; set; }
@@ -10031,7 +10359,11 @@ namespace Google.Apis.Dialogflow.v2
                         this.service = service;
                     }
 
-                    /// <summary>Deletes intents in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Deletes intents in the specified agent. Note: You should always train an agent prior to sending
+                    /// it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the agent to delete all entities types for. Format: `projects//agent`.
@@ -10041,7 +10373,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchDeleteRequest(service, body, parent);
                     }
 
-                    /// <summary>Deletes intents in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Deletes intents in the specified agent. Note: You should always train an agent prior to sending
+                    /// it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchDeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchDelete request.</summary>
@@ -10088,7 +10424,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Updates/Creates multiple intents in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Updates/Creates multiple intents in the specified agent. Note: You should always train an agent
+                    /// prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The name of the agent to update or create intents in. Format: `projects//agent`.
@@ -10098,7 +10438,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new BatchUpdateRequest(service, body, parent);
                     }
 
-                    /// <summary>Updates/Creates multiple intents in the specified agent. Operation </summary>
+                    /// <summary>
+                    /// Updates/Creates multiple intents in the specified agent. Note: You should always train an agent
+                    /// prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class BatchUpdateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                     {
                         /// <summary>Constructs a new BatchUpdate request.</summary>
@@ -10145,7 +10489,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Creates an intent in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an intent in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The agent to create a intent for. Format: `projects//agent`.
@@ -10155,7 +10503,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new CreateRequest(service, body, parent);
                     }
 
-                    /// <summary>Creates an intent in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an intent in the specified agent. Note: You should always train an agent prior to
+                    /// sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Intent>
                     {
                         /// <summary>Constructs a new Create request.</summary>
@@ -10240,7 +10592,11 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Deletes the specified intent and its direct or indirect followup intents.</summary>
+                    /// <summary>
+                    /// Deletes the specified intent and its direct or indirect followup intents. Note: You should
+                    /// always train an agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="name">
                     /// Required. The name of the intent to delete. If this intent has direct or indirect followup
                     /// intents, we also delete them. Format: `projects//agent/intents/`.
@@ -10250,7 +10606,11 @@ namespace Google.Apis.Dialogflow.v2
                         return new DeleteRequest(service, name);
                     }
 
-                    /// <summary>Deletes the specified intent and its direct or indirect followup intents.</summary>
+                    /// <summary>
+                    /// Deletes the specified intent and its direct or indirect followup intents. Note: You should
+                    /// always train an agent prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleProtobufEmpty>
                     {
                         /// <summary>Constructs a new Delete request.</summary>
@@ -10378,7 +10738,10 @@ namespace Google.Apis.Dialogflow.v2
 
                     /// <summary>Returns the list of all intents in the specified agent.</summary>
                     /// <param name="parent">
-                    /// Required. The agent to list all intents from. Format: `projects//agent`.
+                    /// Required. The agent to list all intents from. Format: `projects//agent` or
+                    /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                    /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                    /// Note: training phrases of the intents will not be returned for non-draft environment.
                     /// </param>
                     public virtual ListRequest List(string parent)
                     {
@@ -10395,7 +10758,12 @@ namespace Google.Apis.Dialogflow.v2
                             InitParameters();
                         }
 
-                        /// <summary>Required. The agent to list all intents from. Format: `projects//agent`.</summary>
+                        /// <summary>
+                        /// Required. The agent to list all intents from. Format: `projects//agent` or
+                        /// `projects//locations//agent`. Alternatively, you can specify the environment to list intents
+                        /// for. Format: `projects//agent/environments/` or `projects//locations//agent/environments/`.
+                        /// Note: training phrases of the intents will not be returned for non-draft environment.
+                        /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                         public virtual string Parent { get; private set; }
 
@@ -10492,7 +10860,10 @@ namespace Google.Apis.Dialogflow.v2
                         }
                     }
 
-                    /// <summary>Updates the specified intent.</summary>
+                    /// <summary>
+                    /// Updates the specified intent. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and
@@ -10503,7 +10874,10 @@ namespace Google.Apis.Dialogflow.v2
                         return new PatchRequest(service, body, name);
                     }
 
-                    /// <summary>Updates the specified intent.</summary>
+                    /// <summary>
+                    /// Updates the specified intent. Note: You should always train an agent prior to sending it
+                    /// queries. See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                    /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Intent>
                     {
                         /// <summary>Constructs a new Patch request.</summary>
@@ -11876,7 +12250,7 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Exports the specified agent to a ZIP file. Operation </summary>
+                /// <summary>Exports the specified agent to a ZIP file.</summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The project that the agent to export is associated with. Format: `projects/`.
@@ -11886,7 +12260,7 @@ namespace Google.Apis.Dialogflow.v2
                     return new ExportRequest(service, body, parent);
                 }
 
-                /// <summary>Exports the specified agent to a ZIP file. Operation </summary>
+                /// <summary>Exports the specified agent to a ZIP file.</summary>
                 public class ExportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new Export request.</summary>
@@ -12055,9 +12429,10 @@ namespace Google.Apis.Dialogflow.v2
                 /// the existing ones. Intents and entity types with the same name are replaced with the new versions
                 /// from ImportAgentRequest. After the import, the imported draft agent will be trained automatically
                 /// (unless disabled in agent settings). However, once the import is done, training may not be completed
-                /// yet. Please call TrainAgent and wait for the operation it returns in order to train explicitly.
-                /// Operation An operation which tracks when importing is complete. It only tracks when the draft agent
-                /// is updated not when it is done training.
+                /// yet. Please call TrainAgent and wait for the operation it returns in order to train explicitly. An
+                /// operation which tracks when importing is complete. It only tracks when the draft agent is updated
+                /// not when it is done training. Note: You should always train an agent prior to sending it queries.
+                /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
                 /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
@@ -12073,9 +12448,10 @@ namespace Google.Apis.Dialogflow.v2
                 /// the existing ones. Intents and entity types with the same name are replaced with the new versions
                 /// from ImportAgentRequest. After the import, the imported draft agent will be trained automatically
                 /// (unless disabled in agent settings). However, once the import is done, training may not be completed
-                /// yet. Please call TrainAgent and wait for the operation it returns in order to train explicitly.
-                /// Operation An operation which tracks when importing is complete. It only tracks when the draft agent
-                /// is updated not when it is done training.
+                /// yet. Please call TrainAgent and wait for the operation it returns in order to train explicitly. An
+                /// operation which tracks when importing is complete. It only tracks when the draft agent is updated
+                /// not when it is done training. Note: You should always train an agent prior to sending it queries.
+                /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
                 /// </summary>
                 public class ImportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
@@ -12128,8 +12504,10 @@ namespace Google.Apis.Dialogflow.v2
                 /// the intents and entity types in the older version are deleted. After the restore, the restored draft
                 /// agent will be trained automatically (unless disabled in agent settings). However, once the restore
                 /// is done, training may not be completed yet. Please call TrainAgent and wait for the operation it
-                /// returns in order to train explicitly. Operation An operation which tracks when restoring is
-                /// complete. It only tracks when the draft agent is updated not when it is done training.
+                /// returns in order to train explicitly. An operation which tracks when restoring is complete. It only
+                /// tracks when the draft agent is updated not when it is done training. Note: You should always train
+                /// an agent prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                 /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
@@ -12145,8 +12523,10 @@ namespace Google.Apis.Dialogflow.v2
                 /// the intents and entity types in the older version are deleted. After the restore, the restored draft
                 /// agent will be trained automatically (unless disabled in agent settings). However, once the restore
                 /// is done, training may not be completed yet. Please call TrainAgent and wait for the operation it
-                /// returns in order to train explicitly. Operation An operation which tracks when restoring is
-                /// complete. It only tracks when the draft agent is updated not when it is done training.
+                /// returns in order to train explicitly. An operation which tracks when restoring is complete. It only
+                /// tracks when the draft agent is updated not when it is done training. Note: You should always train
+                /// an agent prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
                 /// </summary>
                 public class RestoreRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
@@ -12276,7 +12656,10 @@ namespace Google.Apis.Dialogflow.v2
                     }
                 }
 
-                /// <summary>Trains the specified agent. Operation </summary>
+                /// <summary>
+                /// Trains the specified agent. Note: You should always train an agent prior to sending it queries. See
+                /// the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The project that the agent to train is associated with. Format: `projects/`.
@@ -12286,7 +12669,10 @@ namespace Google.Apis.Dialogflow.v2
                     return new TrainRequest(service, body, parent);
                 }
 
-                /// <summary>Trains the specified agent. Operation </summary>
+                /// <summary>
+                /// Trains the specified agent. Note: You should always train an agent prior to sending it queries. See
+                /// the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+                /// </summary>
                 public class TrainRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleLongrunningOperation>
                 {
                     /// <summary>Constructs a new Train request.</summary>
@@ -14947,7 +15333,10 @@ namespace Google.Apis.Dialogflow.v2
                 }
             }
 
-            /// <summary>Creates/updates the specified agent.</summary>
+            /// <summary>
+            /// Creates/updates the specified agent. Note: You should always train an agent prior to sending it queries.
+            /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+            /// </summary>
             /// <param name="body">The body of the request.</param>
             /// <param name="parent">Required. The project of this agent. Format: `projects/`.</param>
             public virtual SetAgentRequest SetAgent(Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Agent body, string parent)
@@ -14955,7 +15344,10 @@ namespace Google.Apis.Dialogflow.v2
                 return new SetAgentRequest(service, body, parent);
             }
 
-            /// <summary>Creates/updates the specified agent.</summary>
+            /// <summary>
+            /// Creates/updates the specified agent. Note: You should always train an agent prior to sending it queries.
+            /// See the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+            /// </summary>
             public class SetAgentRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Agent>
             {
                 /// <summary>Constructs a new SetAgent request.</summary>
@@ -15334,7 +15726,10 @@ namespace Google.Apis.Dialogflow.v2
             }
         }
 
-        /// <summary>Creates/updates the specified agent.</summary>
+        /// <summary>
+        /// Creates/updates the specified agent. Note: You should always train an agent prior to sending it queries. See
+        /// the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+        /// </summary>
         /// <param name="body">The body of the request.</param>
         /// <param name="parent">Required. The project of this agent. Format: `projects/`.</param>
         public virtual SetAgentRequest SetAgent(Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Agent body, string parent)
@@ -15342,7 +15737,10 @@ namespace Google.Apis.Dialogflow.v2
             return new SetAgentRequest(service, body, parent);
         }
 
-        /// <summary>Creates/updates the specified agent.</summary>
+        /// <summary>
+        /// Creates/updates the specified agent. Note: You should always train an agent prior to sending it queries. See
+        /// the [training documentation](https://cloud.google.com/dialogflow/es/docs/training).
+        /// </summary>
         public class SetAgentRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v2.Data.GoogleCloudDialogflowV2Agent>
         {
             /// <summary>Constructs a new SetAgent request.</summary>
@@ -15444,6 +15842,34 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Represents a result from running a test case in an agent environment.</summary>
+    public class GoogleCloudDialogflowCxV3ContinuousTestResult : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The resource name for the continuous test result. Format:
+        /// `projects//locations//agents//environments//continuousTestResults/`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>
+        /// The result of this continuous test run, i.e. whether all the tests in this continuous test run pass or not.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("result")]
+        public virtual string Result { get; set; }
+
+        /// <summary>Time when the continuous testing run starts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("runTime")]
+        public virtual object RunTime { get; set; }
+
+        /// <summary>A list of individual test case results names in this continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("testCaseResults")]
+        public virtual System.Collections.Generic.IList<string> TestCaseResults { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// One interaction between a human and virtual agent. The human provides some input and the virtual agent provides
     /// a response.
@@ -15465,6 +15891,10 @@ namespace Google.Apis.Dialogflow.v2.Data
     /// <summary>The input from the human user.</summary>
     public class GoogleCloudDialogflowCxV3ConversationTurnUserInput : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether sentiment analysis is enabled.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSentimentAnalysis")]
+        public virtual System.Nullable<bool> EnableSentimentAnalysis { get; set; }
+
         /// <summary>Parameters that need to be injected into the conversation during intent detection.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("injectedParameters")]
         public virtual System.Collections.Generic.IDictionary<string, object> InjectedParameters { get; set; }
@@ -15636,6 +16066,24 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for Flows.ExportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3ExportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Uncompressed raw byte content for flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowContent")]
+        public virtual string FlowContent { get; set; }
+
+        /// <summary>
+        /// The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in
+        /// ExportFlowRequest.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.ExportTestCases long running operation.</summary>
     public class GoogleCloudDialogflowCxV3ExportTestCasesMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -15774,6 +16222,16 @@ namespace Google.Apis.Dialogflow.v2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("messages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3ResponseMessage> Messages { get; set; }
 
+        /// <summary>
+        /// Whether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a
+        /// webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects
+        /// streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled
+        /// in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to
+        /// fulfillments that have slow webhooks.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnPartialResponses")]
+        public virtual System.Nullable<bool> ReturnPartialResponses { get; set; }
+
         /// <summary>Set parameter values before executing the webhook.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("setParameterActions")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3FulfillmentSetParameterAction> SetParameterActions { get; set; }
@@ -15892,6 +16350,17 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for Flows.ImportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3ImportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flow")]
+        public virtual string Flow { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.ImportTestCases long running operation.</summary>
     public class GoogleCloudDialogflowCxV3ImportTestCasesMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -16005,9 +16474,9 @@ namespace Google.Apis.Dialogflow.v2.Data
         /// <summary>
         /// The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-'
         /// and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start
-        /// with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys."
-        /// is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys.head *
-        /// sys.contextual The above labels do not require value. "sys.head" means the intent is a head intent.
+        /// with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys-"
+        /// is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head *
+        /// sys-contextual The above labels do not require value. "sys-head" means the intent is a head intent.
         /// "sys.contextual" means the intent is a contextual intent.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("labels")]
@@ -16544,6 +17013,28 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata returned for the Environments.RunContinuousTest long running operation.</summary>
+    public class GoogleCloudDialogflowCxV3RunContinuousTestMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The test errors.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3TestError> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Environments.RunContinuousTest.</summary>
+    public class GoogleCloudDialogflowCxV3RunContinuousTestResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The result for a continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("continuousTestResult")]
+        public virtual GoogleCloudDialogflowCxV3ContinuousTestResult ContinuousTestResult { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.RunTestCase long running operation.</summary>
     public class GoogleCloudDialogflowCxV3RunTestCaseMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -17058,6 +17549,34 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Represents a result from running a test case in an agent environment.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ContinuousTestResult : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The resource name for the continuous test result. Format:
+        /// `projects//locations//agents//environments//continuousTestResults/`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>
+        /// The result of this continuous test run, i.e. whether all the tests in this continuous test run pass or not.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("result")]
+        public virtual string Result { get; set; }
+
+        /// <summary>Time when the continuous testing run starts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("runTime")]
+        public virtual object RunTime { get; set; }
+
+        /// <summary>A list of individual test case results names in this continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("testCaseResults")]
+        public virtual System.Collections.Generic.IList<string> TestCaseResults { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// One interaction between a human and virtual agent. The human provides some input and the virtual agent provides
     /// a response.
@@ -17079,6 +17598,10 @@ namespace Google.Apis.Dialogflow.v2.Data
     /// <summary>The input from the human user.</summary>
     public class GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether sentiment analysis is enabled.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSentimentAnalysis")]
+        public virtual System.Nullable<bool> EnableSentimentAnalysis { get; set; }
+
         /// <summary>Parameters that need to be injected into the conversation during intent detection.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("injectedParameters")]
         public virtual System.Collections.Generic.IDictionary<string, object> InjectedParameters { get; set; }
@@ -17250,6 +17773,24 @@ namespace Google.Apis.Dialogflow.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for Flows.ExportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ExportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Uncompressed raw byte content for flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowContent")]
+        public virtual string FlowContent { get; set; }
+
+        /// <summary>
+        /// The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in
+        /// ExportFlowRequest.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.ExportTestCases long running operation.</summary>
     public class GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -17388,6 +17929,16 @@ namespace Google.Apis.Dialogflow.v2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("messages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1ResponseMessage> Messages { get; set; }
 
+        /// <summary>
+        /// Whether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a
+        /// webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects
+        /// streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled
+        /// in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to
+        /// fulfillments that have slow webhooks.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnPartialResponses")]
+        public virtual System.Nullable<bool> ReturnPartialResponses { get; set; }
+
         /// <summary>Set parameter values before executing the webhook.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("setParameterActions")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction> SetParameterActions { get; set; }
@@ -17501,6 +18052,17 @@ namespace Google.Apis.Dialogflow.v2.Data
         /// <summary>Includes details about skipped documents or any other warnings.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
         public virtual System.Collections.Generic.IList<GoogleRpcStatus> Warnings { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Flows.ImportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ImportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flow")]
+        public virtual string Flow { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -18153,6 +18715,28 @@ namespace Google.Apis.Dialogflow.v2.Data
         /// <summary>Required. A collection of text responses.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("text")]
         public virtual System.Collections.Generic.IList<string> Text { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata returned for the Environments.RunContinuousTest long running operation.</summary>
+    public class GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The test errors.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1TestError> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Environments.RunContinuousTest.</summary>
+    public class GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The result for a continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("continuousTestResult")]
+        public virtual GoogleCloudDialogflowCxV3beta1ContinuousTestResult ContinuousTestResult { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -19009,6 +19593,17 @@ namespace Google.Apis.Dialogflow.v2.Data
     /// <summary>Represents a response from an automated agent.</summary>
     public class GoogleCloudDialogflowV2AutomatedAgentReply : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Indicates whether the partial automated agent reply is interruptible when a later reply message arrives.
+        /// e.g. if the agent specified some music as partial response, it can be cancelled.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allowCancellation")]
+        public virtual System.Nullable<bool> AllowCancellation { get; set; }
+
+        /// <summary>AutomatedAgentReply type.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("automatedAgentReplyType")]
+        public virtual string AutomatedAgentReplyType { get; set; }
+
         /// <summary>Response of the Dialogflow Sessions.DetectIntent call.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("detectIntentResponse")]
         public virtual GoogleCloudDialogflowV2DetectIntentResponse DetectIntentResponse { get; set; }
@@ -19692,7 +20287,8 @@ namespace Google.Apis.Dialogflow.v2.Data
 
         /// <summary>
         /// Output only. The unique identifier of this agent environment. Supported formats: -
-        /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+        /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID for the
+        /// default environment is `-`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -19737,7 +20333,8 @@ namespace Google.Apis.Dialogflow.v2.Data
 
         /// <summary>
         /// Output only. The name of the environment this history is for. Supported formats: -
-        /// `projects//agent/environments/` - `projects//locations//agent/environments/`
+        /// `projects//agent/environments/` - `projects//locations//agent/environments/` The environment ID for the
+        /// default environment is `-`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("parent")]
         public virtual string Parent { get; set; }
@@ -19986,7 +20583,7 @@ namespace Google.Apis.Dialogflow.v2.Data
     /// </summary>
     public class GoogleCloudDialogflowV2HumanAgentAssistantConfigConversationModelConfig : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>Required. Conversation model resource name. Format: `projects//conversationModels/`.</summary>
+        /// <summary>Conversation model resource name. Format: `projects//conversationModels/`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("model")]
         public virtual string Model { get; set; }
 
@@ -21829,6 +22426,10 @@ namespace Google.Apis.Dialogflow.v2.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("allRequiredParamsPresent")]
         public virtual System.Nullable<bool> AllRequiredParamsPresent { get; set; }
+
+        /// <summary>Indicates whether the conversational query triggers a cancellation for slot filling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cancelsSlotFilling")]
+        public virtual System.Nullable<bool> CancelsSlotFilling { get; set; }
 
         /// <summary>
         /// Free-form diagnostic information for the associated detect intent request. The fields of this data can
@@ -24261,6 +24862,10 @@ namespace Google.Apis.Dialogflow.v2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("allRequiredParamsPresent")]
         public virtual System.Nullable<bool> AllRequiredParamsPresent { get; set; }
 
+        /// <summary>Indicates whether the conversational query triggers a cancellation for slot filling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cancelsSlotFilling")]
+        public virtual System.Nullable<bool> CancelsSlotFilling { get; set; }
+
         /// <summary>
         /// Free-form diagnostic information for the associated detect intent request. The fields of this data can
         /// change without notice, so you should not write code that depends on its structure. The data may contain: -
@@ -24881,8 +25486,8 @@ namespace Google.Apis.Dialogflow.v2.Data
 
     /// <summary>
     /// An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees
-    /// latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must
-    /// be within normalized ranges.
+    /// latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard.
+    /// Values must be within normalized ranges.
     /// </summary>
     public class GoogleTypeLatLng : Google.Apis.Requests.IDirectResponseSchema
     {

@@ -1170,7 +1170,7 @@ namespace Google.Apis.CloudMemorystoreforMemcached.v1
                 public virtual string Filter { get; set; }
 
                 /// <summary>
-                /// The maximum number of results to return. If not set, the service will select a default.
+                /// The maximum number of results to return. If not set, the service selects a default.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<int> PageSize { get; set; }
@@ -1449,7 +1449,8 @@ namespace Google.Apis.CloudMemorystoreforMemcached.v1.Data
 
         /// <summary>
         /// Unique name of the resource. It uses the form:
-        /// `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+        /// `projects/{project_id|project_number}/locations/{location_id}/instances/{instance_id}` Note: Either
+        /// project_id or project_number can be used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -1601,6 +1602,13 @@ namespace Google.Apis.CloudMemorystoreforMemcached.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("nodeId")]
         public virtual string NodeId { get; set; }
 
+        /// <summary>
+        /// If present, this will override eligibility for the node coming from instance or exclusions for specified
+        /// SLIs.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
+        public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1705,13 +1713,6 @@ namespace Google.Apis.CloudMemorystoreforMemcached.v1.Data
     public class GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Optional. Global per-instance SLI eligibility which applies to all defined SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("eligibility")]
-        public virtual GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility Eligibility { get; set; }
-
-        /// <summary>
         /// List of SLO exclusion windows. When multiple entries in the list match (matching the exclusion time-window
         /// against current time point) the exclusion reason used in the first matching entry will be published. It is
         /// not needed to include expired exclusion in this list, as only the currently applicable exclusions are taken
@@ -1731,10 +1732,7 @@ namespace Google.Apis.CloudMemorystoreforMemcached.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("nodes")]
         public virtual System.Collections.Generic.IList<GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata> Nodes { get; set; }
 
-        /// <summary>
-        /// Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
+        /// <summary>Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
         public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
 

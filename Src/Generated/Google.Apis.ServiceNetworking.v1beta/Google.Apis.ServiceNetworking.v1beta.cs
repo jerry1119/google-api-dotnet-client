@@ -1121,13 +1121,6 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         public virtual string JwtAudience { get; set; }
 
         /// <summary>
-        /// Minimum deadline in seconds needed for this method. Calls having deadline value lower than this will be
-        /// rejected.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("minDeadline")]
-        public virtual System.Nullable<double> MinDeadline { get; set; }
-
-        /// <summary>
         /// The number of seconds to wait for the completion of a long running operation. The default is no deadline.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("operationDeadline")]
@@ -1559,7 +1552,11 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         [Newtonsoft.Json.JsonPropertyAttribute("serviceRootUrl")]
         public virtual string ServiceRootUrl { get; set; }
 
-        /// <summary>A short summary of what the service does. Can only be provided by plain text.</summary>
+        /// <summary>
+        /// A short description of what the service does. The summary must be plain text. It becomes the overview of the
+        /// service displayed in Google Cloud Console. NOTE: This field is equivalent to the standard field
+        /// `description`.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("summary")]
         public virtual string Summary { get; set; }
 
@@ -1577,15 +1574,19 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         [Newtonsoft.Json.JsonPropertyAttribute("deprecationDescription")]
         public virtual string DeprecationDescription { get; set; }
 
-        /// <summary>Description of the selected API(s).</summary>
+        /// <summary>
+        /// The description is the comment in front of the selected proto element, such as a message, a method, a
+        /// 'service' definition, or a field.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("description")]
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// The selector is a comma-separated list of patterns. Each pattern is a qualified name of the element which
-        /// may end in "*", indicating a wildcard. Wildcards are only allowed at the end and for a whole component of
-        /// the qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A wildcard will match one or more
-        /// components. To specify a default for all applicable elements, the whole pattern "*" is used.
+        /// The selector is a comma-separated list of patterns for any element such as a method, a field, an enum value.
+        /// Each pattern is a qualified name of the element which may end in "*", indicating a wildcard. Wildcards are
+        /// only allowed at the end and for a whole component of the qualified name, i.e. "foo.*" is ok, but not
+        /// "foo.b*" or "foo.*.bar". A wildcard will match one or more components. To specify a default for all
+        /// applicable elements, the whole pattern "*" is used.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("selector")]
         public virtual string Selector { get; set; }
@@ -1595,13 +1596,14 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
     }
 
     /// <summary>
-    /// `Endpoint` describes a network endpoint of a service that serves a set of APIs. It is commonly known as a
-    /// service endpoint. A service may expose any number of service endpoints, and all service endpoints share the same
-    /// service definition, such as quota limits and monitoring metrics. Example service configuration: name:
-    /// library-example.googleapis.com endpoints: # Below entry makes 'google.example.library.v1.Library' # API be
-    /// served from endpoint address library-example.googleapis.com. # It also allows HTTP OPTIONS calls to be passed to
-    /// the backend, for # it to decide whether the subsequent cross-origin request is # allowed to proceed. - name:
-    /// library-example.googleapis.com allow_cors: true
+    /// `Endpoint` describes a network address of a service that serves a set of APIs. It is commonly known as a service
+    /// endpoint. A service may expose any number of service endpoints, and all service endpoints share the same service
+    /// definition, such as quota limits and monitoring metrics. Example: type: google.api.Service name:
+    /// library-example.googleapis.com endpoints: # Declares network address `https://library-example.googleapis.com` #
+    /// for service `library-example.googleapis.com`. The `https` scheme # is implicit for all service endpoints. Other
+    /// schemes may be # supported in the future. - name: library-example.googleapis.com allow_cors: false - name:
+    /// content-staging-library-example.googleapis.com # Allows HTTP OPTIONS calls to be passed to the API frontend, for
+    /// it # to decide whether the subsequent cross-origin request is allowed # to proceed. allow_cors: true
     /// </summary>
     public class Endpoint : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -2596,7 +2598,7 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
     {
         /// <summary>
         /// The Markdown content of the page. You can use (== include {path} ==) to include content from a Markdown
-        /// file.
+        /// file. The content can be used to produce the documentation page such as HTML format page.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("content")]
         public virtual string Content { get; set; }
@@ -2617,6 +2619,15 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         [Newtonsoft.Json.JsonPropertyAttribute("subpages")]
         public virtual System.Collections.Generic.IList<Page> Subpages { get; set; }
 
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Metadata provided through GetOperation request for the LRO generated by Partial Delete Connection API
+    /// </summary>
+    public class PartialDeleteConnectionMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -2913,13 +2924,15 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
     }
 
     /// <summary>
-    /// `Service` is the root object of Google service configuration schema. It describes basic information about a
-    /// service, such as the name and the title, and delegates other aspects to sub-sections. Each sub-section is either
-    /// a proto message or a repeated proto message that configures a specific aspect, such as auth. See each proto
-    /// message definition for details. Example: type: google.api.Service name: calendar.googleapis.com title: Google
-    /// Calendar API apis: - name: google.calendar.v3.Calendar authentication: providers: - id: google_calendar_auth
-    /// jwks_uri: https://www.googleapis.com/oauth2/v1/certs issuer: https://securetoken.google.com rules: - selector:
-    /// "*" requirements: provider_id: google_calendar_auth
+    /// `Service` is the root object of Google API service configuration (service config). It describes the basic
+    /// information about a logical service, such as the service name and the user-facing title, and delegates other
+    /// aspects to sub-sections. Each sub-section is either a proto message or a repeated proto message that configures
+    /// a specific aspect, such as auth. For more information, see each proto message definition. Example: type:
+    /// google.api.Service name: calendar.googleapis.com title: Google Calendar API apis: - name:
+    /// google.calendar.v3.Calendar visibility: rules: - selector: "google.calendar.v3.*" restriction: PREVIEW backend:
+    /// rules: - selector: "google.calendar.v3.*" address: calendar.example.com authentication: providers: - id:
+    /// google_calendar_auth jwks_uri: https://www.googleapis.com/oauth2/v1/certs issuer: https://securetoken.google.com
+    /// rules: - selector: "*" requirements: provider_id: google_calendar_auth
     /// </summary>
     public class Service : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -2977,7 +2990,7 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         /// <summary>
         /// A list of all enum types included in this API service. Enums referenced directly or indirectly by the `apis`
         /// are automatically included. Enums which are not referenced but shall be included should be listed here by
-        /// name. Example: enums: - name: google.someapi.v1.SomeEnum
+        /// name by the configuration author. Example: enums: - name: google.someapi.v1.SomeEnum
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enums")]
         public virtual System.Collections.Generic.IList<Enum> Enums { get; set; }
@@ -3050,15 +3063,15 @@ namespace Google.Apis.ServiceNetworking.v1beta.Data
         [Newtonsoft.Json.JsonPropertyAttribute("systemTypes")]
         public virtual System.Collections.Generic.IList<Type> SystemTypes { get; set; }
 
-        /// <summary>The product title for this service.</summary>
+        /// <summary>The product title for this service, it is the name displayed in Google Cloud Console.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
         public virtual string Title { get; set; }
 
         /// <summary>
         /// A list of all proto message types included in this API service. Types referenced directly or indirectly by
         /// the `apis` are automatically included. Messages which are not referenced but shall be included, such as
-        /// types used by the `google.protobuf.Any` type, should be listed here by name. Example: types: - name:
-        /// google.protobuf.Int32
+        /// types used by the `google.protobuf.Any` type, should be listed here by name by the configuration author.
+        /// Example: types: - name: google.protobuf.Int32
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("types")]
         public virtual System.Collections.Generic.IList<Type> Types { get; set; }

@@ -465,7 +465,9 @@ namespace Google.Apis.PeopleService.v1
             [Google.Apis.Util.RequestParameterAttribute("maxMembers", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> MaxMembers { get; set; }
 
-            /// <summary>Required. The resource names of the contact groups to get.</summary>
+            /// <summary>
+            /// Required. The resource names of the contact groups to get. There is a maximum of 200 resource names.
+            /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("resourceNames", Google.Apis.Util.RequestParameterType.Query)]
             public virtual Google.Apis.Util.Repeatable<string> ResourceNames { get; set; }
 
@@ -509,14 +511,20 @@ namespace Google.Apis.PeopleService.v1
             }
         }
 
-        /// <summary>Create a new contact group owned by the authenticated user.</summary>
+        /// <summary>
+        /// Create a new contact group owned by the authenticated user. Created contact group names must be unique to
+        /// the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error.
+        /// </summary>
         /// <param name="body">The body of the request.</param>
         public virtual CreateRequest Create(Google.Apis.PeopleService.v1.Data.CreateContactGroupRequest body)
         {
             return new CreateRequest(service, body);
         }
 
-        /// <summary>Create a new contact group owned by the authenticated user.</summary>
+        /// <summary>
+        /// Create a new contact group owned by the authenticated user. Created contact group names must be unique to
+        /// the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error.
+        /// </summary>
         public class CreateRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.ContactGroup>
         {
             /// <summary>Constructs a new Create request.</summary>
@@ -787,7 +795,11 @@ namespace Google.Apis.PeopleService.v1
             }
         }
 
-        /// <summary>Update the name of an existing contact group owned by the authenticated user.</summary>
+        /// <summary>
+        /// Update the name of an existing contact group owned by the authenticated user. Updated contact group names
+        /// must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a
+        /// HTTP 409 error.
+        /// </summary>
         /// <param name="body">The body of the request.</param>
         /// <param name="resourceName">
         /// The resource name for the contact group, assigned by the server. An ASCII string, in the form of
@@ -798,7 +810,11 @@ namespace Google.Apis.PeopleService.v1
             return new UpdateRequest(service, body, resourceName);
         }
 
-        /// <summary>Update the name of an existing contact group owned by the authenticated user.</summary>
+        /// <summary>
+        /// Update the name of an existing contact group owned by the authenticated user. Updated contact group names
+        /// must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a
+        /// HTTP 409 error.
+        /// </summary>
         public class UpdateRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.ContactGroup>
         {
             /// <summary>Constructs a new Update request.</summary>
@@ -916,7 +932,14 @@ namespace Google.Apis.PeopleService.v1
 
         /// <summary>
         /// List all "Other contacts", that is contacts that are not in a contact group. "Other contacts" are typically
-        /// auto created contacts from interactions.
+        /// auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an
+        /// expired sync token will result in a 410 error. In the case of such an error clients should make a full sync
+        /// request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota
+        /// is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the
+        /// `sync_token` is specified, resources deleted since the last sync will be returned as a person with
+        /// `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request
+        /// parameters must match the first call. See example usage at [List the user's other contacts that have
+        /// changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).
         /// </summary>
         public virtual ListRequest List()
         {
@@ -925,7 +948,14 @@ namespace Google.Apis.PeopleService.v1
 
         /// <summary>
         /// List all "Other contacts", that is contacts that are not in a contact group. "Other contacts" are typically
-        /// auto created contacts from interactions.
+        /// auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an
+        /// expired sync token will result in a 410 error. In the case of such an error clients should make a full sync
+        /// request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota
+        /// is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the
+        /// `sync_token` is specified, resources deleted since the last sync will be returned as a person with
+        /// `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request
+        /// parameters must match the first call. See example usage at [List the user's other contacts that have
+        /// changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).
         /// </summary>
         public class ListRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.ListOtherContactsResponse>
         {
@@ -943,33 +973,62 @@ namespace Google.Apis.PeopleService.v1
             public virtual System.Nullable<int> PageSize { get; set; }
 
             /// <summary>
-            /// Optional. A page token, received from a previous `ListOtherContacts` call. Provide this to retrieve the
-            /// subsequent page. When paginating, all other parameters provided to `ListOtherContacts` must match the
-            /// call that provided the page token.
+            /// Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve
+            /// the subsequent page. When paginating, all other parameters provided to `otherContacts.list` must match
+            /// the first call that provided the page token.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string PageToken { get; set; }
 
             /// <summary>
             /// Required. A field mask to restrict which fields on each person are returned. Multiple fields can be
-            /// specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers
+            /// specified by separating them with commas. Valid values are: * emailAddresses * metadata * names *
+            /// phoneNumbers * photos
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("readMask", Google.Apis.Util.RequestParameterType.Query)]
             public virtual object ReadMask { get; set; }
 
             /// <summary>
-            /// Optional. Whether the response should include `next_sync_token`, which can be used to get all changes
-            /// since the last request. For subsequent sync requests use the `sync_token` param instead. Initial sync
-            /// requests that specify `request_sync_token` have an additional rate limit.
+            /// Optional. Whether the response should return `next_sync_token` on the last page of results. It can be
+            /// used to get incremental changes since the last request by setting it on the request `sync_token`. More
+            /// details about sync behavior at `otherContacts.list`.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("requestSyncToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<bool> RequestSyncToken { get; set; }
 
             /// <summary>
-            /// Optional. A sync token, received from a previous `ListOtherContacts` call. Provide this to retrieve only
-            /// the resources changed since the last request. Sync requests that specify `sync_token` have an additional
-            /// rate limit. When syncing, all other parameters provided to `ListOtherContacts` must match the call that
-            /// provided the sync token.
+            /// Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("sources", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<SourcesEnum> Sources { get; set; }
+
+            /// <summary>
+            /// Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+            /// </summary>
+            public enum SourcesEnum
+            {
+                /// <summary>Unspecified.</summary>
+                [Google.Apis.Util.StringValueAttribute("READ_SOURCE_TYPE_UNSPECIFIED")]
+                READSOURCETYPEUNSPECIFIED = 0,
+
+                /// <summary>Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.</summary>
+                [Google.Apis.Util.StringValueAttribute("READ_SOURCE_TYPE_PROFILE")]
+                READSOURCETYPEPROFILE = 1,
+
+                /// <summary>Returns SourceType.CONTACT.</summary>
+                [Google.Apis.Util.StringValueAttribute("READ_SOURCE_TYPE_CONTACT")]
+                READSOURCETYPECONTACT = 2,
+
+                /// <summary>Returns SourceType.DOMAIN_CONTACT.</summary>
+                [Google.Apis.Util.StringValueAttribute("READ_SOURCE_TYPE_DOMAIN_CONTACT")]
+                READSOURCETYPEDOMAINCONTACT = 3,
+            }
+
+            /// <summary>
+            /// Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve
+            /// only the resources changed since the last request. When syncing, all other parameters provided to
+            /// `otherContacts.list` must match the first call that provided the sync token. More details about sync
+            /// behavior at `otherContacts.list`.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("syncToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string SyncToken { get; set; }
@@ -1019,6 +1078,14 @@ namespace Google.Apis.PeopleService.v1
                     DefaultValue = null,
                     Pattern = null,
                 });
+                RequestParameters.Add("sources", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "sources",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
                 RequestParameters.Add("syncToken", new Google.Apis.Discovery.Parameter
                 {
                     Name = "syncToken",
@@ -1033,7 +1100,9 @@ namespace Google.Apis.PeopleService.v1
         /// <summary>
         /// Provides a list of contacts in the authenticated user's other contacts that matches the search query. The
         /// query matches on a contact's `names`, `emailAddresses`, and `phoneNumbers` fields that are from the
-        /// OTHER_CONTACT source.
+        /// OTHER_CONTACT source. **IMPORTANT**: Before searching, clients should send a warmup request with an empty
+        /// query to update the cache. See
+        /// https://developers.google.com/people/v1/other-contacts#search_the_users_other_contacts
         /// </summary>
         public virtual SearchRequest Search()
         {
@@ -1043,7 +1112,9 @@ namespace Google.Apis.PeopleService.v1
         /// <summary>
         /// Provides a list of contacts in the authenticated user's other contacts that matches the search query. The
         /// query matches on a contact's `names`, `emailAddresses`, and `phoneNumbers` fields that are from the
-        /// OTHER_CONTACT source.
+        /// OTHER_CONTACT source. **IMPORTANT**: Before searching, clients should send a warmup request with an empty
+        /// query to update the cache. See
+        /// https://developers.google.com/people/v1/other-contacts#search_the_users_other_contacts
         /// </summary>
         public class SearchRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.SearchResponse>
         {
@@ -1055,7 +1126,7 @@ namespace Google.Apis.PeopleService.v1
 
             /// <summary>
             /// Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values
-            /// greater than 10 will be capped to 10.
+            /// greater than 30 will be capped to 30.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> PageSize { get; set; }
@@ -1070,7 +1141,8 @@ namespace Google.Apis.PeopleService.v1
 
             /// <summary>
             /// Required. A field mask to restrict which fields on each person are returned. Multiple fields can be
-            /// specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers
+            /// specified by separating them with commas. Valid values are: * emailAddresses * metadata * names *
+            /// phoneNumbers
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("readMask", Google.Apis.Util.RequestParameterType.Query)]
             public virtual object ReadMask { get; set; }
@@ -1149,10 +1221,14 @@ namespace Google.Apis.PeopleService.v1
             }
 
             /// <summary>
-            /// Provides a list of the authenticated user's contacts. The request returns a 400 error if `personFields`
-            /// is not specified. The request returns a 410 error if `sync_token` is specified and is expired. Sync
-            /// tokens expire after 7 days to prevent data drift between clients and the server. To handle a sync token
-            /// expired error, a request should be sent without `sync_token` to get all contacts.
+            /// Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A
+            /// request with an expired sync token will result in a 410 error. In the case of such an error clients
+            /// should make a full sync request without a `sync_token`. The first page of a full sync request has an
+            /// additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can
+            /// not be increased. When the `sync_token` is specified, resources deleted since the last sync will be
+            /// returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is
+            /// specified, all other request parameters must match the first call. See example usage at [List the user's
+            /// contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).
             /// </summary>
             /// <param name="resourceName">
             /// Required. The resource name to return connections for. Only `people/me` is valid.
@@ -1163,10 +1239,14 @@ namespace Google.Apis.PeopleService.v1
             }
 
             /// <summary>
-            /// Provides a list of the authenticated user's contacts. The request returns a 400 error if `personFields`
-            /// is not specified. The request returns a 410 error if `sync_token` is specified and is expired. Sync
-            /// tokens expire after 7 days to prevent data drift between clients and the server. To handle a sync token
-            /// expired error, a request should be sent without `sync_token` to get all contacts.
+            /// Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A
+            /// request with an expired sync token will result in a 410 error. In the case of such an error clients
+            /// should make a full sync request without a `sync_token`. The first page of a full sync request has an
+            /// additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can
+            /// not be increased. When the `sync_token` is specified, resources deleted since the last sync will be
+            /// returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is
+            /// specified, all other request parameters must match the first call. See example usage at [List the user's
+            /// contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).
             /// </summary>
             public class ListRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.ListConnectionsResponse>
             {
@@ -1189,9 +1269,9 @@ namespace Google.Apis.PeopleService.v1
                 public virtual System.Nullable<int> PageSize { get; set; }
 
                 /// <summary>
-                /// Optional. A page token, received from a previous `ListConnections` call. Provide this to retrieve
-                /// the subsequent page. When paginating, all other parameters provided to `ListConnections` must match
-                /// the call that provided the page token.
+                /// Optional. A page token, received from a previous response `next_page_token`. Provide this to
+                /// retrieve the subsequent page. When paginating, all other parameters provided to
+                /// `people.connections.list` must match the first call that provided the page token.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual string PageToken { get; set; }
@@ -1215,11 +1295,9 @@ namespace Google.Apis.PeopleService.v1
                 public virtual object RequestMaskIncludeField { get; set; }
 
                 /// <summary>
-                /// Optional. Whether the response should include `next_sync_token` on the last page, which can be used
-                /// to get all changes since the last request. For subsequent sync requests use the `sync_token` param
-                /// instead. Initial full sync requests that specify `request_sync_token` and do not specify
-                /// `sync_token` have an additional rate limit per user. Each client should generally only be doing a
-                /// full sync once every few days per user and so should not hit this limit.
+                /// Optional. Whether the response should return `next_sync_token` on the last page of results. It can
+                /// be used to get incremental changes since the last request by setting it on the request `sync_token`.
+                /// More details about sync behavior at `people.connections.list`.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("requestSyncToken", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<bool> RequestSyncToken { get; set; }
@@ -1287,11 +1365,10 @@ namespace Google.Apis.PeopleService.v1
                 }
 
                 /// <summary>
-                /// Optional. A sync token, received from a previous `ListConnections` call. Provide this to retrieve
+                /// Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve
                 /// only the resources changed since the last request. When syncing, all other parameters provided to
-                /// `ListConnections` except `page_size` and `page_token` must match the initial call that provided the
-                /// sync token. Sync tokens expire after seven days, after which a full sync request without a
-                /// `sync_token` should be made.
+                /// `people.connections.list` must match the first call that provided the sync token. More details about
+                /// sync behavior at `people.connections.list`.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("syncToken", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual string SyncToken { get; set; }
@@ -1779,7 +1856,7 @@ namespace Google.Apis.PeopleService.v1
         /// Required. The resource name of the person to provide information about. - To get information about the
         /// authenticated user, specify `people/me`. - To get information about a google account, specify
         /// `people/{account_id}`. - To get information about a contact, specify the resource name that identifies the
-        /// contact as returned by [`people.connections.list`](/people/api/rest/v1/people.connections/list).
+        /// contact as returned by `people.connections.list`.
         /// </param>
         public virtual GetRequest Get(string resourceName)
         {
@@ -1803,7 +1880,7 @@ namespace Google.Apis.PeopleService.v1
             /// Required. The resource name of the person to provide information about. - To get information about the
             /// authenticated user, specify `people/me`. - To get information about a google account, specify
             /// `people/{account_id}`. - To get information about a contact, specify the resource name that identifies
-            /// the contact as returned by [`people.connections.list`](/people/api/rest/v1/people.connections/list).
+            /// the contact as returned by `people.connections.list`.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("resourceName", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string ResourceName { get; private set; }
@@ -1951,9 +2028,8 @@ namespace Google.Apis.PeopleService.v1
             /// resourceNames=&amp;lt;name1&amp;gt;&amp;amp;resourceNames=&amp;lt;name2&amp;gt;&amp;amp;... - To get
             /// information about the authenticated user, specify `people/me`. - To get information about a google
             /// account, specify `people/{account_id}`. - To get information about a contact, specify the resource name
-            /// that identifies the contact as returned by
-            /// [`people.connections.list`](/people/api/rest/v1/people.connections/list). You can include up to 50
-            /// resource names in one request.
+            /// that identifies the contact as returned by `people.connections.list`. There is a maximum of 200 resource
+            /// names.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("resourceNames", Google.Apis.Util.RequestParameterType.Query)]
             public virtual Google.Apis.Util.Repeatable<string> ResourceNames { get; set; }
@@ -2037,7 +2113,11 @@ namespace Google.Apis.PeopleService.v1
         }
 
         /// <summary>
-        /// Provides a list of domain profiles and domain contacts in the authenticated user's domain directory.
+        /// Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. When
+        /// the `sync_token` is specified, resources deleted since the last sync will be returned as a person with
+        /// `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request
+        /// parameters must match the first call. See example usage at [List the directory people that have
+        /// changed](/people/v1/directory#list_the_directory_people_that_have_changed).
         /// </summary>
         public virtual ListDirectoryPeopleRequest ListDirectoryPeople()
         {
@@ -2045,7 +2125,11 @@ namespace Google.Apis.PeopleService.v1
         }
 
         /// <summary>
-        /// Provides a list of domain profiles and domain contacts in the authenticated user's domain directory.
+        /// Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. When
+        /// the `sync_token` is specified, resources deleted since the last sync will be returned as a person with
+        /// `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request
+        /// parameters must match the first call. See example usage at [List the directory people that have
+        /// changed](/people/v1/directory#list_the_directory_people_that_have_changed).
         /// </summary>
         public class ListDirectoryPeopleRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.ListDirectoryPeopleResponse>
         {
@@ -2085,9 +2169,9 @@ namespace Google.Apis.PeopleService.v1
             public virtual System.Nullable<int> PageSize { get; set; }
 
             /// <summary>
-            /// Optional. A page token, received from a previous `ListDirectoryPeople` call. Provide this to retrieve
-            /// the subsequent page. When paginating, all other parameters provided to `ListDirectoryPeople` must match
-            /// the call that provided the page token.
+            /// Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve
+            /// the subsequent page. When paginating, all other parameters provided to `people.listDirectoryPeople` must
+            /// match the first call that provided the page token.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string PageToken { get; set; }
@@ -2104,8 +2188,9 @@ namespace Google.Apis.PeopleService.v1
             public virtual object ReadMask { get; set; }
 
             /// <summary>
-            /// Optional. Whether the response should include `next_sync_token`, which can be used to get all changes
-            /// since the last request. For subsequent sync requests use the `sync_token` param instead.
+            /// Optional. Whether the response should return `next_sync_token`. It can be used to get incremental
+            /// changes since the last request by setting it on the request `sync_token`. More details about sync
+            /// behavior at `people.listDirectoryPeople`.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("requestSyncToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<bool> RequestSyncToken { get; set; }
@@ -2121,19 +2206,20 @@ namespace Google.Apis.PeopleService.v1
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_UNSPECIFIED")]
                 DIRECTORYSOURCETYPEUNSPECIFIED = 0,
 
-                /// <summary>G Suite domain shared contact.</summary>
+                /// <summary>Google Workspace domain shared contact.</summary>
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT")]
                 DIRECTORYSOURCETYPEDOMAINCONTACT = 1,
 
-                /// <summary>G Suite domain profile.</summary>
+                /// <summary>Google Workspace domain profile.</summary>
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE")]
                 DIRECTORYSOURCETYPEDOMAINPROFILE = 2,
             }
 
             /// <summary>
-            /// Optional. A sync token, received from a previous `ListDirectoryPeople` call. Provide this to retrieve
+            /// Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve
             /// only the resources changed since the last request. When syncing, all other parameters provided to
-            /// `ListDirectoryPeople` must match the call that provided the sync token.
+            /// `people.listDirectoryPeople` must match the first call that provided the sync token. More details about
+            /// sync behavior at `people.listDirectoryPeople`.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("syncToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string SyncToken { get; set; }
@@ -2213,7 +2299,9 @@ namespace Google.Apis.PeopleService.v1
         /// <summary>
         /// Provides a list of contacts in the authenticated user's grouped contacts that matches the search query. The
         /// query matches on a contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and `organizations`
-        /// fields that are from the CONTACT" source.
+        /// fields that are from the CONTACT" source. **IMPORTANT**: Before searching, clients should send a warmup
+        /// request with an empty query to update the cache. See
+        /// https://developers.google.com/people/v1/contacts#search_the_users_contacts
         /// </summary>
         public virtual SearchContactsRequest SearchContacts()
         {
@@ -2223,7 +2311,9 @@ namespace Google.Apis.PeopleService.v1
         /// <summary>
         /// Provides a list of contacts in the authenticated user's grouped contacts that matches the search query. The
         /// query matches on a contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and `organizations`
-        /// fields that are from the CONTACT" source.
+        /// fields that are from the CONTACT" source. **IMPORTANT**: Before searching, clients should send a warmup
+        /// request with an empty query to update the cache. See
+        /// https://developers.google.com/people/v1/contacts#search_the_users_contacts
         /// </summary>
         public class SearchContactsRequest : PeopleServiceBaseServiceRequest<Google.Apis.PeopleService.v1.Data.SearchResponse>
         {
@@ -2235,7 +2325,7 @@ namespace Google.Apis.PeopleService.v1
 
             /// <summary>
             /// Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values
-            /// greater than 10 will be capped to 10.
+            /// greater than 30 will be capped to 30.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> PageSize { get; set; }
@@ -2386,9 +2476,9 @@ namespace Google.Apis.PeopleService.v1
             public virtual System.Nullable<int> PageSize { get; set; }
 
             /// <summary>
-            /// Optional. A page token, received from a previous `SearchDirectoryPeople` call. Provide this to retrieve
+            /// Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve
             /// the subsequent page. When paginating, all other parameters provided to `SearchDirectoryPeople` must
-            /// match the call that provided the page token.
+            /// match the first call that provided the page token.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string PageToken { get; set; }
@@ -2422,11 +2512,11 @@ namespace Google.Apis.PeopleService.v1
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_UNSPECIFIED")]
                 DIRECTORYSOURCETYPEUNSPECIFIED = 0,
 
-                /// <summary>G Suite domain shared contact.</summary>
+                /// <summary>Google Workspace domain shared contact.</summary>
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT")]
                 DIRECTORYSOURCETYPEDOMAINCONTACT = 1,
 
-                /// <summary>G Suite domain profile.</summary>
+                /// <summary>Google Workspace domain profile.</summary>
                 [Google.Apis.Util.StringValueAttribute("DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE")]
                 DIRECTORYSOURCETYPEDOMAINPROFILE = 2,
             }
@@ -3055,7 +3145,10 @@ namespace Google.Apis.PeopleService.v1.Data
         public virtual ContactGroupMetadata Metadata { get; set; }
 
         /// <summary>
-        /// The contact group name set by the group owner or a system provided name for system groups.
+        /// The contact group name set by the group owner or a system provided name for system groups. For
+        /// [`contactGroups.create`](/people/api/rest/v1/contactGroups/create) or
+        /// [`contactGroups.update`](/people/api/rest/v1/contactGroups/update) the name must be unique to the users
+        /// contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -3253,10 +3346,10 @@ namespace Google.Apis.PeopleService.v1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>A G Suite Domain membership.</summary>
+    /// <summary>A Google Workspace Domain membership.</summary>
     public class DomainMembership : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>True if the person is in the viewer's G Suite domain.</summary>
+        /// <summary>True if the person is in the viewer's Google Workspace domain.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("inViewerDomain")]
         public virtual System.Nullable<bool> InViewerDomain { get; set; }
 
@@ -4004,7 +4097,11 @@ namespace Google.Apis.PeopleService.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("coverPhotos")]
         public virtual System.Collections.Generic.IList<CoverPhoto> CoverPhotos { get; set; }
 
-        /// <summary>The person's email addresses.</summary>
+        /// <summary>
+        /// The person's email addresses. For `people.connections.list` and `otherContacts.list` the number of email
+        /// addresses is limited to 100. If a Person has more email addresses the entire set can be obtained by calling
+        /// GetPeople.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("emailAddresses")]
         public virtual System.Collections.Generic.IList<EmailAddress> EmailAddresses { get; set; }
 
@@ -4075,7 +4172,11 @@ namespace Google.Apis.PeopleService.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("organizations")]
         public virtual System.Collections.Generic.IList<Organization> Organizations { get; set; }
 
-        /// <summary>The person's phone numbers.</summary>
+        /// <summary>
+        /// The person's phone numbers. For `people.connections.list` and `otherContacts.list` the number of phone
+        /// numbers is limited to 100. If a Person has more phone numbers the entire set can be obtained by calling
+        /// GetPeople.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("phoneNumbers")]
         public virtual System.Collections.Generic.IList<PhoneNumber> PhoneNumbers { get; set; }
 
@@ -4133,8 +4234,8 @@ namespace Google.Apis.PeopleService.v1.Data
     public class PersonMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Output only. True if the person resource has been deleted. Populated only for
-        /// [`connections.list`](/people/api/rest/v1/people.connections/list) requests that include a sync token.
+        /// Output only. True if the person resource has been deleted. Populated only for `people.connections.list` and
+        /// `otherContacts.list` sync requests.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("deleted")]
         public virtual System.Nullable<bool> Deleted { get; set; }
@@ -4151,10 +4252,9 @@ namespace Google.Apis.PeopleService.v1.Data
         public virtual string ObjectType { get; set; }
 
         /// <summary>
-        /// Output only. Any former resource names this person has had. Populated only for
-        /// [`connections.list`](/people/api/rest/v1/people.connections/list) requests that include a sync token. The
-        /// resource name may change when adding or removing fields that link a contact and profile such as a verified
-        /// email, verified phone number, or profile URL.
+        /// Output only. Any former resource names this person has had. Populated only for `people.connections.list`
+        /// requests that include a sync token. The resource name may change when adding or removing fields that link a
+        /// contact and profile such as a verified email, verified phone number, or profile URL.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("previousResourceNames")]
         public virtual System.Collections.Generic.IList<string> PreviousResourceNames { get; set; }

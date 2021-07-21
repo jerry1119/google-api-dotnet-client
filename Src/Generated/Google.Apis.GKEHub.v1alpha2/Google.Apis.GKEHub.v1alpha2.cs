@@ -419,7 +419,11 @@ namespace Google.Apis.GKEHub.v1alpha2
                     this.service = service;
                 }
 
-                /// <summary>Adds a new Membership.</summary>
+                /// <summary>
+                /// Creates a new Membership. **This is currently only supported for GKE clusters on Google Cloud**. To
+                /// register other clusters, follow the instructions at
+                /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The parent (project and location) where the Memberships will be created. Specified in the
@@ -430,7 +434,11 @@ namespace Google.Apis.GKEHub.v1alpha2
                     return new CreateRequest(service, body, parent);
                 }
 
-                /// <summary>Adds a new Membership.</summary>
+                /// <summary>
+                /// Creates a new Membership. **This is currently only supported for GKE clusters on Google Cloud**. To
+                /// register other clusters, follow the instructions at
+                /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
+                /// </summary>
                 public class CreateRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1alpha2.Data.Operation>
                 {
                     /// <summary>Constructs a new Create request.</summary>
@@ -496,7 +504,11 @@ namespace Google.Apis.GKEHub.v1alpha2
                     }
                 }
 
-                /// <summary>Removes a Membership.</summary>
+                /// <summary>
+                /// Removes a Membership. **This is currently only supported for GKE clusters on Google Cloud**. To
+                /// unregister other clusters, follow the instructions at
+                /// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
+                /// </summary>
                 /// <param name="name">
                 /// Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.
                 /// </param>
@@ -505,7 +517,11 @@ namespace Google.Apis.GKEHub.v1alpha2
                     return new DeleteRequest(service, name);
                 }
 
-                /// <summary>Removes a Membership.</summary>
+                /// <summary>
+                /// Removes a Membership. **This is currently only supported for GKE clusters on Google Cloud**. To
+                /// unregister other clusters, follow the instructions at
+                /// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
+                /// </summary>
                 public class DeleteRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1alpha2.Data.Operation>
                 {
                     /// <summary>Constructs a new Delete request.</summary>
@@ -545,7 +561,10 @@ namespace Google.Apis.GKEHub.v1alpha2
                     }
                 }
 
-                /// <summary>Generates the manifest for deployment of the GKE connect agent.</summary>
+                /// <summary>
+                /// Generates the manifest for deployment of the GKE connect agent. **This method is used internally by
+                /// Google-provided libraries.** Most clients should not need to call this method directly.
+                /// </summary>
                 /// <param name="name">
                 /// Required. The Membership resource name the Agent will associate with, in the format
                 /// `projects/*/locations/*/memberships/*`.
@@ -555,7 +574,10 @@ namespace Google.Apis.GKEHub.v1alpha2
                     return new GenerateConnectManifestRequest(service, name);
                 }
 
-                /// <summary>Generates the manifest for deployment of the GKE connect agent.</summary>
+                /// <summary>
+                /// Generates the manifest for deployment of the GKE connect agent. **This method is used internally by
+                /// Google-provided libraries.** Most clients should not need to call this method directly.
+                /// </summary>
                 public class GenerateConnectManifestRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1alpha2.Data.GenerateConnectManifestResponse>
                 {
                     /// <summary>Constructs a new GenerateConnectManifest request.</summary>
@@ -1789,6 +1811,13 @@ namespace Google.Apis.GKEHub.v1alpha2.Data
     /// <summary>GkeCluster contains information specific to GKE clusters.</summary>
     public class GkeCluster : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Output only. If cluster_missing is set then it denotes that the GKE cluster no longer exists in the GKE
+        /// Control Plane.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("clusterMissing")]
+        public virtual System.Nullable<bool> ClusterMissing { get; set; }
+
         /// <summary>
         /// Immutable. Self-link of the GCP resource for the GKE cluster. For example:
         /// //container.googleapis.com/projects/my-project/locations/us-west1-a/clusters/my-cluster Zonal clusters are

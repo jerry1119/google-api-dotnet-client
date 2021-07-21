@@ -756,7 +756,10 @@ namespace Google.Apis.AIPlatformNotebooks.v1
                     [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
                     public virtual string Parent { get; private set; }
 
-                    /// <summary>Filter applied to resulting executions.</summary>
+                    /// <summary>
+                    /// Filter applied to resulting executions. Currently only supports filtering executions by a
+                    /// specified schedule_id. Format: "schedule_id="
+                    /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                     public virtual string Filter { get; set; }
 
@@ -1915,6 +1918,63 @@ namespace Google.Apis.AIPlatformNotebooks.v1
                     }
                 }
 
+                /// <summary>Update Notebook Instance configurations.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`
+                /// </param>
+                public virtual UpdateConfigRequest UpdateConfig(Google.Apis.AIPlatformNotebooks.v1.Data.UpdateInstanceConfigRequest body, string name)
+                {
+                    return new UpdateConfigRequest(service, body, name);
+                }
+
+                /// <summary>Update Notebook Instance configurations.</summary>
+                public class UpdateConfigRequest : AIPlatformNotebooksBaseServiceRequest<Google.Apis.AIPlatformNotebooks.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new UpdateConfig request.</summary>
+                    public UpdateConfigRequest(Google.Apis.Services.IClientService service, Google.Apis.AIPlatformNotebooks.v1.Data.UpdateInstanceConfigRequest body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.AIPlatformNotebooks.v1.Data.UpdateInstanceConfigRequest Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "updateConfig";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "PATCH";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}:updateConfig";
+
+                    /// <summary>Initializes UpdateConfig parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                        });
+                    }
+                }
+
                 /// <summary>Updates the Shielded instance configuration of a single Instance.</summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
@@ -2630,6 +2690,63 @@ namespace Google.Apis.AIPlatformNotebooks.v1
                             ParameterType = "query",
                             DefaultValue = null,
                             Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Report and process a runtime event.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
+                /// </param>
+                public virtual ReportEventRequest ReportEvent(Google.Apis.AIPlatformNotebooks.v1.Data.ReportRuntimeEventRequest body, string name)
+                {
+                    return new ReportEventRequest(service, body, name);
+                }
+
+                /// <summary>Report and process a runtime event.</summary>
+                public class ReportEventRequest : AIPlatformNotebooksBaseServiceRequest<Google.Apis.AIPlatformNotebooks.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new ReportEvent request.</summary>
+                    public ReportEventRequest(Google.Apis.Services.IClientService service, Google.Apis.AIPlatformNotebooks.v1.Data.ReportRuntimeEventRequest body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.AIPlatformNotebooks.v1.Data.ReportRuntimeEventRequest Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "reportEvent";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}:reportEvent";
+
+                    /// <summary>Initializes ReportEvent parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
                         });
                     }
                 }
@@ -3598,6 +3715,21 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The definition of an Event for a managed / semi-managed notebook instance.</summary>
+    public class Event : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Event report time.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("reportTime")]
+        public virtual object ReportTime { get; set; }
+
+        /// <summary>Event type.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("type")]
+        public virtual string Type { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The definition of a single executed notebook.</summary>
     public class Execution : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -3618,6 +3750,10 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         /// <summary>execute metadata including name, hardware spec, region, labels, etc.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("executionTemplate")]
         public virtual ExecutionTemplate ExecutionTemplate { get; set; }
+
+        /// <summary>Output only. The URI of the external job used to execute the notebook.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("jobUri")]
+        public virtual string JobUri { get; set; }
 
         /// <summary>
         /// Output only. The resource name of the execute. Format:
@@ -3708,7 +3844,10 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paramsYamlFile")]
         public virtual string ParamsYamlFile { get; set; }
 
-        /// <summary>Required. Scale tier of the hardware used for notebook execution.</summary>
+        /// <summary>
+        /// Required. Scale tier of the hardware used for notebook execution. DEPRECATED Will be discontinued. As right
+        /// now only CUSTOM is supported.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("scaleTier")]
         public virtual string ScaleTier { get; set; }
 
@@ -3942,6 +4081,14 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         public virtual string ProxyUri { get; set; }
 
         /// <summary>
+        /// Optional. The optional reservation affinity. Setting this field will apply the specified [Zonal Compute
+        /// Reservation](https://cloud.google.com/compute/docs/instances/reserving-zonal-resources) to this notebook
+        /// instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("reservationAffinity")]
+        public virtual ReservationAffinity ReservationAffinity { get; set; }
+
+        /// <summary>
         /// The service account on this instance, giving access to other Google Cloud services. You can use any service
         /// account within the same project, but you must have the service account user permission to use the instance.
         /// If not specified, the [Compute Engine default service
@@ -3995,6 +4142,24 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         /// <summary>Use a Compute Engine VM image to start the notebook instance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("vmImage")]
         public virtual VmImage VmImage { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Notebook instance configurations that can be updated.</summary>
+    public class InstanceConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Verifies core internal services are running. More info: go/notebooks-health</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableHealthMonitoring")]
+        public virtual System.Nullable<bool> EnableHealthMonitoring { get; set; }
+
+        /// <summary>
+        /// Cron expression in UTC timezone, used to schedule instance auto upgrade. Please follow the [cron
+        /// format](https://en.wikipedia.org/wiki/Cron).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("notebookUpgradeSchedule")]
+        public virtual string NotebookUpgradeSchedule { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -4524,6 +4689,43 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Request for reporting a Managed Notebook Event.</summary>
+    public class ReportRuntimeEventRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Required. The Event to be reported.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("event")]
+        public virtual Event Event__ { get; set; }
+
+        /// <summary>
+        /// Required. The VM hardware token for authenticating the VM.
+        /// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("vmId")]
+        public virtual string VmId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Reservation Affinity for consuming Zonal reservation.</summary>
+    public class ReservationAffinity : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Optional. Type of reservation to consume</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("consumeReservationType")]
+        public virtual string ConsumeReservationType { get; set; }
+
+        /// <summary>Optional. Corresponds to the label key of reservation resource.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("key")]
+        public virtual string Key { get; set; }
+
+        /// <summary>Optional. Corresponds to the label values of reservation resource.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("values")]
+        public virtual System.Collections.Generic.IList<string> Values { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Request for reseting a notebook instance</summary>
     public class ResetInstanceRequest : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -4717,11 +4919,11 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("enableHealthMonitoring")]
         public virtual System.Nullable<bool> EnableHealthMonitoring { get; set; }
 
-        /// <summary>Runtime will automatically shutdown after idle_shutdown_time. Default: False</summary>
+        /// <summary>Runtime will automatically shutdown after idle_shutdown_time. Default: True</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("idleShutdown")]
         public virtual System.Nullable<bool> IdleShutdown { get; set; }
 
-        /// <summary>Time in minutes to wait before shuting down runtime. Default: 90 minutes</summary>
+        /// <summary>Time in minutes to wait before shuting down runtime. Default: 180 minutes</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("idleShutdownTimeout")]
         public virtual System.Nullable<int> IdleShutdownTimeout { get; set; }
 
@@ -4766,8 +4968,8 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// Output only. Display name used for UI purposes. Name can only contain alphanumeric characters, hyphens ‘-’,
-        /// and underscores ‘_’.
+        /// Output only. Display name used for UI purposes. Name can only contain alphanumeric characters, hyphens '-',
+        /// and underscores '_'.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("displayName")]
         public virtual string DisplayName { get; set; }
@@ -5018,6 +5220,17 @@ namespace Google.Apis.AIPlatformNotebooks.v1.Data
     /// <summary>Request for created scheduled notebooks</summary>
     public class TriggerScheduleRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Request for updating instance configurations.</summary>
+    public class UpdateInstanceConfigRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The instance configurations to be updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("config")]
+        public virtual InstanceConfig Config { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }

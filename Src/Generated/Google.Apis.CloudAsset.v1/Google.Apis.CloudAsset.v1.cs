@@ -34,6 +34,7 @@ namespace Google.Apis.CloudAsset.v1
         /// <param name="initializer">The service initializer.</param>
         public CloudAssetService(Google.Apis.Services.BaseClientService.Initializer initializer) : base(initializer)
         {
+            Assets = new AssetsResource(this);
             Feeds = new FeedsResource(this);
             Operations = new OperationsResource(this);
             V1 = new V1Resource(this);
@@ -77,6 +78,9 @@ namespace Google.Apis.CloudAsset.v1
             /// <summary>See, edit, configure, and delete your Google Cloud Platform data</summary>
             public const string CloudPlatform = "https://www.googleapis.com/auth/cloud-platform";
         }
+
+        /// <summary>Gets the Assets resource.</summary>
+        public virtual AssetsResource Assets { get; }
 
         /// <summary>Gets the Feeds resource.</summary>
         public virtual FeedsResource Feeds { get; }
@@ -266,6 +270,184 @@ namespace Google.Apis.CloudAsset.v1
                 DefaultValue = null,
                 Pattern = null,
             });
+        }
+    }
+
+    /// <summary>The "assets" collection of methods.</summary>
+    public class AssetsResource
+    {
+        private const string Resource = "assets";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public AssetsResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+        }
+
+        /// <summary>Lists assets with time and resource types and returns paged results in response.</summary>
+        /// <param name="parent">
+        /// Required. Name of the organization or project the assets belong to. Format:
+        /// "organizations/[organization-number]" (such as "organizations/123"), "projects/[project-id]" (such as
+        /// "projects/my-project-id"), or "projects/[project-number]" (such as "projects/12345").
+        /// </param>
+        public virtual ListRequest List(string parent)
+        {
+            return new ListRequest(service, parent);
+        }
+
+        /// <summary>Lists assets with time and resource types and returns paged results in response.</summary>
+        public class ListRequest : CloudAssetBaseServiceRequest<Google.Apis.CloudAsset.v1.Data.ListAssetsResponse>
+        {
+            /// <summary>Constructs a new List request.</summary>
+            public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+            {
+                Parent = parent;
+                InitParameters();
+            }
+
+            /// <summary>
+            /// Required. Name of the organization or project the assets belong to. Format:
+            /// "organizations/[organization-number]" (such as "organizations/123"), "projects/[project-id]" (such as
+            /// "projects/my-project-id"), or "projects/[project-number]" (such as "projects/12345").
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Parent { get; private set; }
+
+            /// <summary>
+            /// A list of asset types to take a snapshot for. For example: "compute.googleapis.com/Disk". Regular
+            /// expression is also supported. For example: * "compute.googleapis.com.*" snapshots resources whose asset
+            /// type starts with "compute.googleapis.com". * ".*Instance" snapshots resources whose asset type ends with
+            /// "Instance". * ".*Instance.*" snapshots resources whose asset type contains "Instance". See
+            /// [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the
+            /// regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.
+            /// If specified, only matching assets will be returned, otherwise, it will snapshot all asset types. See
+            /// [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all
+            /// supported asset types.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("assetTypes", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual Google.Apis.Util.Repeatable<string> AssetTypes { get; set; }
+
+            /// <summary>Asset content type. If not specified, no content but the asset name will be returned.</summary>
+            [Google.Apis.Util.RequestParameterAttribute("contentType", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<ContentTypeEnum> ContentType { get; set; }
+
+            /// <summary>Asset content type. If not specified, no content but the asset name will be returned.</summary>
+            public enum ContentTypeEnum
+            {
+                /// <summary>Unspecified content type.</summary>
+                [Google.Apis.Util.StringValueAttribute("CONTENT_TYPE_UNSPECIFIED")]
+                CONTENTTYPEUNSPECIFIED = 0,
+
+                /// <summary>Resource metadata.</summary>
+                [Google.Apis.Util.StringValueAttribute("RESOURCE")]
+                RESOURCE = 1,
+
+                /// <summary>The actual IAM policy set on a resource.</summary>
+                [Google.Apis.Util.StringValueAttribute("IAM_POLICY")]
+                IAMPOLICY = 2,
+
+                /// <summary>The Cloud Organization Policy set on an asset.</summary>
+                [Google.Apis.Util.StringValueAttribute("ORG_POLICY")]
+                ORGPOLICY = 3,
+
+                /// <summary>The Cloud Access context manager Policy set on an asset.</summary>
+                [Google.Apis.Util.StringValueAttribute("ACCESS_POLICY")]
+                ACCESSPOLICY = 4,
+
+                /// <summary>The runtime OS Inventory information.</summary>
+                [Google.Apis.Util.StringValueAttribute("OS_INVENTORY")]
+                OSINVENTORY = 5,
+            }
+
+            /// <summary>
+            /// The maximum number of assets to be returned in a single response. Default is 100, minimum is 1, and
+            /// maximum is 1000.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<int> PageSize { get; set; }
+
+            /// <summary>
+            /// The `next_page_token` returned from the previous `ListAssetsResponse`, or unspecified for the first
+            /// `ListAssetsRequest`. It is a continuation of a prior `ListAssets` call, and the API should return the
+            /// next page of assets.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string PageToken { get; set; }
+
+            /// <summary>
+            /// Timestamp to take an asset snapshot. This can only be set to a timestamp between the current time and
+            /// the current time minus 35 days (inclusive). If not specified, the current time will be used. Due to
+            /// delays in resource data collection and indexing, there is a volatile window during which running the
+            /// same query may get different results.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("readTime", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual object ReadTime { get; set; }
+
+            /// <summary>Gets the method name.</summary>
+            public override string MethodName => "list";
+
+            /// <summary>Gets the HTTP method.</summary>
+            public override string HttpMethod => "GET";
+
+            /// <summary>Gets the REST path.</summary>
+            public override string RestPath => "v1/{+parent}/assets";
+
+            /// <summary>Initializes List parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+                RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "parent",
+                    IsRequired = true,
+                    ParameterType = "path",
+                    DefaultValue = null,
+                    Pattern = @"^[^/]+/[^/]+$",
+                });
+                RequestParameters.Add("assetTypes", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "assetTypes",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("contentType", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "contentType",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "pageSize",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "pageToken",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("readTime", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "readTime",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+            }
         }
     }
 
@@ -991,6 +1173,121 @@ namespace Google.Apis.CloudAsset.v1
         }
 
         /// <summary>
+        /// Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is
+        /// best effort depending on the user's permissions of viewing different hierarchical policies and
+        /// configurations. The policies and configuration are subject to change before the actual resource migration
+        /// takes place.
+        /// </summary>
+        /// <param name="resource">
+        /// Required. Name of the resource to perform the analysis against. Only GCP Project are supported as of today.
+        /// Hence, this can only be Project ID (such as "projects/my-project-id") or a Project Number (such as
+        /// "projects/12345").
+        /// </param>
+        public virtual AnalyzeMoveRequest AnalyzeMove(string resource)
+        {
+            return new AnalyzeMoveRequest(service, resource);
+        }
+
+        /// <summary>
+        /// Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is
+        /// best effort depending on the user's permissions of viewing different hierarchical policies and
+        /// configurations. The policies and configuration are subject to change before the actual resource migration
+        /// takes place.
+        /// </summary>
+        public class AnalyzeMoveRequest : CloudAssetBaseServiceRequest<Google.Apis.CloudAsset.v1.Data.AnalyzeMoveResponse>
+        {
+            /// <summary>Constructs a new AnalyzeMove request.</summary>
+            public AnalyzeMoveRequest(Google.Apis.Services.IClientService service, string resource) : base(service)
+            {
+                Resource = resource;
+                InitParameters();
+            }
+
+            /// <summary>
+            /// Required. Name of the resource to perform the analysis against. Only GCP Project are supported as of
+            /// today. Hence, this can only be Project ID (such as "projects/my-project-id") or a Project Number (such
+            /// as "projects/12345").
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("resource", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Resource { get; private set; }
+
+            /// <summary>
+            /// Required. Name of the GCP Folder or Organization to reparent the target resource. The analysis will be
+            /// performed against hypothetically moving the resource to this specified desitination parent. This can
+            /// only be a Folder number (such as "folders/123") or an Organization number (such as "organizations/123").
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("destinationParent", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string DestinationParent { get; set; }
+
+            /// <summary>
+            /// Analysis view indicating what information should be included in the analysis response. If unspecified,
+            /// the default view is FULL.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("view", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<ViewEnum> View { get; set; }
+
+            /// <summary>
+            /// Analysis view indicating what information should be included in the analysis response. If unspecified,
+            /// the default view is FULL.
+            /// </summary>
+            public enum ViewEnum
+            {
+                /// <summary>The default/unset value. The API will default to the FULL view.</summary>
+                [Google.Apis.Util.StringValueAttribute("ANALYSIS_VIEW_UNSPECIFIED")]
+                ANALYSISVIEWUNSPECIFIED = 0,
+
+                /// <summary>Full analysis including all level of impacts of the specified resource move.</summary>
+                [Google.Apis.Util.StringValueAttribute("FULL")]
+                FULL = 1,
+
+                /// <summary>
+                /// Basic analysis only including blockers which will prevent the specified resource move at runtime.
+                /// </summary>
+                [Google.Apis.Util.StringValueAttribute("BASIC")]
+                BASIC = 2,
+            }
+
+            /// <summary>Gets the method name.</summary>
+            public override string MethodName => "analyzeMove";
+
+            /// <summary>Gets the HTTP method.</summary>
+            public override string HttpMethod => "GET";
+
+            /// <summary>Gets the REST path.</summary>
+            public override string RestPath => "v1/{+resource}:analyzeMove";
+
+            /// <summary>Initializes AnalyzeMove parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+                RequestParameters.Add("resource", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "resource",
+                    IsRequired = true,
+                    ParameterType = "path",
+                    DefaultValue = null,
+                    Pattern = @"^[^/]+/[^/]+$",
+                });
+                RequestParameters.Add("destinationParent", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "destinationParent",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("view", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "view",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+            }
+        }
+
+        /// <summary>
         /// Batch gets the update history of assets that overlap a time window. For IAM_POLICY content, this API outputs
         /// history when the asset and its attached IAM POLICY both exist. This can create gaps in the output history.
         /// Otherwise, this API outputs history with asset in both non-delete or deleted status. If a specified asset
@@ -1257,6 +1554,30 @@ namespace Google.Apis.CloudAsset.v1
             public virtual string Scope { get; private set; }
 
             /// <summary>
+            /// Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM
+            /// policies that are attached to all the [searchable asset
+            /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+            /// Regular expressions are also supported. For example: * "compute.googleapis.com.*" snapshots IAM policies
+            /// attached to asset type starts with "compute.googleapis.com". * ".*Instance" snapshots IAM policies
+            /// attached to asset type ends with "Instance". * ".*Instance.*" snapshots IAM policies attached to asset
+            /// type contains "Instance". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular
+            /// expression syntax. If the regular expression does not match any supported asset type, an
+            /// INVALID_ARGUMENT error will be returned.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("assetTypes", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual Google.Apis.Util.Repeatable<string> AssetTypes { get; set; }
+
+            /// <summary>
+            /// Optional. A comma-separated list of fields specifying the sorting order of the results. The default
+            /// order is ascending. Add " DESC" after the field name to indicate descending order. Redundant space
+            /// characters are ignored. Example: "assetType DESC, resource". Only singular primitive fields in the
+            /// response are sortable: * resource * assetType * project All the other fields such as repeated fields
+            /// (e.g., `folders`) and non-primitive fields (e.g., `policy`) are not supported.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("orderBy", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string OrderBy { get; set; }
+
+            /// <summary>
             /// Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value
             /// is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than
             /// requested. When this happens, there could be more results as long as `next_page_token` is returned.
@@ -1294,7 +1615,9 @@ namespace Google.Apis.CloudAsset.v1
             /// IAM policy bindings that are set on the project named "myproject". * `Important` to find IAM policy
             /// bindings that contain "Important" as a word in any of the searchable fields (except for the included
             /// permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set
-            /// on resources "instance1" or "instance2" and also specify user "amy".
+            /// on resources "instance1" or "instance2" and also specify user "amy". * `roles:roles/compute.admin` to
+            /// find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy
+            /// bindings that contain the "user" member type.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("query", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string Query { get; set; }
@@ -1319,6 +1642,22 @@ namespace Google.Apis.CloudAsset.v1
                     ParameterType = "path",
                     DefaultValue = null,
                     Pattern = @"^[^/]+/[^/]+$",
+                });
+                RequestParameters.Add("assetTypes", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "assetTypes",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("orderBy", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "orderBy",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
                 });
                 RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
                 {
@@ -1404,12 +1743,13 @@ namespace Google.Apis.CloudAsset.v1
             public virtual Google.Apis.Util.Repeatable<string> AssetTypes { get; set; }
 
             /// <summary>
-            /// Optional. A comma separated list of fields specifying the sorting order of the results. The default
+            /// Optional. A comma-separated list of fields specifying the sorting order of the results. The default
             /// order is ascending. Add " DESC" after the field name to indicate descending order. Redundant space
-            /// characters are ignored. Example: "location DESC, name". Only string fields in the response are sortable,
-            /// including `name`, `displayName`, `description`, `location`. All the other fields such as repeated fields
-            /// (e.g., `networkTags`), map fields (e.g., `labels`) and struct fields (e.g., `additionalAttributes`) are
-            /// not supported.
+            /// characters are ignored. Example: "location DESC, name". Only singular primitive fields in the response
+            /// are sortable: * name * assetType * project * displayName * description * location * kmsKey * createTime
+            /// * updateTime * state * parentFullResourceName * parentAssetType All the other fields such as repeated
+            /// fields (e.g., `networkTags`), map fields (e.g., `labels`) and struct fields (e.g.,
+            /// `additionalAttributes`) are not supported.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("orderBy", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string OrderBy { get; set; }
@@ -1442,19 +1782,33 @@ namespace Google.Apis.CloudAsset.v1
             /// to find Cloud resources that have a label "env" and its value is "prod". * `labels.env:*` to find Cloud
             /// resources that have a label "env". * `kmsKey:key` to find Cloud resources encrypted with a
             /// customer-managed encryption key whose name contains the word "key". * `state:ACTIVE` to find Cloud
-            /// resources whose state contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find {{gcp_name}} resources
-            /// whose state doesn't contain "ACTIVE" as a word. * `createTime&amp;lt;1609459200` to find Cloud resources
-            /// that were created before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of "2021-01-01
-            /// 00:00:00 UTC" in seconds. * `updateTime&amp;gt;1609459200` to find Cloud resources that were updated
-            /// after "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of "2021-01-01 00:00:00 UTC" in
-            /// seconds. * `Important` to find Cloud resources that contain "Important" as a word in any of the
-            /// searchable fields. * `Impor*` to find Cloud resources that contain "Impor" as a prefix of any word in
-            /// any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that
-            /// contain "Important" as a word in any of the searchable fields and are also located in the "us-west1"
-            /// region or the "global" location.
+            /// resources whose state contains "ACTIVE" as a word. * `NOT state:ACTIVE` to find Cloud resources whose
+            /// state doesn't contain "ACTIVE" as a word. * `createTime&amp;lt;1609459200` to find Cloud resources that
+            /// were created before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of "2021-01-01 00:00:00
+            /// UTC" in seconds. * `updateTime&amp;gt;1609459200` to find Cloud resources that were updated after
+            /// "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of "2021-01-01 00:00:00 UTC" in seconds. *
+            /// `Important` to find Cloud resources that contain "Important" as a word in any of the searchable fields.
+            /// * `Impor*` to find Cloud resources that contain "Impor" as a prefix of any word in any of the searchable
+            /// fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain "Important" as
+            /// a word in any of the searchable fields and are also located in the "us-west1" region or the "global"
+            /// location.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("query", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string Query { get; set; }
+
+            /// <summary>
+            /// Optional. A comma-separated list of fields specifying which fields to be returned in
+            /// ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both
+            /// snake_case and camelCase are supported. Examples: `"*"`, `"name,location"`, `"name,versionedResources"`.
+            /// The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase
+            /// are supported): * name * assetType * project * displayName * description * location * labels *
+            /// networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If
+            /// read_mask is not specified, all fields except versionedResources will be returned. If only '*' is
+            /// specified, all fields including versionedResources will be returned. Any invalid field path will trigger
+            /// INVALID_ARGUMENT error.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("readMask", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual object ReadMask { get; set; }
 
             /// <summary>Gets the method name.</summary>
             public override string MethodName => "searchAllResources";
@@ -1512,6 +1866,14 @@ namespace Google.Apis.CloudAsset.v1
                 RequestParameters.Add("query", new Google.Apis.Discovery.Parameter
                 {
                     Name = "query",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("readMask", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "readMask",
                     IsRequired = false,
                     ParameterType = "query",
                     DefaultValue = null,
@@ -1589,11 +1951,25 @@ namespace Google.Apis.CloudAsset.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for resource move analysis.</summary>
+    public class AnalyzeMoveResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The list of analyses returned from performing the intended resource move analysis. The analysis is grouped
+        /// by different Cloud services.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("moveAnalysis")]
+        public virtual System.Collections.Generic.IList<MoveAnalysis> MoveAnalysis { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// An asset in Google Cloud. An asset can be any resource in the Google Cloud [resource
     /// hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy), a resource outside
     /// the Google Cloud resource hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy (e.g.
-    /// Cloud IAM policy). See [Supported asset
+    /// Cloud IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP relationship). See [Supported asset
     /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types) for more information.
     /// </summary>
     public class Asset : Google.Apis.Requests.IDirectResponseSchema
@@ -1680,6 +2056,31 @@ namespace Google.Apis.CloudAsset.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
         public virtual object UpdateTime { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Attached resource representation, which is defined by the corresponding service provider. It represents an
+    /// attached resource's payload.
+    /// </summary>
+    public class AttachedResource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The type of this attached resource. Example: `osconfig.googleapis.com/Inventory` You can find the supported
+        /// attached asset types of each resource in this table:
+        /// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types`
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("assetType")]
+        public virtual string AssetType { get; set; }
+
+        /// <summary>
+        /// Versioned resource representations of this attached resource. This is repeated because there could be
+        /// multiple versions of the attached resource representations during version migration.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("versionedResources")]
+        public virtual System.Collections.Generic.IList<VersionedResource> VersionedResources { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2050,8 +2451,8 @@ namespace Google.Apis.CloudAsset.v1.Data
         /// valid [CEL expression] (https://github.com/google/cel-spec) on a TemporalAsset with name `temporal_asset`.
         /// Example: a Feed with expression ("temporal_asset.deleted == true") will only publish Asset deletions. Other
         /// fields of `Expr` are optional. See our [user
-        /// guide](https://cloud.google.com/asset-inventory/docs/monitoring-asset-changes#feed_with_condition) for
-        /// detailed instructions.
+        /// guide](https://cloud.google.com/asset-inventory/docs/monitoring-asset-changes-with-condition) for detailed
+        /// instructions.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("condition")]
         public virtual Expr Condition { get; set; }
@@ -3475,11 +3876,36 @@ namespace Google.Apis.CloudAsset.v1.Data
     public class IamPolicySearchResult : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
+        /// The type of the resource associated with this IAM policy. Example: `compute.googleapis.com/Disk`. To search
+        /// against the `asset_type`: * specify the `asset_types` field in your search request.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("assetType")]
+        public virtual string AssetType { get; set; }
+
+        /// <summary>
         /// Explanation about the IAM policy search result. It contains additional information to explain why the search
         /// result matches the query.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("explanation")]
         public virtual Explanation Explanation { get; set; }
+
+        /// <summary>
+        /// The folder(s) that the IAM policy belongs to, in the form of folders/{FOLDER_NUMBER}. This field is
+        /// available when the IAM policy belongs to one or more folders. To search against `folders`: * use a field
+        /// query. Example: `folders:(123 OR 456)` * use a free text query. Example: `123` * specify the `scope` field
+        /// as this folder in your search request.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("folders")]
+        public virtual System.Collections.Generic.IList<string> Folders { get; set; }
+
+        /// <summary>
+        /// The organization that the IAM policy belongs to, in the form of organizations/{ORGANIZATION_NUMBER}. This
+        /// field is available when the IAM policy belongs to an organization. To search against `organization`: * use a
+        /// field query. Example: `organization:123` * use a free text query. Example: `123` * specify the `scope` field
+        /// as this organization in your search request.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("organization")]
+        public virtual string Organization { get; set; }
 
         /// <summary>
         /// The IAM policy directly set on the given resource. Note that the original IAM policy can contain multiple
@@ -3588,11 +4014,85 @@ namespace Google.Apis.CloudAsset.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>ListAssets response.</summary>
+    public class ListAssetsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Assets.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("assets")]
+        public virtual System.Collections.Generic.IList<Asset> Assets { get; set; }
+
+        /// <summary>
+        /// Token to retrieve the next page of results. It expires 72 hours after the page token for the first page is
+        /// generated. Set to empty if there are no remaining results.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>Time the snapshot was taken.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("readTime")]
+        public virtual object ReadTime { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class ListFeedsResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>A list of feeds.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("feeds")]
         public virtual System.Collections.Generic.IList<Feed> Feeds { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A message to group the analysis information.</summary>
+    public class MoveAnalysis : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Analysis result of moving the target resource.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("analysis")]
+        public virtual MoveAnalysisResult Analysis { get; set; }
+
+        /// <summary>The user friendly display name of the analysis. E.g. IAM, Organization Policy etc.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayName")]
+        public virtual string DisplayName { get; set; }
+
+        /// <summary>Description of error encountered when performing the analysis.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("error")]
+        public virtual Status Error { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>An analysis result including blockers and warnings.</summary>
+    public class MoveAnalysisResult : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Blocking information that would prevent the target resource from moving to the specified destination at
+        /// runtime.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("blockers")]
+        public virtual System.Collections.Generic.IList<MoveImpact> Blockers { get; set; }
+
+        /// <summary>
+        /// Warning information indicating that moving the target resource to the specified destination might be unsafe.
+        /// This can include important policy information and configuration changes, but will not block moves at
+        /// runtime.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
+        public virtual System.Collections.Generic.IList<MoveImpact> Warnings { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A message to group impacts of moving the target resource.</summary>
+    public class MoveImpact : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>User friendly impact detail in a free form message.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("detail")]
+        public virtual string Detail { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -3953,10 +4453,20 @@ namespace Google.Apis.CloudAsset.v1.Data
         public virtual string AssetType { get; set; }
 
         /// <summary>
+        /// Attached resources of this resource. For example, an OSConfig Inventory is an attached resource of a Compute
+        /// Instance. This field is repeated because a resource could have multiple attached resources. This
+        /// `attached_resources` field is not searchable. Some attributes of the attached resources are exposed in
+        /// `additional_attributes` field, so as to allow users to search on them.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("attachedResources")]
+        public virtual System.Collections.Generic.IList<AttachedResource> AttachedResources { get; set; }
+
+        /// <summary>
         /// The create timestamp of this resource, at which the resource was created. The granularity is in seconds.
         /// Timestamp.nanos will always be 0. This field is available only when the resource's proto contains it. To
-        /// search against `create_time`: * use a field query (value in seconds). Example: `createTime &amp;gt;=
-        /// 1594294238`
+        /// search against `create_time`: * use a field query. - value in seconds since unix epoch. Example: `createTime
+        /// &amp;gt; 1609459200` - value in date string. Example: `createTime &amp;gt; 2021-01-01` - value in date-time
+        /// string (must be quoted). Example: `createTime &amp;gt; "2021-01-01T00:00:00"`
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
         public virtual object CreateTime { get; set; }
@@ -4089,11 +4599,22 @@ namespace Google.Apis.CloudAsset.v1.Data
         /// <summary>
         /// The last update timestamp of this resource, at which the resource was last modified or deleted. The
         /// granularity is in seconds. Timestamp.nanos will always be 0. This field is available only when the
-        /// resource's proto contains it. To search against `update_time`: * use a field query (value in seconds).
-        /// Example: `updateTime &amp;lt; 1594294238`
+        /// resource's proto contains it. To search against `update_time`: * use a field query. - value in seconds since
+        /// unix epoch. Example: `updateTime &amp;lt; 1609459200` - value in date string. Example: `updateTime &amp;lt;
+        /// 2021-01-01` - value in date-time string (must be quoted). Example: `updateTime &amp;lt;
+        /// "2021-01-01T00:00:00"`
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
         public virtual object UpdateTime { get; set; }
+
+        /// <summary>
+        /// Versioned resource representations of this resource. This is repeated because there could be multiple
+        /// versions of resource representations during version migration. This `versioned_resources` field is not
+        /// searchable. Some attributes of the resource representations are exposed in `additional_attributes` field, so
+        /// as to allow users to search on them.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("versionedResources")]
+        public virtual System.Collections.Generic.IList<VersionedResource> VersionedResources { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -4334,6 +4855,33 @@ namespace Google.Apis.CloudAsset.v1.Data
         public virtual string PackageName { get; set; }
 
         /// <summary>The version of the package.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public virtual string Version { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Resource representation as defined by the corresponding service providing the resource for a given API version.
+    /// </summary>
+    public class VersionedResource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// JSON representation of the resource as defined by the corresponding service providing this resource.
+        /// Example: If the resource is an instance provided by Compute Engine, this field will contain the JSON
+        /// representation of the instance as defined by Compute Engine:
+        /// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`. You can find the resource definition
+        /// for each supported resource type in this table:
+        /// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types`
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("resource")]
+        public virtual System.Collections.Generic.IDictionary<string, object> Resource { get; set; }
+
+        /// <summary>
+        /// API version of the resource. Example: If the resource is an instance provided by Compute Engine v1 API as
+        /// defined in `https://cloud.google.com/compute/docs/reference/rest/v1/instances`, version will be "v1".
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
         public virtual string Version { get; set; }
 

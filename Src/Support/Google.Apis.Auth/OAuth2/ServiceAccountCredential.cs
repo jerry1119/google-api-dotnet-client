@@ -26,8 +26,9 @@ using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2.Requests;
 using Google.Apis.Json;
 using Google.Apis.Util;
+using Google.Apis.Http;
 
-#if NETSTANDARD1_3 || NETSTANDARD2_0
+#if NETSTANDARD1_3 || NETSTANDARD2_0 || NET461
 using RsaKey = System.Security.Cryptography.RSA;
 #elif NET45
 using RsaKey = System.Security.Cryptography.RSACryptoServiceProvider;
@@ -54,7 +55,7 @@ namespace Google.Apis.Auth.OAuth2
     /// is used and when regular OAuth2 token is used.
     /// </para>
     /// </summary>
-    public class ServiceAccountCredential : ServiceCredential, IOidcTokenProvider, IGoogleCredential
+    public class ServiceAccountCredential : ServiceCredential, IOidcTokenProvider, IGoogleCredential, IBlobSigner
     {
         private const string Sha256Oid = "2.16.840.1.101.3.4.2.1";
         /// <summary>An initializer class for the service account credential. </summary>
@@ -121,7 +122,7 @@ namespace Google.Apis.Auth.OAuth2
             /// <summary>Extracts a <see cref="Key"/> from the given certificate.</summary>
             public Initializer FromCertificate(X509Certificate2 certificate)
             {
-#if NETSTANDARD1_3 || NETSTANDARD2_0
+#if NETSTANDARD1_3 || NETSTANDARD2_0 || NET461
                 Key = certificate.GetRSAPrivateKey();
 #elif NET45
                 // Workaround to correctly cast the private key as a RSACryptoServiceProvider type 24.
@@ -167,8 +168,17 @@ namespace Google.Apis.Auth.OAuth2
         /// </summary>
         public string KeyId { get; }
 
-        /// <summary><c>true</c> if this credential has any scopes associated with it.</summary>
-        internal bool HasScopes => Scopes?.Any() == true;
+        /// <summary>
+        /// Returns true if this credential scopes have been explicitly set via this library.
+        /// Returns false otherwise.
+        /// </summary>
+        internal bool HasExplicitScopes => Scopes?.Any() == true;
+
+        /// <inheritdoc/>
+        bool IGoogleCredential.HasExplicitScopes => HasExplicitScopes;
+
+        /// <inheritdoc/>
+        bool IGoogleCredential.SupportsExplicitScopes => true;
 
         /// <summary>Constructs a new service account credential using the given initializer.</summary>
         public ServiceAccountCredential(Initializer initializer) : base(initializer)
@@ -176,7 +186,7 @@ namespace Google.Apis.Auth.OAuth2
             Id = initializer.Id.ThrowIfNullOrEmpty("initializer.Id");
             ProjectId = initializer.ProjectId;
             User = initializer.User;
-            Scopes = initializer.Scopes;
+            Scopes = initializer.Scopes?.ToList().AsReadOnly() ?? Enumerable.Empty<string>();
             Key = initializer.Key.ThrowIfNull("initializer.Key");
             KeyId = initializer.KeyId;
         }
@@ -203,6 +213,18 @@ namespace Google.Apis.Auth.OAuth2
         /// <inheritdoc/>
         IGoogleCredential IGoogleCredential.WithQuotaProject(string quotaProject) =>
             new ServiceAccountCredential(new Initializer(this) { QuotaProject = quotaProject });
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.MaybeWithScopes(IEnumerable<string> scopes) =>
+            new ServiceAccountCredential(new Initializer(this) { Scopes = scopes });
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.WithUserForDomainWideDelegation(string user) =>
+            new ServiceAccountCredential(new Initializer(this) { User = user });
+
+        /// <inheritdoc/>
+        IGoogleCredential IGoogleCredential.WithHttpClientFactory(IHttpClientFactory httpClientFactory) =>
+            new ServiceAccountCredential(new Initializer(this) { HttpClientFactory = httpClientFactory });
 
         /// <summary>
         /// Requests a new token as specified in 
@@ -240,7 +262,7 @@ namespace Google.Apis.Auth.OAuth2
         public override async Task<string> GetAccessTokenForRequestAsync(string authUri = null, CancellationToken cancellationToken = default)
         {
             // See: https://developers.google.com/identity/protocols/oauth2/service-account#jwt-auth
-            if (!HasScopes && authUri != null)
+            if (!HasExplicitScopes && authUri != null)
             {
                 return await GetOrCreateJwtAccessTokenAsync(authUri).ConfigureAwait(false);
             }
@@ -402,7 +424,7 @@ namespace Google.Apis.Auth.OAuth2
             using (var hashAlg = SHA256.Create())
             {
                 byte[] assertionHash = hashAlg.ComputeHash(data);
-#if NETSTANDARD1_3 || NETSTANDARD2_0
+#if NETSTANDARD1_3 || NETSTANDARD2_0 || NET461
                 var sigBytes = Key.SignHash(assertionHash, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 #elif NET45
                 var sigBytes = Key.SignHash(assertionHash, Sha256Oid);
@@ -412,6 +434,10 @@ namespace Google.Apis.Auth.OAuth2
                 return Convert.ToBase64String(sigBytes);
             }
         }
+
+        /// <inheritdoc/>
+        public Task<string> SignBlobAsync(byte[] blob, CancellationToken cancellationToken = default)
+            => Task.FromResult(CreateSignature(blob));
 
         /// <summary>
         /// Creates a serialized header as specified in 

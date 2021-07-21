@@ -1318,6 +1318,59 @@ namespace Google.Apis.PubsubLite.v1
                             }
                         }
                     }
+
+                    /// <summary>Updates the committed cursor.</summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="subscription">The subscription for which to update the cursor.</param>
+                    public virtual CommitCursorRequest CommitCursor(Google.Apis.PubsubLite.v1.Data.CommitCursorRequest body, string subscription)
+                    {
+                        return new CommitCursorRequest(service, body, subscription);
+                    }
+
+                    /// <summary>Updates the committed cursor.</summary>
+                    public class CommitCursorRequest : PubsubLiteBaseServiceRequest<Google.Apis.PubsubLite.v1.Data.CommitCursorResponse>
+                    {
+                        /// <summary>Constructs a new CommitCursor request.</summary>
+                        public CommitCursorRequest(Google.Apis.Services.IClientService service, Google.Apis.PubsubLite.v1.Data.CommitCursorRequest body, string subscription) : base(service)
+                        {
+                            Subscription = subscription;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>The subscription for which to update the cursor.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("subscription", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Subscription { get; private set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.PubsubLite.v1.Data.CommitCursorRequest Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "commitCursor";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "POST";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v1/cursor/{+subscription}:commitCursor";
+
+                        /// <summary>Initializes CommitCursor parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("subscription", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "subscription",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                            });
+                        }
+                    }
                 }
             }
         }
@@ -1506,6 +1559,63 @@ namespace Google.Apis.PubsubLite.v1
                             });
                         }
                     }
+
+                    /// <summary>
+                    /// Compute the corresponding cursor for a publish or event time in a topic partition.
+                    /// </summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="topic">Required. The topic for which we should compute the cursor.</param>
+                    public virtual ComputeTimeCursorRequest ComputeTimeCursor(Google.Apis.PubsubLite.v1.Data.ComputeTimeCursorRequest body, string topic)
+                    {
+                        return new ComputeTimeCursorRequest(service, body, topic);
+                    }
+
+                    /// <summary>
+                    /// Compute the corresponding cursor for a publish or event time in a topic partition.
+                    /// </summary>
+                    public class ComputeTimeCursorRequest : PubsubLiteBaseServiceRequest<Google.Apis.PubsubLite.v1.Data.ComputeTimeCursorResponse>
+                    {
+                        /// <summary>Constructs a new ComputeTimeCursor request.</summary>
+                        public ComputeTimeCursorRequest(Google.Apis.Services.IClientService service, Google.Apis.PubsubLite.v1.Data.ComputeTimeCursorRequest body, string topic) : base(service)
+                        {
+                            Topic = topic;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>Required. The topic for which we should compute the cursor.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("topic", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Topic { get; private set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.PubsubLite.v1.Data.ComputeTimeCursorRequest Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "computeTimeCursor";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "POST";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v1/topicStats/{+topic}:computeTimeCursor";
+
+                        /// <summary>Initializes ComputeTimeCursor parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("topic", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "topic",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/topics/[^/]+$",
+                            });
+                        }
+                    }
                 }
             }
         }
@@ -1524,6 +1634,31 @@ namespace Google.Apis.PubsubLite.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("subscribeMibPerSec")]
         public virtual System.Nullable<int> SubscribeMibPerSec { get; set; }
 
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Request for CommitCursor.</summary>
+    public class CommitCursorRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The new value for the committed cursor.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cursor")]
+        public virtual Cursor Cursor { get; set; }
+
+        /// <summary>
+        /// The partition for which to update the cursor. Partitions are zero indexed, so `partition` must be in the
+        /// range [0, topic.num_partitions).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("partition")]
+        public virtual System.Nullable<long> Partition { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response for CommitCursor.</summary>
+    public class CommitCursorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1596,6 +1731,37 @@ namespace Google.Apis.PubsubLite.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimumPublishTime")]
         public virtual object MinimumPublishTime { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Compute the corresponding cursor for a publish or event time in a topic partition.</summary>
+    public class ComputeTimeCursorRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Required. The partition for which we should compute the cursor.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("partition")]
+        public virtual System.Nullable<long> Partition { get; set; }
+
+        /// <summary>
+        /// Required. The target publish or event time. Specifying a future time will return an unset cursor.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("target")]
+        public virtual TimeTarget Target { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response containing the cursor corresponding to a publish or event time in a topic partition.</summary>
+    public class ComputeTimeCursorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// If present, the cursor references the first message with time greater than or equal to the specified target
+        /// time. If such a message cannot be found, the cursor will be unset (i.e. `cursor` is not present).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cursor")]
+        public virtual Cursor Cursor { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -1796,6 +1962,31 @@ namespace Google.Apis.PubsubLite.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("topic")]
         public virtual string Topic { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// A target publish or event time. Can be used for seeking to or retrieving the corresponding cursor.
+    /// </summary>
+    public class TimeTarget : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Request the cursor of the first message with event time greater than or equal to `event_time`. If messages
+        /// are missing an event time, the publish time is used as a fallback. As event times are user supplied,
+        /// subsequent messages may have event times less than `event_time` and should be filtered by the client, if
+        /// necessary.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("eventTime")]
+        public virtual object EventTime { get; set; }
+
+        /// <summary>
+        /// Request the cursor of the first message with publish time greater than or equal to `publish_time`. All
+        /// messages thereafter are guaranteed to have publish times &amp;gt;= `publish_time`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("publishTime")]
+        public virtual object PublishTime { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

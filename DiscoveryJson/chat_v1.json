@@ -601,7 +601,7 @@
    }
   }
  },
- "revision": "20210417",
+ "revision": "20210707",
  "rootUrl": "https://chat.googleapis.com/",
  "schemas": {
   "ActionParameter": {
@@ -634,8 +634,8 @@
      "enumDescriptions": [
       "Default type; will be handled as NEW_MESSAGE.",
       "Post as a new message in the topic.",
-      "Update the bot's own message. (Only after CARD_CLICKED events.)",
-      "Privately ask the user for additional auth or config."
+      "Update the bot's message. This is only permitted on a CARD_CLICKED event where the message sender type is BOT.",
+      "Update a message, with cards only. (Only after a MESSAGE event with a matched url, or a CARD_CLICKED event on a human created message)."
      ],
      "type": "string"
     },
@@ -842,10 +842,10 @@
    "properties": {
     "action": {
      "$ref": "FormAction",
-     "description": "The form action data associated with an interactive card that was clicked. Only populated for CARD_CLICKED events. See the [Interactive Cards guide](/hangouts/chat/how-tos/cards-onclick) for more information."
+     "description": "The form action data associated with an interactive card that was clicked. Only populated for CARD_CLICKED events. See the [Interactive Cards guide](/chat/how-tos/cards-onclick) for more information."
     },
     "configCompleteRedirectUrl": {
-     "description": "The URL the bot should redirect the user to after they have completed an authorization or configuration flow outside of Google Chat. See the [Authorizing access to 3p services guide](/hangouts/chat/how-tos/auth-3p) for more information.",
+     "description": "The URL the bot should redirect the user to after they have completed an authorization or configuration flow outside of Google Chat. See the [Authorizing access to 3p services guide](/chat/how-tos/auth-3p) for more information.",
      "type": "string"
     },
     "eventTime": {
@@ -1259,6 +1259,7 @@
     "createTime": {
      "description": "Output only. The time at which the message was created in Hangouts Chat server.",
      "format": "google-datetime",
+     "readOnly": true,
      "type": "string"
     },
     "fallbackText": {

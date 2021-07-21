@@ -2781,7 +2781,12 @@ namespace Google.Apis.RecommendationsAI.v1beta1.Data
         /// field in the prediction response. The given 'score' indicates the probability of an item being
         /// clicked/purchased given the user's context and history. * `strictFiltering`: Boolean. True by default. If
         /// set to false, the service will return generic (unfiltered) popular items instead of empty if your filter
-        /// blocks all prediction results.
+        /// blocks all prediction results. * `priceRerankLevel`: String. Default empty. If set to be non-empty, then it
+        /// needs to be one of {'no-price-reranking', 'low-price-reranking', 'medium-price-reranking',
+        /// 'high-price-reranking'}. This gives request level control and adjust prediction results based on product
+        /// price. * `diversityLevel`: String. Default empty. If set to be non-empty, then it needs to be one of
+        /// {'no-diversity', 'low-diversity', 'medium-diversity', 'high-diversity', 'auto-diversity'}. This gives
+        /// request level control and adjust prediction results based on product category.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("params")]
         public virtual System.Collections.Generic.IDictionary<string, object> Params__ { get; set; }
@@ -3327,9 +3332,9 @@ namespace Google.Apis.RecommendationsAI.v1beta1.Data
 
         /// <summary>
         /// Required. A unique identifier for tracking visitors with a length limit of 128 bytes. For example, this
-        /// could be implemented with a http cookie, which should be able to uniquely identify a visitor on a single
-        /// device. This unique identifier should not change if the visitor log in/out of the website. Maximum length
-        /// 128 bytes. Cannot be empty.
+        /// could be implemented with an HTTP cookie, which should be able to uniquely identify a visitor on a single
+        /// device. This unique identifier should not change if the visitor logs in or out of the website. Maximum
+        /// length 128 bytes. Cannot be empty.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("visitorId")]
         public virtual string VisitorId { get; set; }

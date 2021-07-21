@@ -1011,6 +1011,13 @@ namespace Google.Apis.Assuredworkloads.v1.Data
     public class GoogleCloudAssuredworkloadsV1WorkloadResourceSettings : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
+        /// User-assigned resource display name. If not empty it will be used to create a resource with the specified
+        /// name.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayName")]
+        public virtual string DisplayName { get; set; }
+
+        /// <summary>
         /// Resource identifier. For a project this represents project_id. If the project is already taken, the workload
         /// creation will fail.
         /// </summary>
@@ -1049,6 +1056,12 @@ namespace Google.Apis.Assuredworkloads.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("parent")]
         public virtual string Parent { get; set; }
 
+        /// <summary>
+        /// Optional. Resource properties in the input that are used for creating/customizing workload resources.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("resourceSettings")]
+        public virtual System.Collections.Generic.IList<GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings> ResourceSettings { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1057,10 +1070,10 @@ namespace Google.Apis.Assuredworkloads.v1.Data
     public class GoogleCloudAssuredworkloadsV1beta1Workload : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Required. Input only. The billing account used for the resources which are direct children of workload. This
-        /// billing account is initially associated with the resources created as part of Workload creation. After the
-        /// initial creation of these resources, the customer can change the assigned billing account. The resource name
-        /// has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.
+        /// Input only. The billing account used for the resources which are direct children of workload. This billing
+        /// account is initially associated with the resources created as part of Workload creation. After the initial
+        /// creation of these resources, the customer can change the assigned billing account. The resource name has the
+        /// form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("billingAccount")]
         public virtual string BillingAccount { get; set; }
@@ -1230,6 +1243,13 @@ namespace Google.Apis.Assuredworkloads.v1.Data
     /// <summary>Represent the custom settings for the resources to be created.</summary>
     public class GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// User-assigned resource display name. If not empty it will be used to create a resource with the specified
+        /// name.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayName")]
+        public virtual string DisplayName { get; set; }
+
         /// <summary>
         /// Resource identifier. For a project this represents project_id. If the project is already taken, the workload
         /// creation will fail.

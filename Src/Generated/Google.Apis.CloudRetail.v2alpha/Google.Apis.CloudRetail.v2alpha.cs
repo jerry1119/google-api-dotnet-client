@@ -1866,7 +1866,7 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
         [Newtonsoft.Json.JsonPropertyAttribute("catalogItem")]
         public virtual string CatalogItem { get; set; }
 
-        /// <summary>GCS file path of the import source. Can be set for batch operation error.</summary>
+        /// <summary>Cloud Storage file path of the import source. Can be set for batch operation error.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("gcsPath")]
         public virtual string GcsPath { get; set; }
 
@@ -2467,7 +2467,13 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
         /// returned product will be set in the `results.metadata` field in the prediction response. The given 'score'
         /// indicates the probability of an product being clicked/purchased given the user's context and history. *
         /// `strictFiltering`: Boolean. True by default. If set to false, the service will return generic (unfiltered)
-        /// popular products instead of empty if your filter blocks all prediction results.
+        /// popular products instead of empty if your filter blocks all prediction results. * `priceRerankLevel`:
+        /// String. Default empty. If set to be non-empty, then it needs to be one of {'no-price-reranking',
+        /// 'low-price-reranking', 'medium-price-reranking', 'high-price-reranking'}. This gives request-level control
+        /// and adjusts prediction results based on product price. * `diversityLevel`: String. Default empty. If set to
+        /// be non-empty, then it needs to be one of {'no-diversity', 'low-diversity', 'medium-diversity',
+        /// 'high-diversity', 'auto-diversity'}. This gives request-level control and adjusts prediction results based
+        /// on product category.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("params")]
         public virtual System.Collections.Generic.IDictionary<string, object> Params__ { get; set; }
@@ -2585,7 +2591,7 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
         /// brand/maker of a product, or country of a customer. Numerical features. Some examples would be the
         /// height/weight of a product, or age of a customer. For example: `{ "vendor": {"text": ["vendor123",
         /// "vendor456"]}, "lengths_cm": {"numbers":[2.3, 15.4]}, "heights_cm": {"numbers":[8.1, 6.4]} }`. This field
-        /// needs to pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: * Max entries count: 150
+        /// needs to pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: * Max entries count: 200
         /// by default; 100 for Type.VARIANT. * The key must be a UTF-8 encoded string with a length limit of 128
         /// characters.
         /// </summary>
@@ -2701,8 +2707,7 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
         public virtual string Title { get; set; }
 
         /// <summary>
-        /// Immutable. The type of the product. This field is output-only. Default to
-        /// Catalog.product_level_config.ingestion_product_type if unset.
+        /// Immutable. The type of the product. Default to Catalog.product_level_config.ingestion_product_type if unset.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("type")]
         public virtual string Type { get; set; }
@@ -2748,7 +2753,7 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
     {
         /// <summary>
         /// Required. A list of products to update/create. Each product must have a valid Product.id. Recommended max of
-        /// 10k items.
+        /// 100 items.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("products")]
         public virtual System.Collections.Generic.IList<GoogleCloudRetailV2alphaProduct> Products { get; set; }
@@ -2972,10 +2977,11 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
 
         /// <summary>
         /// Required. User event type. Allowed values are: * `add-to-cart`: Products being added to cart. *
-        /// `category-page-view`: Special pages such as sale or promotion pages viewed. * `detail-page-view`: Products
-        /// detail page viewed. * `home-page-view`: Homepage viewed. * `promotion-offered`: Promotion is offered to a
-        /// user. * `promotion-not-offered`: Promotion is not offered to a user. * `purchase-complete`: User finishing a
-        /// purchase. * `search`: Product search. * `shopping-cart-page-view`: User viewing a shopping cart.
+        /// `category-page-view`: Special pages such as sale or promotion pages viewed. * `completion`: Completion query
+        /// result showed/clicked. * `detail-page-view`: Products detail page viewed. * `home-page-view`: Homepage
+        /// viewed. * `promotion-offered`: Promotion is offered to a user. * `promotion-not-offered`: Promotion is not
+        /// offered to a user. * `purchase-complete`: User finishing a purchase. * `search`: Product search. *
+        /// `shopping-cart-page-view`: User viewing a shopping cart.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("eventType")]
         public virtual string EventType { get; set; }
@@ -3134,20 +3140,20 @@ namespace Google.Apis.CloudRetail.v2alpha.Data
         public virtual System.Nullable<bool> DirectUserRequest { get; set; }
 
         /// <summary>
-        /// The end user's IP address. This field is used to extract location information for personalization. This
-        /// field must be either an IPv4 address (e.g. "104.133.9.80") or an IPv6 address (e.g.
-        /// "2001:0db8:85a3:0000:0000:8a2e:0370:7334"). Otherwise, an INVALID_ARGUMENT error is returned. This should
-        /// not be set when using the JavaScript tag in UserEventService.CollectUserEvent or if direct_user_request is
-        /// set.
+        /// The end user's IP address. Required for getting SearchRespons.sponsored_results. This field is used to
+        /// extract location information for personalization. This field must be either an IPv4 address (e.g.
+        /// "104.133.9.80") or an IPv6 address (e.g. "2001:0db8:85a3:0000:0000:8a2e:0370:7334"). Otherwise, an
+        /// INVALID_ARGUMENT error is returned. This should not be set when using the JavaScript tag in
+        /// UserEventService.CollectUserEvent or if direct_user_request is set.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("ipAddress")]
         public virtual string IpAddress { get; set; }
 
         /// <summary>
-        /// User agent as included in the HTTP header. The field must be a UTF-8 encoded string with a length limit of
-        /// 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. This should not be set when using the
-        /// client side event reporting with GTM or JavaScript tag in UserEventService.CollectUserEvent or if
-        /// direct_user_request is set.
+        /// User agent as included in the HTTP header. Required for getting SearchRespons.sponsored_results. The field
+        /// must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error
+        /// is returned. This should not be set when using the client side event reporting with GTM or JavaScript tag in
+        /// UserEventService.CollectUserEvent or if direct_user_request is set.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("userAgent")]
         public virtual string UserAgent { get; set; }

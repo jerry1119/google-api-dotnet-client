@@ -1492,6 +1492,10 @@ namespace Google.Apis.ShoppingContent.v2_1
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<long> MaxResults { get; set; }
 
+            /// <summary>If set, only the accounts with the given name (case sensitive) will be returned.</summary>
+            [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string Name { get; set; }
+
             /// <summary>The token returned by the previous request.</summary>
             [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string PageToken { get; set; }
@@ -1555,6 +1559,14 @@ namespace Google.Apis.ShoppingContent.v2_1
                     DefaultValue = null,
                     Pattern = null,
                 });
+                RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "name",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
                 RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
                 {
                     Name = "pageToken",
@@ -1607,7 +1619,10 @@ namespace Google.Apis.ShoppingContent.v2_1
             [Google.Apis.Util.RequestParameterAttribute("accountId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual ulong AccountId { get; private set; }
 
-            /// <summary>The maximum number of links to return in the response, used for pagination.</summary>
+            /// <summary>
+            /// The maximum number of links to return in the response, used for pagination. The minimum allowed value is
+            /// 5 results per page. If provided value is lower than 5, it will be automatically increased to 5.
+            /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<long> MaxResults { get; set; }
 
@@ -1979,6 +1994,10 @@ namespace Google.Apis.ShoppingContent.v2_1
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<long> MaxResults { get; set; }
 
+            /// <summary>If set, only the accounts with the given name (case sensitive) will be returned.</summary>
+            [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string Name { get; set; }
+
             /// <summary>The token returned by the previous request.</summary>
             [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string PageToken { get; set; }
@@ -2015,6 +2034,14 @@ namespace Google.Apis.ShoppingContent.v2_1
                 RequestParameters.Add("maxResults", new Google.Apis.Discovery.Parameter
                 {
                     Name = "maxResults",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "name",
                     IsRequired = false,
                     ParameterType = "query",
                     DefaultValue = null,
@@ -5345,6 +5372,102 @@ namespace Google.Apis.ShoppingContent.v2_1
         public OrderreturnsResource(Google.Apis.Services.IClientService service)
         {
             this.service = service;
+            Labels = new LabelsResource(service);
+        }
+
+        /// <summary>Gets the Labels resource.</summary>
+        public virtual LabelsResource Labels { get; }
+
+        /// <summary>The "labels" collection of methods.</summary>
+        public class LabelsResource
+        {
+            private const string Resource = "labels";
+
+            /// <summary>The service which this resource belongs to.</summary>
+            private readonly Google.Apis.Services.IClientService service;
+
+            /// <summary>Constructs a new resource.</summary>
+            public LabelsResource(Google.Apis.Services.IClientService service)
+            {
+                this.service = service;
+            }
+
+            /// <summary>
+            /// Links a return shipping label to a return id. You can only create one return label per return id. Since
+            /// the label is sent to the buyer, the linked return label cannot be updated or deleted. If you try to
+            /// create multiple return shipping labels for a single return id, every create request except the first
+            /// will fail.
+            /// </summary>
+            /// <param name="body">The body of the request.</param>
+            /// <param name="merchantId">Required. The merchant the Return Shipping Label belongs to.</param>
+            /// <param name="returnId">Required. Provide the Google-generated merchant order return ID.</param>
+            public virtual CreateRequest Create(Google.Apis.ShoppingContent.v2_1.Data.ReturnShippingLabel body, long merchantId, string returnId)
+            {
+                return new CreateRequest(service, body, merchantId, returnId);
+            }
+
+            /// <summary>
+            /// Links a return shipping label to a return id. You can only create one return label per return id. Since
+            /// the label is sent to the buyer, the linked return label cannot be updated or deleted. If you try to
+            /// create multiple return shipping labels for a single return id, every create request except the first
+            /// will fail.
+            /// </summary>
+            public class CreateRequest : ShoppingContentBaseServiceRequest<Google.Apis.ShoppingContent.v2_1.Data.ReturnShippingLabel>
+            {
+                /// <summary>Constructs a new Create request.</summary>
+                public CreateRequest(Google.Apis.Services.IClientService service, Google.Apis.ShoppingContent.v2_1.Data.ReturnShippingLabel body, long merchantId, string returnId) : base(service)
+                {
+                    MerchantId = merchantId;
+                    ReturnId = returnId;
+                    Body = body;
+                    InitParameters();
+                }
+
+                /// <summary>Required. The merchant the Return Shipping Label belongs to.</summary>
+                [Google.Apis.Util.RequestParameterAttribute("merchantId", Google.Apis.Util.RequestParameterType.Path)]
+                public virtual long MerchantId { get; private set; }
+
+                /// <summary>Required. Provide the Google-generated merchant order return ID.</summary>
+                [Google.Apis.Util.RequestParameterAttribute("returnId", Google.Apis.Util.RequestParameterType.Path)]
+                public virtual string ReturnId { get; private set; }
+
+                /// <summary>Gets or sets the body of this request.</summary>
+                Google.Apis.ShoppingContent.v2_1.Data.ReturnShippingLabel Body { get; set; }
+
+                /// <summary>Returns the body of the request.</summary>
+                protected override object GetBody() => Body;
+
+                /// <summary>Gets the method name.</summary>
+                public override string MethodName => "create";
+
+                /// <summary>Gets the HTTP method.</summary>
+                public override string HttpMethod => "POST";
+
+                /// <summary>Gets the REST path.</summary>
+                public override string RestPath => "{merchantId}/orderreturns/{returnId}/labels";
+
+                /// <summary>Initializes Create parameter list.</summary>
+                protected override void InitParameters()
+                {
+                    base.InitParameters();
+                    RequestParameters.Add("merchantId", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "merchantId",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("returnId", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "returnId",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                }
+            }
         }
 
         /// <summary>Acks an order return in your Merchant Center account.</summary>
@@ -8388,6 +8511,100 @@ namespace Google.Apis.ShoppingContent.v2_1
                 });
             }
         }
+
+        /// <summary>
+        /// Updates an existing product in your Merchant Center account. Only updates attributes provided in the
+        /// request.
+        /// </summary>
+        /// <param name="body">The body of the request.</param>
+        /// <param name="merchantId">
+        /// The ID of the account that contains the product. This account cannot be a multi-client account.
+        /// </param>
+        /// <param name="productId">The REST ID of the product for which to update.</param>
+        public virtual UpdateRequest Update(Google.Apis.ShoppingContent.v2_1.Data.Product body, ulong merchantId, string productId)
+        {
+            return new UpdateRequest(service, body, merchantId, productId);
+        }
+
+        /// <summary>
+        /// Updates an existing product in your Merchant Center account. Only updates attributes provided in the
+        /// request.
+        /// </summary>
+        public class UpdateRequest : ShoppingContentBaseServiceRequest<Google.Apis.ShoppingContent.v2_1.Data.Product>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.ShoppingContent.v2_1.Data.Product body, ulong merchantId, string productId) : base(service)
+            {
+                MerchantId = merchantId;
+                ProductId = productId;
+                Body = body;
+                InitParameters();
+            }
+
+            /// <summary>
+            /// The ID of the account that contains the product. This account cannot be a multi-client account.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("merchantId", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual ulong MerchantId { get; private set; }
+
+            /// <summary>The REST ID of the product for which to update.</summary>
+            [Google.Apis.Util.RequestParameterAttribute("productId", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string ProductId { get; private set; }
+
+            /// <summary>
+            /// The comma-separated list of product attributes to be updated. Example: `"title,salePrice"`. Attributes
+            /// specified in the update mask without a value specified in the body will be deleted from the product.
+            /// Only top-level product attributes can be updated. If not defined, product attributes with set values
+            /// will be updated and other attributes will stay unchanged.
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual object UpdateMask { get; set; }
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.ShoppingContent.v2_1.Data.Product Body { get; set; }
+
+            /// <summary>Returns the body of the request.</summary>
+            protected override object GetBody() => Body;
+
+            /// <summary>Gets the method name.</summary>
+            public override string MethodName => "update";
+
+            /// <summary>Gets the HTTP method.</summary>
+            public override string HttpMethod => "PATCH";
+
+            /// <summary>Gets the REST path.</summary>
+            public override string RestPath => "{merchantId}/products/{productId}";
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+                RequestParameters.Add("merchantId", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "merchantId",
+                    IsRequired = true,
+                    ParameterType = "path",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("productId", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "productId",
+                    IsRequired = true,
+                    ParameterType = "path",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+                RequestParameters.Add("updateMask", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "updateMask",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = null,
+                    Pattern = null,
+                });
+            }
+        }
     }
 
     /// <summary>The "productstatuses" collection of methods.</summary>
@@ -9321,7 +9538,10 @@ namespace Google.Apis.ShoppingContent.v2_1
             [Google.Apis.Util.RequestParameterAttribute("regionId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string RegionId { get; private set; }
 
-            /// <summary>Optional. The field mask indicating the fields to update.</summary>
+            /// <summary>
+            /// Optional. The comma-separated field mask indicating the fields to update. Example:
+            /// `"displayName,postalCodeArea.regionCode"`.
+            /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
             public virtual object UpdateMask { get; set; }
 
@@ -11565,6 +11785,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
     /// </summary>
     public class Account : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>How the account is managed. Acceptable values are: - "`manual`" - "`automatic`" </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("accountManagement")]
+        public virtual string AccountManagement { get; set; }
+
         /// <summary>
         /// Linked Ads accounts that are active or pending approval. To create a new link request, add a new link with
         /// status `active` to the list. It will remain in a `pending` state until approved or rejected either in the
@@ -11861,6 +12085,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         /// <summary>A list of account level issues.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("accountLevelIssues")]
         public virtual System.Collections.Generic.IList<AccountStatusAccountLevelIssue> AccountLevelIssues { get; set; }
+
+        /// <summary>How the account is managed. Acceptable values are: - "`manual`" - "`automatic`" </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("accountManagement")]
+        public virtual string AccountManagement { get; set; }
 
         /// <summary>
         /// Identifies what kind of resource this is. Value: the fixed string "`content#accountStatus`"
@@ -12219,7 +12447,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
         /// <summary>
         /// Type of the link between the two accounts. Acceptable values are: - "`channelPartner`" -
-        /// "`eCommercePlatform`"
+        /// "`eCommercePlatform`" - "`paymentServiceProvider`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("linkType")]
         public virtual string LinkType { get; set; }
@@ -12230,7 +12458,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
         /// <summary>
         /// Provided services. Acceptable values are: - "`shoppingAdsProductManagement`" -
-        /// "`shoppingActionsProductManagement`" - "`shoppingActionsOrderManagement`"
+        /// "`shoppingActionsProductManagement`" - "`shoppingActionsOrderManagement`" - "`paymentProcessing`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("services")]
         public virtual System.Collections.Generic.IList<string> Services { get; set; }
@@ -12295,7 +12523,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
         /// <summary>
         /// Type of the link between the two accounts. Acceptable values are: - "`channelPartner`" -
-        /// "`eCommercePlatform`"
+        /// "`eCommercePlatform`" - "`paymentServiceProvider`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("linkType")]
         public virtual string LinkType { get; set; }
@@ -12304,9 +12532,13 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("linkedAccountId")]
         public virtual string LinkedAccountId { get; set; }
 
+        /// <summary>Additional information required for `paymentServiceProvider` link type.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("paymentServiceProviderLinkInfo")]
+        public virtual PaymentServiceProviderLinkInfo PaymentServiceProviderLinkInfo { get; set; }
+
         /// <summary>
         ///  Acceptable values are: - "`shoppingAdsProductManagement`" - "`shoppingActionsProductManagement`" -
-        /// "`shoppingActionsOrderManagement`"
+        /// "`shoppingActionsOrderManagement`" - "`paymentProcessing`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("services")]
         public virtual System.Collections.Generic.IList<string> Services { get; set; }
@@ -12679,12 +12911,20 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("country")]
         public virtual string Country { get; set; }
 
+        /// <summary>
+        /// A list of services supported for EDD (Estimated Delivery Date) calculation. This is the list of valid values
+        /// for WarehouseBasedDeliveryTime.carrierService.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("eddServices")]
+        public virtual System.Collections.Generic.IList<string> EddServices { get; set; }
+
         /// <summary>The name of the carrier (e.g., `"UPS"`). Always present.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// A list of supported services (e.g., `"ground"`) for that carrier. Contains at least one service.
+        /// A list of supported services (e.g., `"ground"`) for that carrier. Contains at least one service. This is the
+        /// list of valid values for CarrierRate.carrierService.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("services")]
         public virtual System.Collections.Generic.IList<string> Services { get; set; }
@@ -13622,6 +13862,14 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("transitTimeTable")]
         public virtual TransitTable TransitTimeTable { get; set; }
 
+        /// <summary>
+        /// Indicates that the delivery time should be calculated per warehouse (shipping origin location) based on the
+        /// settings of the selected carrier. When set, no other transit time related field in DeliveryTime should be
+        /// set.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("warehouseBasedDeliveryTimes")]
+        public virtual System.Collections.Generic.IList<WarehouseBasedDeliveryTime> WarehouseBasedDeliveryTimes { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -14260,7 +14508,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
     {
         /// <summary>
         /// Service provided to or by the linked account. Acceptable values are: - "`shoppingActionsOrderManagement`" -
-        /// "`shoppingActionsProductManagement`" - "`shoppingAdsProductManagement`"
+        /// "`shoppingActionsProductManagement`" - "`shoppingAdsProductManagement`" - "`paymentProcessing`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("service")]
         public virtual string Service { get; set; }
@@ -14738,6 +14986,23 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
     /// </summary>
     public class Metrics : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Average order size - the average number of items in an order. **This metric cannot be segmented by product
+        /// dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aos")]
+        public virtual System.Nullable<double> Aos { get; set; }
+
+        /// <summary>
+        /// Average order value - the average value (total price of items) of all placed orders. The currency of the
+        /// returned value is stored in the currency_code segment. If this metric is selected, 'segments.currency_code'
+        /// is automatically added to the SELECT clause in the search query (unless it is explicitly selected by the
+        /// user) and the currency_code segment is populated in the response. **This metric cannot be segmented by
+        /// product dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aovMicros")]
+        public virtual System.Nullable<double> AovMicros { get; set; }
+
         /// <summary>Number of clicks.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("clicks")]
         public virtual System.Nullable<long> Clicks { get; set; }
@@ -14749,9 +15014,116 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("ctr")]
         public virtual System.Nullable<double> Ctr { get; set; }
 
+        /// <summary>
+        /// Average number of days between an order being placed and the order being fully shipped, reported on the last
+        /// shipment date. **This metric cannot be segmented by product dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("daysToShip")]
+        public virtual System.Nullable<double> DaysToShip { get; set; }
+
         /// <summary>Number of times merchant's products are shown.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("impressions")]
         public virtual System.Nullable<long> Impressions { get; set; }
+
+        /// <summary>Average number of days between an item being ordered and the item being</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("itemDaysToShip")]
+        public virtual System.Nullable<double> ItemDaysToShip { get; set; }
+
+        /// <summary>
+        /// Percentage of shipped items in relation to all finalized items (shipped or rejected by the merchant;
+        /// unshipped items are not taken into account), reported on the order date. Item fill rate is lowered by
+        /// merchant rejections.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("itemFillRate")]
+        public virtual System.Nullable<double> ItemFillRate { get; set; }
+
+        /// <summary>
+        /// Total price of ordered items. Excludes shipping, taxes (US only), and customer cancellations that happened
+        /// within 30 minutes of placing the order. The currency of the returned value is stored in the currency_code
+        /// segment. If this metric is selected, 'segments.currency_code' is automatically added to the SELECT clause in
+        /// the search query (unless it is explicitly selected by the user) and the currency_code segment is populated
+        /// in the response.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("orderedItemSalesMicros")]
+        public virtual System.Nullable<long> OrderedItemSalesMicros { get; set; }
+
+        /// <summary>
+        /// Number of ordered items. Excludes customer cancellations that happened within 30 minutes of placing the
+        /// order.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("orderedItems")]
+        public virtual System.Nullable<long> OrderedItems { get; set; }
+
+        /// <summary>
+        /// Number of placed orders. Excludes customer cancellations that happened within 30 minutes of placing the
+        /// order. **This metric cannot be segmented by product dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("orders")]
+        public virtual System.Nullable<long> Orders { get; set; }
+
+        /// <summary>Number of ordered items canceled by the merchant, reported on the order date.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rejectedItems")]
+        public virtual System.Nullable<long> RejectedItems { get; set; }
+
+        /// <summary>
+        /// Total price of returned items divided by the total price of shipped items, reported on the order date. If
+        /// this metric is selected, 'segments.currency_code' is automatically added to the SELECT clause in the search
+        /// query (unless it is explicitly selected by the user) and the currency_code segment is populated in the
+        /// response.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnRate")]
+        public virtual System.Nullable<double> ReturnRate { get; set; }
+
+        /// <summary>
+        /// Number of ordered items sent back for return, reported on the date when the merchant accepted the return.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnedItems")]
+        public virtual System.Nullable<long> ReturnedItems { get; set; }
+
+        /// <summary>
+        /// Total price of ordered items sent back for return, reported on the date when the merchant accepted the
+        /// return. The currency of the returned value is stored in the currency_code segment. If this metric is
+        /// selected, 'segments.currency_code' is automatically added to the SELECT clause in the search query (unless
+        /// it is explicitly selected by the user) and the currency_code segment is populated in the response.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnsMicros")]
+        public virtual System.Nullable<long> ReturnsMicros { get; set; }
+
+        /// <summary>
+        /// Total price of shipped items, reported on the order date. Excludes shipping and taxes (US only). The
+        /// currency of the returned value is stored in the currency_code segment. If this metric is selected,
+        /// 'segments.currency_code' is automatically added to the SELECT clause in the search query (unless it is
+        /// explicitly selected by the user) and the currency_code segment is populated in the response.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("shippedItemSalesMicros")]
+        public virtual System.Nullable<long> ShippedItemSalesMicros { get; set; }
+
+        /// <summary>Number of shipped items, reported on the shipment date.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("shippedItems")]
+        public virtual System.Nullable<long> ShippedItems { get; set; }
+
+        /// <summary>
+        /// Number of fully shipped orders, reported on the last shipment date. **This metric cannot be segmented by
+        /// product dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("shippedOrders")]
+        public virtual System.Nullable<long> ShippedOrders { get; set; }
+
+        /// <summary>
+        /// Number of ordered items not shipped up until the end of the queried day. If a multi-day period is specified
+        /// in the search query, the returned value is the average number of unshipped items over the days in the
+        /// queried period.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("unshippedItems")]
+        public virtual System.Nullable<double> UnshippedItems { get; set; }
+
+        /// <summary>
+        /// Number of orders not shipped or partially shipped up until the end of the queried day. If a multi-day period
+        /// is specified in the search query, the returned value is the average number of unshipped orders over the days
+        /// in the queried period. **This metric cannot be segmented by product dimensions.**
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("unshippedOrders")]
+        public virtual System.Nullable<double> UnshippedOrders { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -15739,12 +16111,12 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         /// Malaysia) - "`postnl`" (PostNL) - "`ptt`" (PTT Turkish Post) - "`eub`" (ePacket) - "`chukou1`" (Chukou1
         /// Logistics) - "`bestex`" (Best Express) - "`canada post`" (Canada Post) - "`purolator`" (Purolator) -
         /// "`canpar`" (Canpar) - "`india post`" (India Post) - "`blue dart`" (Blue Dart) - "`delhivery`" (Delhivery) -
-        /// "`dtdc`" (DTDC) - "`tpc india`" (TPC India) Supported carriers for FR are: - "`la poste`" (La Poste)
-        /// *automatic status updates * - "`colissimo`" (Colissimo by La Poste) *automatic status updates* - "`ups`"
-        /// (United Parcel Service) *automatic status updates * - "`chronopost`" (Chronopost by La Poste) - "`gls`"
-        /// (General Logistics Systems France) - "`dpd`" (DPD Group by GeoPost) - "`bpost`" (Belgian Post Group) -
-        /// "`colis prive`" (Colis Privé) - "`boxtal`" (Boxtal) - "`geodis`" (GEODIS) - "`tnt`" (TNT) - "`db schenker`"
-        /// (DB Schenker) - "`aramex`" (Aramex)
+        /// "`dtdc`" (DTDC) - "`tpc india`" (TPC India) - "`lso`" (Lone Star Overnight) - "`tww`" (Team Worldwide)
+        /// Supported carriers for FR are: - "`la poste`" (La Poste) *automatic status updates * - "`colissimo`"
+        /// (Colissimo by La Poste) *automatic status updates* - "`ups`" (United Parcel Service) *automatic status
+        /// updates * - "`chronopost`" (Chronopost by La Poste) - "`gls`" (General Logistics Systems France) - "`dpd`"
+        /// (DPD Group by GeoPost) - "`bpost`" (Belgian Post Group) - "`colis prive`" (Colis Privé) - "`boxtal`"
+        /// (Boxtal) - "`geodis`" (GEODIS) - "`tnt`" (TNT) - "`db schenker`" (DB Schenker) - "`aramex`" (Aramex)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("carrier")]
         public virtual string Carrier { get; set; }
@@ -15841,7 +16213,8 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         public virtual PriceAmount CustomerShippingFee { get; set; }
 
         /// <summary>
-        /// Required. The delivery postal code, as a continuous string without spaces or dashes, e.g. "95016".
+        /// Required. The delivery postal code, as a continuous string without spaces or dashes, e.g. "95016". This
+        /// field will be anonymized in returned OrderTrackingSignal creation response.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("deliveryPostalCode")]
         public virtual string DeliveryPostalCode { get; set; }
@@ -15872,7 +16245,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("orderCreatedTime")]
         public virtual DateTime OrderCreatedTime { get; set; }
 
-        /// <summary>Required. The ID of the order on the merchant side.</summary>
+        /// <summary>
+        /// Required. The ID of the order on the merchant side. This field will be hashed in returned
+        /// OrderTrackingSignal creation response.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("orderId")]
         public virtual string OrderId { get; set; }
 
@@ -15932,7 +16308,9 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("quantity")]
         public virtual System.Nullable<long> Quantity { get; set; }
 
-        /// <summary>Required. The shipment ID.</summary>
+        /// <summary>
+        /// Required. The shipment ID. This field will be hashed in returned OrderTrackingSignal creation response.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shipmentId")]
         public virtual string ShipmentId { get; set; }
 
@@ -15975,7 +16353,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("latestDeliveryPromiseTime")]
         public virtual DateTime LatestDeliveryPromiseTime { get; set; }
 
-        /// <summary>The origin postal code, as a continuous string without spaces or dashes, e.g. "95016".</summary>
+        /// <summary>
+        /// The origin postal code, as a continuous string without spaces or dashes, e.g. "95016". This field will be
+        /// anonymized in returned OrderTrackingSignal creation response.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("originPostalCode")]
         public virtual string OriginPostalCode { get; set; }
 
@@ -15986,7 +16367,9 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("originRegionCode")]
         public virtual string OriginRegionCode { get; set; }
 
-        /// <summary>Required. The shipment ID.</summary>
+        /// <summary>
+        /// Required. The shipment ID. This field will be hashed in returned OrderTrackingSignal creation response.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shipmentId")]
         public virtual string ShipmentId { get; set; }
 
@@ -16269,9 +16652,19 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
     public class OrderreturnsLineItem : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>The ID of the line item. This value is assigned by Google when an order is created.</summary>
+        /// <summary>
+        /// The ID of the line item. This value is assigned by Google when an order is created. Either lineItemId or
+        /// productId is required.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lineItemId")]
         public virtual string LineItemId { get; set; }
+
+        /// <summary>
+        /// The ID of the product to cancel. This is the REST ID used in the products service. Either lineItemId or
+        /// productId is required.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productId")]
+        public virtual string ProductId { get; set; }
 
         /// <summary>The quantity of this line item.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("quantity")]
@@ -17348,6 +17741,23 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Additional information required for PAYMENT_SERVICE_PROVIDER link type.</summary>
+    public class PaymentServiceProviderLinkInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The business country of the merchant account as identified by the third party service provider.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("externalAccountBusinessCountry")]
+        public virtual string ExternalAccountBusinessCountry { get; set; }
+
+        /// <summary>The id used by the third party service provider to identify the merchant.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("externalAccountId")]
+        public virtual string ExternalAccountId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class PickupCarrierService : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The name of the pickup carrier (e.g., `"UPS"`). Required.</summary>
@@ -17899,9 +18309,8 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
     /// <summary>
     ///  Required product attributes are primarily defined by the products data specification. See the Products Data
-    /// Specification Help Center article for information. Some attributes are country-specific, so make sure you select
-    /// the appropriate country in the drop-down selector at the top of the page. Product data. After inserting,
-    /// updating, or deleting a product, it may take several minutes before changes take effect.
+    /// Specification Help Center article for information. Product data. After inserting, updating, or deleting a
+    /// product, it may take several minutes before changes take effect.
     /// </summary>
     public class Product : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -18113,6 +18522,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("link")]
         public virtual string Link { get; set; }
 
+        /// <summary>URL template for merchant hosted local storefront.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("linkTemplate")]
+        public virtual string LinkTemplate { get; set; }
+
         /// <summary>Loyalty points that users receive after purchasing the item. Japan only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("loyaltyPoints")]
         public virtual LoyaltyPoints LoyaltyPoints { get; set; }
@@ -18141,6 +18554,10 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("mobileLink")]
         public virtual string MobileLink { get; set; }
 
+        /// <summary>URL template for merchant hosted local storefront optimized for mobile devices.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("mobileLinkTemplate")]
+        public virtual string MobileLinkTemplate { get; set; }
+
         /// <summary>Manufacturer Part Number (MPN) of the item.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("mpn")]
         public virtual string Mpn { get; set; }
@@ -18161,6 +18578,20 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         /// <summary>The item's pattern (e.g. polka dots).</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pattern")]
         public virtual string Pattern { get; set; }
+
+        /// <summary>
+        /// The pick up option for the item. Acceptable values are: - "`buy`" - "`reserve`" - "`ship to store`" - "`not
+        /// supported`"
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pickupMethod")]
+        public virtual string PickupMethod { get; set; }
+
+        /// <summary>
+        /// Item store pickup timeline. Acceptable values are: - "`same day`" - "`next day`" - "`2-day`" - "`3-day`" -
+        /// "`4-day`" - "`5-day`" - "`6-day`" - "`7-day`" - "`multi-week`"
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pickupSla")]
+        public virtual string PickupSla { get; set; }
 
         /// <summary>Price of the item.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("price")]
@@ -18647,7 +19078,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         public virtual System.Nullable<ulong> MerchantId { get; set; }
 
         /// <summary>
-        /// The method of the batch entry. Acceptable values are: - "`delete`" - "`get`" - "`insert`"
+        /// The method of the batch entry. Acceptable values are: - "`delete`" - "`get`" - "`insert`" - "`update`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("method")]
         public virtual string Method { get; set; }
@@ -18659,6 +19090,15 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         /// <summary>The ID of the product to get or delete. Only defined if the method is `get` or `delete`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("productId")]
         public virtual string ProductId { get; set; }
+
+        /// <summary>
+        /// The comma-separated list of product attributes to be updated. Example: `"title,salePrice"`. Attributes
+        /// specified in the update mask without a value specified in the body will be deleted from the product. Only
+        /// top-level product attributes can be updated. If not defined, product attributes with set values will be
+        /// updated and other attributes will stay unchanged. Only defined if the method is `update`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateMask")]
+        public virtual object UpdateMask { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -19186,7 +19626,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("applicationCount")]
         public virtual System.Nullable<long> ApplicationCount { get; set; }
 
-        /// <summary>Stats specific to buybox winning rules for product report.</summary>
+        /// <summary>Stats specific to buybox winning rules for product report (deprecated).</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("buyboxWinningProductStats")]
         public virtual RepricingProductReportBuyboxWinningProductStats BuyboxWinningProductStats { get; set; }
 
@@ -19417,7 +19857,7 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
     /// <summary>Resource that represents a daily Repricing rule report. Next ID: 11</summary>
     public class RepricingRuleReport : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>Stats specific to buybox winning rules for rule report.</summary>
+        /// <summary>Stats specific to buybox winning rules for rule report (deprecated).</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("buyboxWinningRuleStats")]
         public virtual RepricingRuleReportBuyboxWinningRuleStats BuyboxWinningRuleStats { get; set; }
 
@@ -19966,6 +20406,25 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Return shipping label for a Buy on Google merchant-managed return.</summary>
+    public class ReturnShippingLabel : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Name of the carrier.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("carrier")]
+        public virtual string Carrier { get; set; }
+
+        /// <summary>The URL for the return shipping label in PDF format</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("labelUri")]
+        public virtual string LabelUri { get; set; }
+
+        /// <summary>The tracking id of this return label.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("trackingId")]
+        public virtual string TrackingId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class ReturnaddressCustomBatchRequest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The request entries to be processed in the batch.</summary>
@@ -20226,6 +20685,57 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
     /// </summary>
     public class Segments : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Brand of the product.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("brand")]
+        public virtual string Brand { get; set; }
+
+        /// <summary>Product category (1st level) in Google's product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("categoryL1")]
+        public virtual string CategoryL1 { get; set; }
+
+        /// <summary>Product category (2nd level) in Google's product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("categoryL2")]
+        public virtual string CategoryL2 { get; set; }
+
+        /// <summary>Product category (3rd level) in Google's product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("categoryL3")]
+        public virtual string CategoryL3 { get; set; }
+
+        /// <summary>Product category (4th level) in Google's product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("categoryL4")]
+        public virtual string CategoryL4 { get; set; }
+
+        /// <summary>Product category (5th level) in Google's product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("categoryL5")]
+        public virtual string CategoryL5 { get; set; }
+
+        /// <summary>
+        /// Currency in which price metrics are represented, e.g., if you select `ordered_item_sales_micros`, the
+        /// returned value will be represented by this currency.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("currencyCode")]
+        public virtual string CurrencyCode { get; set; }
+
+        /// <summary>Custom label 0 for custom grouping of products.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customLabel0")]
+        public virtual string CustomLabel0 { get; set; }
+
+        /// <summary>Custom label 1 for custom grouping of products.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customLabel1")]
+        public virtual string CustomLabel1 { get; set; }
+
+        /// <summary>Custom label 2 for custom grouping of products.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customLabel2")]
+        public virtual string CustomLabel2 { get; set; }
+
+        /// <summary>Custom label 3 for custom grouping of products.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customLabel3")]
+        public virtual string CustomLabel3 { get; set; }
+
+        /// <summary>Custom label 4 for custom grouping of products.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customLabel4")]
+        public virtual string CustomLabel4 { get; set; }
+
         /// <summary>Date in the merchant timezone to which metrics apply.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
         public virtual Date Date { get; set; }
@@ -20234,9 +20744,37 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("offerId")]
         public virtual string OfferId { get; set; }
 
+        /// <summary>Product category (1st level) in merchant's own product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productTypeL1")]
+        public virtual string ProductTypeL1 { get; set; }
+
+        /// <summary>Product category (2nd level) in merchant's own product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productTypeL2")]
+        public virtual string ProductTypeL2 { get; set; }
+
+        /// <summary>Product category (3rd level) in merchant's own product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productTypeL3")]
+        public virtual string ProductTypeL3 { get; set; }
+
+        /// <summary>Product category (4th level) in merchant's own product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productTypeL4")]
+        public virtual string ProductTypeL4 { get; set; }
+
+        /// <summary>Product category (5th level) in merchant's own product taxonomy.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("productTypeL5")]
+        public virtual string ProductTypeL5 { get; set; }
+
         /// <summary>Program to which metrics apply, e.g., Free Product Listing.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("program")]
         public virtual string Program { get; set; }
+
+        /// <summary>Title of the product.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("title")]
+        public virtual string Title { get; set; }
+
+        /// <summary>First day of the week (Monday) of the metrics date in the merchant timezone.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("week")]
+        public virtual Date Week { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -20404,7 +20942,12 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         /// - "`qualityNotExpected`" - "`receivedTooLate`" - "`storePackageMissing`" - "`transitPackageMissing`" -
         /// "`unsuccessfulDeliveryUndeliverable`" - "`wrongChargeInStore`" - "`wrongItem`" - "`returns`" -
         /// "`undeliverable`" - "`issueRelatedRefundAndReplacementAmountDescription`" - "`refundFromMerchant`" -
-        /// "`returnLabelShippingFee`" - "`lumpSumCorrection`" - "`pspFee`"
+        /// "`returnLabelShippingFee`" - "`lumpSumCorrection`" - "`pspFee`" - "`principalRefundDoesNotFit`" -
+        /// "`principalRefundOrderedWrongItem`" - "`principalRefundQualityNotExpected`" -
+        /// "`principalRefundBetterPriceFound`" - "`principalRefundNoLongerNeeded`" - "`principalRefundChangedMind`" -
+        /// "`principalRefundReceivedTooLate`" - "`principalRefundIncorrectItemReceived`" -
+        /// "`principalRefundDamagedOrDefectiveItem`" - "`principalRefundDidNotMatchDescription`" -
+        /// "`principalRefundExpiredItem`"
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("description")]
         public virtual string Description { get; set; }
@@ -21139,7 +21682,11 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("additionalCharges")]
         public virtual System.Collections.Generic.IList<UnitInvoiceAdditionalCharge> AdditionalCharges { get; set; }
 
-        /// <summary>[required] Pre-tax or post-tax price of the unit depending on the locality of the order.</summary>
+        /// <summary>
+        /// [required] Pre-tax or post-tax price of one unit depending on the locality of the order. *Note:* Invoicing
+        /// works on a per unit basis. The `unitPrice` is the price of a single unit, and will be multiplied by the
+        /// number of entries in `shipmentUnitId`.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("unitPrice")]
         public virtual Price UnitPrice { get; set; }
 
@@ -21153,7 +21700,11 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
 
     public class UnitInvoiceAdditionalCharge : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>[required] Amount of the additional charge.</summary>
+        /// <summary>
+        /// [required] Amount of the additional charge per unit. *Note:* Invoicing works on a per unit bases. The
+        /// `additionalChargeAmount` is the amount charged per unit, and will be multiplied by the number of entries in
+        /// `shipmentUnitID`.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("additionalChargeAmount")]
         public virtual Amount AdditionalChargeAmount { get; set; }
 
@@ -21229,13 +21780,60 @@ namespace Google.Apis.ShoppingContent.v2_1.Data
         public virtual string ETag { get; set; }
     }
 
+    public class WarehouseBasedDeliveryTime : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Required. Carrier, such as `"UPS"` or `"Fedex"`. The list of supported carriers can be retrieved via the
+        /// `listSupportedCarriers` method.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("carrier")]
+        public virtual string Carrier { get; set; }
+
+        /// <summary>
+        /// Required. Carrier service, such as `"ground"` or `"2 days"`. The list of supported services for a carrier
+        /// can be retrieved via the `listSupportedCarriers` method. The name of the service must be in the
+        /// eddSupportedServices list.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("carrierService")]
+        public virtual string CarrierService { get; set; }
+
+        /// <summary>Required. Shipping origin's state.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("originAdministrativeArea")]
+        public virtual string OriginAdministrativeArea { get; set; }
+
+        /// <summary>Required. Shipping origin's city.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("originCity")]
+        public virtual string OriginCity { get; set; }
+
+        /// <summary>
+        /// Required. Shipping origin's country represented as a [CLDR territory
+        /// code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("originCountry")]
+        public virtual string OriginCountry { get; set; }
+
+        /// <summary>Required. Shipping origin.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("originPostalCode")]
+        public virtual string OriginPostalCode { get; set; }
+
+        /// <summary>Shipping origin's street address.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("originStreetAddress")]
+        public virtual string OriginStreetAddress { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class Weight : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Required. The weight unit. Acceptable values are: - "`kg`" - "`lb`" </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("unit")]
         public virtual string Unit { get; set; }
 
-        /// <summary>Required. The weight represented as a number.</summary>
+        /// <summary>
+        /// Required. The weight represented as a number. The weight can have a maximum precision of four decimal
+        /// places.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("value")]
         public virtual string Value { get; set; }
 

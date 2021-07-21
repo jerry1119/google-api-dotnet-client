@@ -1518,7 +1518,7 @@ namespace Google.Apis.Drive.v3
                 InitParameters();
             }
 
-            /// <summary>Maximum number of shared drives to return.</summary>
+            /// <summary>Maximum number of shared drives to return per page.</summary>
             [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> PageSize { get; set; }
 
@@ -2469,10 +2469,17 @@ namespace Google.Apis.Drive.v3
 
             /// <summary>
             /// The space in which the IDs can be used to create new files. Supported values are 'drive' and
-            /// 'appDataFolder'.
+            /// 'appDataFolder'. (Default: 'drive')
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("space", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string Space { get; set; }
+
+            /// <summary>
+            /// The type of items which the IDs can be used for. Supported values are 'files' and 'shortcuts'. Note that
+            /// 'shortcuts' are only supported in the drive 'space'. (Default: 'files')
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("type", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string Type { get; set; }
 
             /// <summary>Gets the method name.</summary>
             public override string MethodName => "generateIds";
@@ -2501,6 +2508,14 @@ namespace Google.Apis.Drive.v3
                     IsRequired = false,
                     ParameterType = "query",
                     DefaultValue = "drive",
+                    Pattern = null,
+                });
+                RequestParameters.Add("type", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "type",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = "files",
                     Pattern = null,
                 });
             }
@@ -3527,7 +3542,11 @@ namespace Google.Apis.Drive.v3
 
             /// <summary>
             /// Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This
-            /// parameter is required as an acknowledgement of the side effect.
+            /// parameter is required as an acknowledgement of the side effect. File owners can only transfer ownership
+            /// of files existing on My Drive. Files existing in a shared drive are owned by the organization that owns
+            /// that shared drive. Ownership transfers are not supported for files and folders in shared drives.
+            /// Organizers of a shared drive can move items from that shared drive into their My Drive which transfers
+            /// the ownership to them.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("transferOwnership", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<bool> TransferOwnership { get; set; }
@@ -4005,7 +4024,11 @@ namespace Google.Apis.Drive.v3
 
             /// <summary>
             /// Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This
-            /// parameter is required as an acknowledgement of the side effect.
+            /// parameter is required as an acknowledgement of the side effect. File owners can only transfer ownership
+            /// of files existing on My Drive. Files existing in a shared drive are owned by the organization that owns
+            /// that shared drive. Ownership transfers are not supported for files and folders in shared drives.
+            /// Organizers of a shared drive can move items from that shared drive into their My Drive which transfers
+            /// the ownership to them.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("transferOwnership", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<bool> TransferOwnership { get; set; }
@@ -6079,6 +6102,10 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("lastModifyingUser")]
         public virtual User LastModifyingUser { get; set; }
 
+        /// <summary>Contains details about the link URLs that clients are using to refer to this item.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("linkShareMetadata")]
+        public virtual LinkShareMetadataData LinkShareMetadata { get; set; }
+
         /// <summary>
         /// The MD5 checksum for the content of the file. This is only applicable to files with binary content in Google
         /// Drive.
@@ -6146,8 +6173,8 @@ namespace Google.Apis.Drive.v3.Data
         public virtual System.Nullable<bool> OwnedByMe { get; set; }
 
         /// <summary>
-        /// The owners of the file. Currently, only certain legacy files may have more than one owner. Not populated for
-        /// items in shared drives.
+        /// The owner of this file. Only certain legacy files may have more than one owner. This field isn't populated
+        /// for items in shared drives.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("owners")]
         public virtual System.Collections.Generic.IList<User> Owners { get; set; }
@@ -6185,6 +6212,10 @@ namespace Google.Apis.Drive.v3.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("quotaBytesUsed")]
         public virtual System.Nullable<long> QuotaBytesUsed { get; set; }
+
+        /// <summary>A key needed to access the item via a shared link.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("resourceKey")]
+        public virtual string ResourceKey { get; set; }
 
         /// <summary>Whether the file has been shared. Not populated for items in shared drives.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shared")]
@@ -6360,6 +6391,12 @@ namespace Google.Apis.Drive.v3.Data
             /// </summary>
             [Newtonsoft.Json.JsonPropertyAttribute("canChangeCopyRequiresWriterPermission")]
             public virtual System.Nullable<bool> CanChangeCopyRequiresWriterPermission { get; set; }
+
+            /// <summary>
+            /// Whether the current user can change the securityUpdateEnabled field on link share metadata.
+            /// </summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("canChangeSecurityUpdateEnabled")]
+            public virtual System.Nullable<bool> CanChangeSecurityUpdateEnabled { get; set; }
 
             /// <summary>Deprecated</summary>
             [Newtonsoft.Json.JsonPropertyAttribute("canChangeViewersCanCopyContent")]
@@ -6665,6 +6702,18 @@ namespace Google.Apis.Drive.v3.Data
             }
         }
 
+        /// <summary>Contains details about the link URLs that clients are using to refer to this item.</summary>
+        public class LinkShareMetadataData
+        {
+            /// <summary>Whether the file is eligible for security update.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("securityUpdateEligible")]
+            public virtual System.Nullable<bool> SecurityUpdateEligible { get; set; }
+
+            /// <summary>Whether the security update is enabled for this file.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("securityUpdateEnabled")]
+            public virtual System.Nullable<bool> SecurityUpdateEnabled { get; set; }
+        }
+
         /// <summary>
         /// Shortcut file details. Only populated for shortcut files, which have the mimeType field set to
         /// application/vnd.google-apps.shortcut.
@@ -6681,6 +6730,10 @@ namespace Google.Apis.Drive.v3.Data
             /// </summary>
             [Newtonsoft.Json.JsonPropertyAttribute("targetMimeType")]
             public virtual string TargetMimeType { get; set; }
+
+            /// <summary>The ResourceKey for the target file.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("targetResourceKey")]
+            public virtual string TargetResourceKey { get; set; }
         }
 
         /// <summary>Additional metadata about video media. This may not be available immediately upon upload.</summary>

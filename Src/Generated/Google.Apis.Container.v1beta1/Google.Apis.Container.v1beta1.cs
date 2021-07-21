@@ -6172,6 +6172,13 @@ namespace Google.Apis.Container.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("acceleratorType")]
         public virtual string AcceleratorType { get; set; }
 
+        /// <summary>
+        /// Size of partitions to create on the GPU. Valid values are described in the NVIDIA [mig user
+        /// guide](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#partitioning).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gpuPartitionSize")]
+        public virtual string GpuPartitionSize { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -6322,6 +6329,10 @@ namespace Google.Apis.Container.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("diskType")]
         public virtual string DiskType { get; set; }
+
+        /// <summary>The image type to use for NAP created node.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("imageType")]
+        public virtual string ImageType { get; set; }
 
         /// <summary>NodeManagement configuration for this NodePool.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("management")]
@@ -6759,6 +6770,13 @@ namespace Google.Apis.Container.v1beta1.Data
         public virtual System.Nullable<int> NodeIpv4CidrSize { get; set; }
 
         /// <summary>
+        /// Default NodePool settings for the entire cluster. These settings are overridden if specified on the specific
+        /// NodePool object.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nodePoolDefaults")]
+        public virtual NodePoolDefaults NodePoolDefaults { get; set; }
+
+        /// <summary>
         /// The node pools associated with this cluster. This field should not be set if "node_config" or
         /// "initial_node_count" are specified.
         /// </summary>
@@ -6926,6 +6944,14 @@ namespace Google.Apis.Container.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("desiredAddonsConfig")]
         public virtual AddonsConfig DesiredAddonsConfig { get; set; }
 
+        /// <summary>AuthenticatorGroupsConfig specifies the config for the cluster security groups settings.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("desiredAuthenticatorGroupsConfig")]
+        public virtual AuthenticatorGroupsConfig DesiredAuthenticatorGroupsConfig { get; set; }
+
+        /// <summary>The desired Autopilot configuration for the cluster.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("desiredAutopilot")]
+        public virtual Autopilot DesiredAutopilot { get; set; }
+
         /// <summary>The desired configuration options for the Binary Authorization feature.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("desiredBinaryAuthorization")]
         public virtual BinaryAuthorization DesiredBinaryAuthorization { get; set; }
@@ -6949,6 +6975,10 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>The desired status of whether to disable default sNAT for this cluster.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("desiredDefaultSnatStatus")]
         public virtual DefaultSnatStatus DesiredDefaultSnatStatus { get; set; }
+
+        /// <summary>DNSConfig contains clusterDNS config for this cluster.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("desiredDnsConfig")]
+        public virtual DNSConfig DesiredDnsConfig { get; set; }
 
         /// <summary>
         /// The desired image type for the node pool. NOTE: Set the "desired_node_pool" field as well.
@@ -7060,6 +7090,12 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>The desired configuration for exporting resource usage.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("desiredResourceUsageExportConfig")]
         public virtual ResourceUsageExportConfig DesiredResourceUsageExportConfig { get; set; }
+
+        /// <summary>
+        /// ServiceExternalIPsConfig specifies the config for the use of Services with ExternalIPs field.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("desiredServiceExternalIpsConfig")]
+        public virtual ServiceExternalIPsConfig DesiredServiceExternalIpsConfig { get; set; }
 
         /// <summary>Configuration for Shielded Nodes.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("desiredShieldedNodes")]
@@ -7239,6 +7275,25 @@ namespace Google.Apis.Container.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>DNSConfig contains the desired set of options for configuring clusterDNS.</summary>
+    public class DNSConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>cluster_dns indicates which in-cluster DNS provider should be used.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("clusterDns")]
+        public virtual string ClusterDns { get; set; }
+
+        /// <summary>cluster_dns_domain is the suffix used for all cluster service records.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("clusterDnsDomain")]
+        public virtual string ClusterDnsDomain { get; set; }
+
+        /// <summary>cluster_dns_scope indicates the scope of access to cluster DNS records.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("clusterDnsScope")]
+        public virtual string ClusterDnsScope { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Time window specified for daily maintenance operations.</summary>
     public class DailyMaintenanceWindow : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -7273,6 +7328,35 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>Denotes the state of etcd encryption.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("state")]
         public virtual string State { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either
+    /// specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one
+    /// of the following: * A full date, with non-zero year, month, and day values * A month and day value, with a zero
+    /// year, such as an anniversary * A year on its own, with zero month and day values * A year and month value, with
+    /// a zero day, such as a credit card expiration date Related types are google.type.TimeOfDay and
+    /// `google.protobuf.Timestamp`.
+    /// </summary>
+    public class Date : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a
+        /// year and month where the day isn't significant.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("day")]
+        public virtual System.Nullable<int> Day { get; set; }
+
+        /// <summary>Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("month")]
+        public virtual System.Nullable<int> Month { get; set; }
+
+        /// <summary>Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("year")]
+        public virtual System.Nullable<int> Year { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -7992,6 +8076,10 @@ namespace Google.Apis.Container.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("defaultSnatStatus")]
         public virtual DefaultSnatStatus DefaultSnatStatus { get; set; }
 
+        /// <summary>DNSConfig contains clusterDNS config for this cluster.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("dnsConfig")]
+        public virtual DNSConfig DnsConfig { get; set; }
+
         /// <summary>
         /// Whether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible
         /// for VPC network.
@@ -8017,6 +8105,10 @@ namespace Google.Apis.Container.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("privateIpv6GoogleAccess")]
         public virtual string PrivateIpv6GoogleAccess { get; set; }
+
+        /// <summary>ServiceExternalIPsConfig specifies if services with externalIPs field are blocked or not.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serviceExternalIpsConfig")]
+        public virtual ServiceExternalIPsConfig ServiceExternalIpsConfig { get; set; }
 
         /// <summary>
         /// Output only. The relative name of the Google Compute Engine
@@ -8254,6 +8346,13 @@ namespace Google.Apis.Container.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Subset of NodeConfig message that has defaults.</summary>
+    public class NodeConfigDefaults : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Node kubelet configs.</summary>
     public class NodeKubeletConfig : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -8360,7 +8459,16 @@ namespace Google.Apis.Container.v1beta1.Data
     /// NodePool contains the name and configuration for a cluster's node pool. Node pools are a set of nodes (i.e.
     /// VM's), with a common configuration and specification, under the control of the cluster master. They may have a
     /// set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may
-    /// also be resized up or down, to accommodate the workload.
+    /// also be resized up or down, to accommodate the workload. These upgrade settings control the level of parallelism
+    /// and the level of disruption caused by an upgrade. maxUnavailable controls the number of nodes that can be
+    /// simultaneously unavailable. maxSurge controls the number of additional nodes that can be added to the node pool
+    /// temporarily for the time of the upgrade to increase the number of available nodes. (maxUnavailable + maxSurge)
+    /// determines the level of parallelism (how many nodes are being upgraded at the same time). Note: upgrades
+    /// inevitably introduce some disruption since workloads need to be moved from old nodes to new, upgraded ones. Even
+    /// if maxUnavailable=0, this holds true. (Disruption stays within the limits of PodDisruptionBudget, if it is
+    /// configured.) Consider a hypothetical node pool with 5 nodes having maxSurge=2, maxUnavailable=1. This means the
+    /// upgrade process upgrades 3 nodes simultaneously. It creates 2 additional (upgraded) nodes, then it brings down 3
+    /// old (not yet upgraded) nodes at the same time. This ensures that there are always at least 4 nodes available.
     /// </summary>
     public class NodePool : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -8479,6 +8587,17 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>Minimum number of nodes in the NodePool. Must be &gt;= 1 and &lt;= max_node_count.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minNodeCount")]
         public virtual System.Nullable<int> MinNodeCount { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Subset of Nodepool message that has defaults.</summary>
+    public class NodePoolDefaults : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Subset of NodeConfig message that has defaults.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nodeConfigDefaults")]
+        public virtual NodeConfigDefaults NodeConfigDefaults { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -8955,6 +9074,21 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>List of valid node upgrade target versions, in descending order.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("validNodeVersions")]
         public virtual System.Collections.Generic.IList<string> ValidNodeVersions { get; set; }
+
+        /// <summary>Maps of Kubernetes version and supported Windows server versions.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("windowsVersionMaps")]
+        public virtual System.Collections.Generic.IDictionary<string, WindowsVersions> WindowsVersionMaps { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Config to block services with externalIPs field.</summary>
+    public class ServiceExternalIPsConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Whether Services with ExternalIPs field are allowed or not.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
+        public virtual System.Nullable<bool> Enabled { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -9871,9 +10005,7 @@ namespace Google.Apis.Container.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("releaseChannel")]
         public virtual ReleaseChannel ReleaseChannel { get; set; }
 
-        /// <summary>
-        /// Optional. Optional relative path to the resource. For example, the relative path of the node pool.
-        /// </summary>
+        /// <summary>Optional relative path to the resource. For example, the relative path of the node pool.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("resource")]
         public virtual string Resource { get; set; }
 
@@ -9925,18 +10057,6 @@ namespace Google.Apis.Container.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>
-    /// These upgrade settings control the level of parallelism and the level of disruption caused by an upgrade.
-    /// maxUnavailable controls the number of nodes that can be simultaneously unavailable. maxSurge controls the number
-    /// of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the
-    /// number of available nodes. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are
-    /// being upgraded at the same time). Note: upgrades inevitably introduce some disruption since workloads need to be
-    /// moved from old nodes to new, upgraded ones. Even if maxUnavailable=0, this holds true. (Disruption stays within
-    /// the limits of PodDisruptionBudget, if it is configured.) Consider a hypothetical node pool with 5 nodes having
-    /// maxSurge=2, maxUnavailable=1. This means the upgrade process upgrades 3 nodes simultaneously. It creates 2
-    /// additional (upgraded) nodes, then it brings down 3 old (not yet upgraded) nodes at the same time. This ensures
-    /// that there are always at least 4 nodes available.
-    /// </summary>
     public class UpgradeSettings : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -10021,6 +10141,36 @@ namespace Google.Apis.Container.v1beta1.Data
         /// <summary>Enables vertical pod autoscaling.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
         public virtual System.Nullable<bool> Enabled { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Windows server version.</summary>
+    public class WindowsVersion : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Windows server image type</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("imageType")]
+        public virtual string ImageType { get; set; }
+
+        /// <summary>Windows server build number</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("osVersion")]
+        public virtual string OsVersion { get; set; }
+
+        /// <summary>Mainstream support end date</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("supportEndDate")]
+        public virtual Date SupportEndDate { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Windows server versions.</summary>
+    public class WindowsVersions : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>List of Windows server versions.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("windowsVersions")]
+        public virtual System.Collections.Generic.IList<WindowsVersion> WindowsVersionsValue { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

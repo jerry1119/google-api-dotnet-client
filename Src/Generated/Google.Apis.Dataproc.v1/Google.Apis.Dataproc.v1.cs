@@ -2301,13 +2301,13 @@ namespace Google.Apis.Dataproc.v1
                     public virtual string Region { get; private set; }
 
                     /// <summary>
-                    /// Optional. A unique id used to identify the request. If the server receives two
+                    /// Optional. A unique ID used to identify the request. If the server receives two
                     /// CreateClusterRequest
                     /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateClusterRequest)s
                     /// with the same id, then the second request will be ignored and the first
                     /// google.longrunning.Operation created and stored in the backend is returned.It is recommended to
                     /// always set this value to a UUID
-                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters
+                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters
                     /// (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40
                     /// characters.
                     /// </summary>
@@ -2411,13 +2411,13 @@ namespace Google.Apis.Dataproc.v1
                     public virtual string ClusterUuid { get; set; }
 
                     /// <summary>
-                    /// Optional. A unique id used to identify the request. If the server receives two
+                    /// Optional. A unique ID used to identify the request. If the server receives two
                     /// DeleteClusterRequest
                     /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.DeleteClusterRequest)s
                     /// with the same id, then the second request will be ignored and the first
                     /// google.longrunning.Operation created and stored in the backend is returned.It is recommended to
                     /// always set this value to a UUID
-                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters
+                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters
                     /// (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40
                     /// characters.
                     /// </summary>
@@ -2923,6 +2923,7 @@ namespace Google.Apis.Dataproc.v1
                 /// <summary>
                 /// Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata
                 /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+                /// The cluster must be in a RUNNING state or an error is returned.
                 /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="projectId">
@@ -2938,6 +2939,7 @@ namespace Google.Apis.Dataproc.v1
                 /// <summary>
                 /// Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata
                 /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+                /// The cluster must be in a RUNNING state or an error is returned.
                 /// </summary>
                 public class PatchRequest : DataprocBaseServiceRequest<Google.Apis.Dataproc.v1.Data.Operation>
                 {
@@ -2976,13 +2978,13 @@ namespace Google.Apis.Dataproc.v1
                     public virtual object GracefulDecommissionTimeout { get; set; }
 
                     /// <summary>
-                    /// Optional. A unique id used to identify the request. If the server receives two
+                    /// Optional. A unique ID used to identify the request. If the server receives two
                     /// UpdateClusterRequest
                     /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.UpdateClusterRequest)s
                     /// with the same id, then the second request will be ignored and the first
                     /// google.longrunning.Operation created and stored in the backend is returned.It is recommended to
                     /// always set this value to a UUID
-                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters
+                    /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters
                     /// (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40
                     /// characters.
                     /// </summary>
@@ -3069,6 +3071,89 @@ namespace Google.Apis.Dataproc.v1
                             Name = "updateMask",
                             IsRequired = false,
                             ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Repairs a cluster.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="projectId">
+                /// Required. The ID of the Google Cloud Platform project the cluster belongs to.
+                /// </param>
+                /// <param name="region">Required. The Dataproc region in which to handle the request.</param>
+                /// <param name="clusterName">Required. The cluster name.</param>
+                public virtual RepairRequest Repair(Google.Apis.Dataproc.v1.Data.RepairClusterRequest body, string projectId, string region, string clusterName)
+                {
+                    return new RepairRequest(service, body, projectId, region, clusterName);
+                }
+
+                /// <summary>Repairs a cluster.</summary>
+                public class RepairRequest : DataprocBaseServiceRequest<Google.Apis.Dataproc.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new Repair request.</summary>
+                    public RepairRequest(Google.Apis.Services.IClientService service, Google.Apis.Dataproc.v1.Data.RepairClusterRequest body, string projectId, string region, string clusterName) : base(service)
+                    {
+                        ProjectId = projectId;
+                        Region = region;
+                        ClusterName = clusterName;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>Required. The ID of the Google Cloud Platform project the cluster belongs to.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string ProjectId { get; private set; }
+
+                    /// <summary>Required. The Dataproc region in which to handle the request.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("region", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Region { get; private set; }
+
+                    /// <summary>Required. The cluster name.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("clusterName", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string ClusterName { get; private set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.Dataproc.v1.Data.RepairClusterRequest Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "repair";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/projects/{projectId}/regions/{region}/clusters/{clusterName}:repair";
+
+                    /// <summary>Initializes Repair parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("region", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "region",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("clusterName", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "clusterName",
+                            IsRequired = true,
+                            ParameterType = "path",
                             DefaultValue = null,
                             Pattern = null,
                         });
@@ -5613,7 +5698,7 @@ namespace Google.Apis.Dataproc.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("cooldownPeriod")]
         public virtual object CooldownPeriod { get; set; }
 
-        /// <summary>Required. YARN autoscaling configuration.</summary>
+        /// <summary>Optional. YARN autoscaling configuration.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("yarnConfig")]
         public virtual BasicYarnAutoscalingConfig YarnConfig { get; set; }
 
@@ -5671,6 +5756,45 @@ namespace Google.Apis.Dataproc.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("scaleUpMinWorkerFraction")]
         public virtual System.Nullable<double> ScaleUpMinWorkerFraction { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata describing the Batch operation.</summary>
+    public class BatchOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Name of the batch for the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("batch")]
+        public virtual string Batch { get; set; }
+
+        /// <summary>Batch UUID for the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("batchUuid")]
+        public virtual string BatchUuid { get; set; }
+
+        /// <summary>The time when the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>Short description of the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        public virtual string Description { get; set; }
+
+        /// <summary>The time when the operation finished.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("doneTime")]
+        public virtual object DoneTime { get; set; }
+
+        /// <summary>Labels associated with the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("labels")]
+        public virtual System.Collections.Generic.IDictionary<string, string> Labels { get; set; }
+
+        /// <summary>The operation type.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operationType")]
+        public virtual string OperationType { get; set; }
+
+        /// <summary>Warnings encountered during operation execution.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
+        public virtual System.Collections.Generic.IList<string> Warnings { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -6028,7 +6152,7 @@ namespace Google.Apis.Dataproc.v1.Data
 
     /// <summary>
     /// Confidential Instance Config for clusters using Confidential VMs
-    /// (https://cloud.google.com/compute/confidential-vm/docs) NEXT ID: 2
+    /// (https://cloud.google.com/compute/confidential-vm/docs)
     /// </summary>
     public class ConfidentialInstanceConfig : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -6187,7 +6311,7 @@ namespace Google.Apis.Dataproc.v1.Data
     {
         /// <summary>
         /// Optional. Confidential Instance Config for clusters using Confidential VMs
-        /// (https://cloud.google.com/compute/confidential-vm/docs)
+        /// (https://cloud.google.com/compute/confidential-vm/docs).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("confidentialInstanceConfig")]
         public virtual ConfidentialInstanceConfig ConfidentialInstanceConfig { get; set; }
@@ -6605,7 +6729,11 @@ namespace Google.Apis.Dataproc.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("instanceName")]
         public virtual string InstanceName { get; set; }
 
-        /// <summary>The public key used for sharing data with this instance.</summary>
+        /// <summary>The public ECIES key used for sharing data with this instance.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("publicEciesKey")]
+        public virtual string PublicEciesKey { get; set; }
+
+        /// <summary>The public RSA key used for sharing data with this instance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("publicKey")]
         public virtual string PublicKey { get; set; }
 
@@ -7585,6 +7713,30 @@ namespace Google.Apis.Dataproc.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>A request to repair a cluster.</summary>
+    public class RepairClusterRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Optional. Specifying the cluster_uuid means the RPC will fail (with error NOT_FOUND) if a cluster with the
+        /// specified UUID does not exist.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("clusterUuid")]
+        public virtual string ClusterUuid { get; set; }
+
+        /// <summary>
+        /// Optional. A unique ID used to identify the request. If the server receives two RepairClusterRequests with
+        /// the same ID, the second request is ignored, and the first google.longrunning.Operation created and stored in
+        /// the backend is returned.Recommendation: Set this value to a UUID
+        /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters (a-z, A-Z),
+        /// numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("requestId")]
+        public virtual string RequestId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Reservation Affinity for consuming Zonal reservation.</summary>
     public class ReservationAffinity : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -7841,11 +7993,11 @@ namespace Google.Apis.Dataproc.v1.Data
         public virtual string ClusterUuid { get; set; }
 
         /// <summary>
-        /// Optional. A unique id used to identify the request. If the server receives two StartClusterRequest
+        /// Optional. A unique ID used to identify the request. If the server receives two StartClusterRequest
         /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.StartClusterRequest)s
         /// with the same id, then the second request will be ignored and the first google.longrunning.Operation created
         /// and stored in the backend is returned.Recommendation: Set this value to a UUID
-        /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters (a-z, A-Z),
+        /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters (a-z, A-Z),
         /// numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("requestId")]
@@ -7895,11 +8047,11 @@ namespace Google.Apis.Dataproc.v1.Data
         public virtual string ClusterUuid { get; set; }
 
         /// <summary>
-        /// Optional. A unique id used to identify the request. If the server receives two StopClusterRequest
+        /// Optional. A unique ID used to identify the request. If the server receives two StopClusterRequest
         /// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.StopClusterRequest)s
         /// with the same id, then the second request will be ignored and the first google.longrunning.Operation created
         /// and stored in the backend is returned.Recommendation: Set this value to a UUID
-        /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters (a-z, A-Z),
+        /// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters (a-z, A-Z),
         /// numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("requestId")]

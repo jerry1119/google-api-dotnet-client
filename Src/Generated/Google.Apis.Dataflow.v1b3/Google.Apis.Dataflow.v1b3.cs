@@ -5016,10 +5016,7 @@ namespace Google.Apis.Dataflow.v1b3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("time")]
         public virtual object Time { get; set; }
 
-        /// <summary>
-        /// A short and friendly name for the worker pool this event refers to, populated from the value of
-        /// PoolStageRelation::user_pool_name.
-        /// </summary>
+        /// <summary>A short and friendly name for the worker pool this event refers to.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
         public virtual string WorkerPool { get; set; }
 
@@ -5683,8 +5680,7 @@ namespace Google.Apis.Dataflow.v1b3.Data
 
         /// <summary>
         /// The list of experiments to enable. This field should be used for SDK related experiments and not for service
-        /// related experiments. The proper field for service related experiments is service_options. For more details
-        /// see the rationale at go/user-specified-service-options.
+        /// related experiments. The proper field for service related experiments is service_options.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("experiments")]
         public virtual System.Collections.Generic.IList<string> Experiments { get; set; }
@@ -5719,7 +5715,7 @@ namespace Google.Apis.Dataflow.v1b3.Data
         /// <summary>
         /// The list of service options to enable. This field should be used for service related experiments only. These
         /// experiments, when graduating to GA, should be replaced by dedicated fields or become default (i.e. always
-        /// on). For more details see the rationale at go/user-specified-service-options.
+        /// on).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serviceOptions")]
         public virtual System.Collections.Generic.IList<string> ServiceOptions { get; set; }
@@ -5891,6 +5887,10 @@ namespace Google.Apis.Dataflow.v1b3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("additionalUserLabels")]
         public virtual System.Collections.Generic.IDictionary<string, string> AdditionalUserLabels { get; set; }
 
+        /// <summary>Worker disk size, in gigabytes.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("diskSizeGb")]
+        public virtual System.Nullable<int> DiskSizeGb { get; set; }
+
         /// <summary>Whether to enable Streaming Engine for the job.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enableStreamingEngine")]
         public virtual System.Nullable<bool> EnableStreamingEngine { get; set; }
@@ -5915,6 +5915,10 @@ namespace Google.Apis.Dataflow.v1b3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("machineType")]
         public virtual string MachineType { get; set; }
 
+        /// <summary>The maximum number of workers to cap scaling at.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxNumWorkers")]
+        public virtual System.Nullable<int> MaxNumWorkers { get; set; }
+
         /// <summary>
         /// The maximum number of Google Compute Engine instances to be made available to your pipeline during
         /// execution, from 1 to 1000.
@@ -5931,6 +5935,13 @@ namespace Google.Apis.Dataflow.v1b3.Data
         /// <summary>The initial number of Google Compute Engine instances for the job.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("numWorkers")]
         public virtual System.Nullable<int> NumWorkers { get; set; }
+
+        /// <summary>
+        /// Docker registry location of container image to use for the 'worker harness. Default is the container for the
+        /// version of the SDK. Note this field is only valid for portable pipelines.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("sdkContainerImage")]
+        public virtual string SdkContainerImage { get; set; }
 
         /// <summary>The email address of the service account to run the job as.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serviceAccountEmail")]
@@ -7145,6 +7156,10 @@ namespace Google.Apis.Dataflow.v1b3.Data
     /// <summary>Metadata for a specific parameter.</summary>
     public class ParameterMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Optional. Additional metadata for describing this parameter.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("customMetadata")]
+        public virtual System.Collections.Generic.IDictionary<string, string> CustomMetadata { get; set; }
+
         /// <summary>Required. The help text to display for the parameter.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("helpText")]
         public virtual string HelpText { get; set; }
@@ -7875,6 +7890,10 @@ namespace Google.Apis.Dataflow.v1b3.Data
         /// <summary>PubSub snapshot metadata.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pubsubMetadata")]
         public virtual System.Collections.Generic.IList<PubsubSnapshotMetadata> PubsubMetadata { get; set; }
+
+        /// <summary>Cloud region where this snapshot lives in, e.g., "us-central1".</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("region")]
+        public virtual string Region { get; set; }
 
         /// <summary>The job this snapshot was created from.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("sourceJobId")]

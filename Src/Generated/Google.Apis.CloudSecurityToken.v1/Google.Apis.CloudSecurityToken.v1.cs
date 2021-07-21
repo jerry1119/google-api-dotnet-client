@@ -262,6 +262,51 @@ namespace Google.Apis.CloudSecurityToken.v1
         }
 
         /// <summary>
+        /// Gets information about a Google OAuth 2.0 access token issued by the Google Cloud [Security Token Service
+        /// API](https://cloud.google.com/iam/docs/reference/sts/rest).
+        /// </summary>
+        /// <param name="body">The body of the request.</param>
+        public virtual IntrospectRequest Introspect(Google.Apis.CloudSecurityToken.v1.Data.GoogleIdentityStsV1IntrospectTokenRequest body)
+        {
+            return new IntrospectRequest(service, body);
+        }
+
+        /// <summary>
+        /// Gets information about a Google OAuth 2.0 access token issued by the Google Cloud [Security Token Service
+        /// API](https://cloud.google.com/iam/docs/reference/sts/rest).
+        /// </summary>
+        public class IntrospectRequest : CloudSecurityTokenBaseServiceRequest<Google.Apis.CloudSecurityToken.v1.Data.GoogleIdentityStsV1IntrospectTokenResponse>
+        {
+            /// <summary>Constructs a new Introspect request.</summary>
+            public IntrospectRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudSecurityToken.v1.Data.GoogleIdentityStsV1IntrospectTokenRequest body) : base(service)
+            {
+                Body = body;
+                InitParameters();
+            }
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.CloudSecurityToken.v1.Data.GoogleIdentityStsV1IntrospectTokenRequest Body { get; set; }
+
+            /// <summary>Returns the body of the request.</summary>
+            protected override object GetBody() => Body;
+
+            /// <summary>Gets the method name.</summary>
+            public override string MethodName => "introspect";
+
+            /// <summary>Gets the HTTP method.</summary>
+            public override string HttpMethod => "POST";
+
+            /// <summary>Gets the REST path.</summary>
+            public override string RestPath => "v1/introspect";
+
+            /// <summary>Initializes Introspect parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+            }
+        }
+
+        /// <summary>
         /// Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within a
         /// workload identity pool, or it applies a Credential Access Boundary to a Google access token. When you call
         /// this method, do not send the `Authorization` HTTP header in the request. This method does not require the
@@ -353,28 +398,33 @@ namespace Google.Apis.CloudSecurityToken.v1.Data
         public virtual string Scope { get; set; }
 
         /// <summary>
-        /// Required. The input token. This token is a either an external credential issued by a workload identity pool
+        /// Required. The input token. This token is either an external credential issued by a workload identity pool
         /// provider, or a short-lived access token issued by Google. If the token is an OIDC JWT, it must use the JWT
         /// format defined in [RFC 7523](https://tools.ietf.org/html/rfc7523), and the `subject_token_type` must be
-        /// `urn:ietf:params:oauth:token-type:jwt`. The following headers are required: - `kid`: The identifier of the
-        /// signing key securing the JWT. - `alg`: The cryptographic algorithm securing the JWT. Must be `RS256`. The
-        /// following payload fields are required. For more information, see [RFC 7523, Section
-        /// 3](https://tools.ietf.org/html/rfc7523#section-3): - `iss`: The issuer of the token. The issuer must provide
-        /// a discovery document at the URL `/.well-known/openid-configuration`, where `` is the value of this field.
-        /// The document must be formatted according to section 4.2 of the [OIDC 1.0 Discovery
+        /// either `urn:ietf:params:oauth:token-type:jwt` or `urn:ietf:params:oauth:token-type:id_token`. The following
+        /// headers are required: - `kid`: The identifier of the signing key securing the JWT. - `alg`: The
+        /// cryptographic algorithm securing the JWT. Must be `RS256` or `ES256`. The following payload fields are
+        /// required. For more information, see [RFC 7523, Section 3](https://tools.ietf.org/html/rfc7523#section-3): -
+        /// `iss`: The issuer of the token. The issuer must provide a discovery document at the URL
+        /// `/.well-known/openid-configuration`, where `` is the value of this field. The document must be formatted
+        /// according to section 4.2 of the [OIDC 1.0 Discovery
         /// specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse). -
         /// `iat`: The issue time, in seconds, since the Unix epoch. Must be in the past. - `exp`: The expiration time,
         /// in seconds, since the Unix epoch. Must be less than 48 hours after `iat`. Shorter expiration times are more
         /// secure. If possible, we recommend setting an expiration time less than 6 hours. - `sub`: The identity
-        /// asserted in the JWT. - `aud`: Configured by the mapper policy. The default value is the service account's
-        /// unique ID. Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example payload: ``` { "iss":
-        /// "https://accounts.google.com", "iat": 1517963104, "exp": 1517966704, "aud": "113475438248934895348", "sub":
-        /// "113475438248934895348", "my_claims": { "additional_claim": "value" } } ``` If `subject_token` is for AWS,
-        /// it must be a serialized `GetCallerIdentity` token. This token contains the same information as a request to
-        /// the AWS [`GetCallerIdentity()`](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity)
-        /// method, as well as the AWS
-        /// [signature](https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html) for the request
-        /// information. Use Signature Version 4. Format the request as URL-encoded JSON, and set the
+        /// asserted in the JWT. - `aud`: For workload identity pools, this must be a value specified in the allowed
+        /// audiences for the workload identity pool provider, or one of the audiences allowed by default if no
+        /// audiences were specified. See
+        /// https://cloud.google.com/iam/docs/reference/rest/v1/projects.locations.workloadIdentityPools.providers#oidc
+        /// Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example payload: ``` { "iss":
+        /// "https://accounts.google.com", "iat": 1517963104, "exp": 1517966704, "aud":
+        /// "//iam.googleapis.com/projects/1234567890123/locations/global/workloadIdentityPools/my-pool/providers/my-provider",
+        /// "sub": "113475438248934895348", "my_claims": { "additional_claim": "value" } } ``` If `subject_token` is for
+        /// AWS, it must be a serialized `GetCallerIdentity` token. This token contains the same information as a
+        /// request to the AWS
+        /// [`GetCallerIdentity()`](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity) method,
+        /// as well as the AWS [signature](https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html)
+        /// for the request information. Use Signature Version 4. Format the request as URL-encoded JSON, and set the
         /// `subject_token_type` parameter to `urn:ietf:params:aws:token-type:aws4_request`. The following parameters
         /// are required: - `url`: The URL of the AWS STS endpoint for `GetCallerIdentity()`, such as
         /// `https://sts.amazonaws.com?Action=GetCallerIdentity&amp;amp;Version=2011-06-15`. Regional endpoints are also
@@ -406,8 +456,8 @@ namespace Google.Apis.CloudSecurityToken.v1.Data
 
         /// <summary>
         /// Required. An identifier that indicates the type of the security token in the `subject_token` parameter.
-        /// Supported values are `urn:ietf:params:oauth:token-type:jwt`, `urn:ietf:params:aws:token-type:aws4_request`,
-        /// and `urn:ietf:params:oauth:token-type:access_token`.
+        /// Supported values are `urn:ietf:params:oauth:token-type:jwt`, `urn:ietf:params:oauth:token-type:id_token`,
+        /// `urn:ietf:params:aws:token-type:aws4_request`, and `urn:ietf:params:oauth:token-type:access_token`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("subjectTokenType")]
         public virtual string SubjectTokenType { get; set; }
@@ -443,6 +493,77 @@ namespace Google.Apis.CloudSecurityToken.v1.Data
         /// <summary>The type of access token. Always has the value `Bearer`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("token_type")]
         public virtual string TokenType { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Request message for IntrospectToken.</summary>
+    public class GoogleIdentityStsV1IntrospectTokenRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Required. The OAuth 2.0 security token issued by the Security Token Service API.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("token")]
+        public virtual string Token { get; set; }
+
+        /// <summary>
+        /// Optional. The type of the given token. Supported values are `urn:ietf:params:oauth:token-type:access_token`
+        /// and `access_token`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("tokenTypeHint")]
+        public virtual string TokenTypeHint { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response message for IntrospectToken.</summary>
+    public class GoogleIdentityStsV1IntrospectTokenResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>A boolean value that indicates whether the provided access token is currently active.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("active")]
+        public virtual System.Nullable<bool> Active { get; set; }
+
+        /// <summary>The client identifier for the OAuth 2.0 client that requested the provided token.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("client_id")]
+        public virtual string ClientId { get; set; }
+
+        /// <summary>
+        /// The expiration timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this
+        /// token will expire.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("exp")]
+        public virtual System.Nullable<long> Exp { get; set; }
+
+        /// <summary>
+        /// The issued timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this token
+        /// was originally issued.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("iat")]
+        public virtual System.Nullable<long> Iat { get; set; }
+
+        /// <summary>The issuer of the provided token.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("iss")]
+        public virtual string Iss { get; set; }
+
+        /// <summary>A list of scopes associated with the provided token.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("scope")]
+        public virtual string Scope { get; set; }
+
+        /// <summary>
+        /// The unique user ID associated with the provided token. For Google Accounts, this value is based on the
+        /// Google Account's user ID. For federated identities, this value is based on the identity pool ID and the
+        /// value of the mapped `google.subject` attribute.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("sub")]
+        public virtual string Sub { get; set; }
+
+        /// <summary>
+        /// The human-readable identifier for the token principal subject. For example, if the provided token is
+        /// associated with a workload identity pool, this field contains a value in the following format:
+        /// `principal://iam.googleapis.com/projects//locations//workloadIdentityPools//subject/`
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("username")]
+        public virtual string Username { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

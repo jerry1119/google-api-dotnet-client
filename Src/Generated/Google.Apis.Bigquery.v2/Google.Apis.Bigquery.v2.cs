@@ -1661,7 +1661,10 @@ namespace Google.Apis.Bigquery.v2
             }
         }
 
-        /// <summary>Lists all models in the specified dataset. Requires the READER dataset role.</summary>
+        /// <summary>
+        /// Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of
+        /// models, you can get information about a particular model by calling the models.get method.
+        /// </summary>
         /// <param name="projectId">Required. Project ID of the models to list.</param>
         /// <param name="datasetId">Required. Dataset ID of the models to list.</param>
         public virtual ListRequest List(string projectId, string datasetId)
@@ -1669,7 +1672,10 @@ namespace Google.Apis.Bigquery.v2
             return new ListRequest(service, projectId, datasetId);
         }
 
-        /// <summary>Lists all models in the specified dataset. Requires the READER dataset role.</summary>
+        /// <summary>
+        /// Lists all models in the specified dataset. Requires the READER dataset role. After retrieving the list of
+        /// models, you can get information about a particular model by calling the models.get method.
+        /// </summary>
         public class ListRequest : BigqueryBaseServiceRequest<Google.Apis.Bigquery.v2.Data.ListModelsResponse>
         {
             /// <summary>Constructs a new List request.</summary>
@@ -3993,6 +3999,37 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    public class BiEngineReason : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>[Output-only] High-level BI Engine reason for partial or disabled acceleration.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("code")]
+        public virtual string Code { get; set; }
+
+        /// <summary>[Output-only] Free form human-readable reason for partial or disabled acceleration.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("message")]
+        public virtual string Message { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    public class BiEngineStatistics : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>[Output-only] Specifies which mode of BI Engine acceleration was performed (if any).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("biEngineMode")]
+        public virtual string BiEngineMode { get; set; }
+
+        /// <summary>
+        /// In case of DISABLED or PARTIAL bi_engine_mode, these contain the explanatory reasons as to why BI Engine
+        /// could not accelerate. In case the full query was accelerated, this field is not populated.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("biEngineReasons")]
+        public virtual System.Collections.Generic.IList<BiEngineReason> BiEngineReasons { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class BigQueryModelTraining : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -4904,6 +4941,24 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual string ETag { get; set; }
     }
 
+    public class DmlStatistics : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Number of deleted Rows. populated by DML DELETE, MERGE and TRUNCATE statements.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("deletedRowCount")]
+        public virtual System.Nullable<long> DeletedRowCount { get; set; }
+
+        /// <summary>Number of inserted Rows. Populated by DML INSERT and MERGE statements.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("insertedRowCount")]
+        public virtual System.Nullable<long> InsertedRowCount { get; set; }
+
+        /// <summary>Number of updated Rows. Populated by DML UPDATE and MERGE statements.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updatedRowCount")]
+        public virtual System.Nullable<long> UpdatedRowCount { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     public class EncryptionConfiguration : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -5131,24 +5186,6 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Explanation for a single feature.</summary>
-    public class Explanation : Google.Apis.Requests.IDirectResponseSchema
-    {
-        /// <summary>Attribution of feature.</summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("attribution")]
-        public virtual System.Nullable<double> Attribution { get; set; }
-
-        /// <summary>
-        /// Full name of the feature. For non-numerical features, will be formatted like .. Overall size of feature name
-        /// will always be truncated to first 120 characters.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("featureName")]
-        public virtual string FeatureName { get; set; }
-
-        /// <summary>The ETag of the item.</summary>
-        public virtual string ETag { get; set; }
-    }
-
     /// <summary>
     /// Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression
     /// language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example
@@ -5219,6 +5256,24 @@ namespace Google.Apis.Bigquery.v2.Data
         /// <summary>Additional properties to set if sourceFormat is set to CSV.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("csvOptions")]
         public virtual CsvOptions CsvOptions { get; set; }
+
+        /// <summary>
+        /// [Optional] Defines the list of possible SQL data types to which the source decimal values are converted.
+        /// This list and the precision and the scale parameters of the decimal field determine the target type. In the
+        /// order of NUMERIC, BIGNUMERIC, and STRING, a type is picked if it is in the specified list and if it supports
+        /// the precision and the scale. STRING supports all precision and scale values. If none of the listed types
+        /// supports the precision and the scale, the type supporting the widest range in the specified list is picked,
+        /// and if a value exceeds the supported range when reading the data, an error will be thrown. Example: Suppose
+        /// the value of this field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: (38,9) -&amp;gt; NUMERIC;
+        /// (39,9) -&amp;gt; BIGNUMERIC (NUMERIC cannot hold 30 integer digits); (38,10) -&amp;gt; BIGNUMERIC (NUMERIC
+        /// cannot hold 10 fractional digits); (76,38) -&amp;gt; BIGNUMERIC; (77,38) -&amp;gt; BIGNUMERIC (error if
+        /// value exeeds supported range). This field cannot contain duplicate types. The order of the types in this
+        /// field is ignored. For example, ["BIGNUMERIC", "NUMERIC"] is the same as ["NUMERIC", "BIGNUMERIC"] and
+        /// NUMERIC always takes precedence over BIGNUMERIC. Defaults to ["NUMERIC", "STRING"] for ORC and ["NUMERIC"]
+        /// for the other file formats.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("decimalTargetTypes")]
+        public virtual System.Collections.Generic.IList<string> DecimalTargetTypes { get; set; }
 
         /// <summary>[Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("googleSheetsOptions")]
@@ -5410,26 +5465,6 @@ namespace Google.Apis.Bigquery.v2.Data
         /// <summary>The resource type of the response.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; }
-
-        /// <summary>The ETag of the item.</summary>
-        public virtual string ETag { get; set; }
-    }
-
-    /// <summary>Global explanations containing the top most important features after training.</summary>
-    public class GlobalExplanation : Google.Apis.Requests.IDirectResponseSchema
-    {
-        /// <summary>
-        /// Class label for this set of global explanations. Will be empty/null for binary logistic and linear
-        /// regression models. Sorted alphabetically in descending order.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("classLabel")]
-        public virtual string ClassLabel { get; set; }
-
-        /// <summary>
-        /// A list of the top global explanations. Sorted by absolute value of attribution in descending order.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("explanations")]
-        public virtual System.Collections.Generic.IList<Explanation> Explanations { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -5747,19 +5782,19 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual string CreateDisposition { get; set; }
 
         /// <summary>
-        /// Defines the list of possible SQL data types to which the source decimal values are converted. This list and
-        /// the precision and the scale parameters of the decimal field determine the target type. In the order of
-        /// NUMERIC, BIGNUMERIC ([Preview](/products/#product-launch-stages)), and STRING, a type is picked if it is in
-        /// the specified list and if it supports the precision and the scale. STRING supports all precision and scale
-        /// values. If none of the listed types supports the precision and the scale, the type supporting the widest
-        /// range in the specified list is picked, and if a value exceeds the supported range when reading the data, an
-        /// error will be thrown. Example: Suppose the value of this field is ["NUMERIC", "BIGNUMERIC"]. If
-        /// (precision,scale) is: * (38,9) -&amp;gt; NUMERIC; * (39,9) -&amp;gt; BIGNUMERIC (NUMERIC cannot hold 30
-        /// integer digits); * (38,10) -&amp;gt; BIGNUMERIC (NUMERIC cannot hold 10 fractional digits); * (76,38)
-        /// -&amp;gt; BIGNUMERIC; * (77,38) -&amp;gt; BIGNUMERIC (error if value exeeds supported range). This field
-        /// cannot contain duplicate types. The order of the types in this field is ignored. For example, ["BIGNUMERIC",
-        /// "NUMERIC"] is the same as ["NUMERIC", "BIGNUMERIC"] and NUMERIC always takes precedence over BIGNUMERIC.
-        /// Defaults to ["NUMERIC", "STRING"] for ORC and ["NUMERIC"] for the other file formats.
+        /// [Optional] Defines the list of possible SQL data types to which the source decimal values are converted.
+        /// This list and the precision and the scale parameters of the decimal field determine the target type. In the
+        /// order of NUMERIC, BIGNUMERIC, and STRING, a type is picked if it is in the specified list and if it supports
+        /// the precision and the scale. STRING supports all precision and scale values. If none of the listed types
+        /// supports the precision and the scale, the type supporting the widest range in the specified list is picked,
+        /// and if a value exceeds the supported range when reading the data, an error will be thrown. Example: Suppose
+        /// the value of this field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: (38,9) -&amp;gt; NUMERIC;
+        /// (39,9) -&amp;gt; BIGNUMERIC (NUMERIC cannot hold 30 integer digits); (38,10) -&amp;gt; BIGNUMERIC (NUMERIC
+        /// cannot hold 10 fractional digits); (76,38) -&amp;gt; BIGNUMERIC; (77,38) -&amp;gt; BIGNUMERIC (error if
+        /// value exeeds supported range). This field cannot contain duplicate types. The order of the types in this
+        /// field is ignored. For example, ["BIGNUMERIC", "NUMERIC"] is the same as ["NUMERIC", "BIGNUMERIC"] and
+        /// NUMERIC always takes precedence over BIGNUMERIC. Defaults to ["NUMERIC", "STRING"] for ORC and ["NUMERIC"]
+        /// for the other file formats.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("decimalTargetTypes")]
         public virtual System.Collections.Generic.IList<string> DecimalTargetTypes { get; set; }
@@ -6333,8 +6368,8 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual ScriptStatistics ScriptStatistics { get; set; }
 
         /// <summary>[Output-only] [Preview] Information of the session if this job is part of one.</summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("sessionInfoTemplate")]
-        public virtual SessionInfo SessionInfoTemplate { get; set; }
+        [Newtonsoft.Json.JsonPropertyAttribute("sessionInfo")]
+        public virtual SessionInfo SessionInfo { get; set; }
 
         /// <summary>
         /// [Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the
@@ -6354,8 +6389,8 @@ namespace Google.Apis.Bigquery.v2.Data
         /// <summary>
         /// [Output-only] [Alpha] Information of the multi-statement transaction if this job is part of one.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("transactionInfoTemplate")]
-        public virtual TransactionInfo TransactionInfoTemplate { get; set; }
+        [Newtonsoft.Json.JsonPropertyAttribute("transactionInfo")]
+        public virtual TransactionInfo TransactionInfo { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -6375,6 +6410,10 @@ namespace Google.Apis.Bigquery.v2.Data
 
     public class JobStatistics2 : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>BI Engine specific Statistics. [Output-only] BI Engine specific Statistics.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("biEngineStatistics")]
+        public virtual BiEngineStatistics BiEngineStatistics { get; set; }
+
         /// <summary>[Output-only] Billing tier for the job.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("billingTier")]
         public virtual System.Nullable<int> BillingTier { get; set; }
@@ -6389,6 +6428,13 @@ namespace Google.Apis.Bigquery.v2.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("ddlAffectedRowAccessPolicyCount")]
         public virtual System.Nullable<long> DdlAffectedRowAccessPolicyCount { get; set; }
+
+        /// <summary>
+        /// [Output-only] The DDL destination table. Present only for ALTER TABLE RENAME TO queries. Note that
+        /// ddl_target_table is used just for its type information.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("ddlDestinationTable")]
+        public virtual TableReference DdlDestinationTable { get; set; }
 
         /// <summary>
         /// The DDL operation performed, possibly dependent on the pre-existence of the DDL target. Possible values (new
@@ -6421,6 +6467,13 @@ namespace Google.Apis.Bigquery.v2.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("ddlTargetTable")]
         public virtual TableReference DdlTargetTable { get; set; }
+
+        /// <summary>
+        /// [Output-only] Detailed statistics for DML statements Present only for DML statements INSERT, UPDATE, DELETE
+        /// or TRUNCATE.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("dmlStats")]
+        public virtual DmlStatistics DmlStats { get; set; }
 
         /// <summary>[Output-only] The original estimate of bytes processed for the job.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("estimatedBytesProcessed")]
@@ -7232,6 +7285,13 @@ namespace Google.Apis.Bigquery.v2.Data
         public virtual System.Nullable<bool> CacheHit { get; set; }
 
         /// <summary>
+        /// [Output-only] Detailed statistics for DML statements Present only for DML statements INSERT, UPDATE, DELETE
+        /// or TRUNCATE.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("dmlStats")]
+        public virtual DmlStatistics DmlStats { get; set; }
+
+        /// <summary>
         /// [Output-only] The first errors or warnings encountered during the running of the job. The final message
         /// includes the number of errors that caused the process to stop. Errors here do not necessarily mean that the
         /// job has completed or was unsuccessful.
@@ -7694,11 +7754,14 @@ namespace Google.Apis.Bigquery.v2.Data
 
     public class SnapshotDefinition : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>[Required] Reference describing the ID of the table that is snapshotted.</summary>
+        /// <summary>[Required] Reference describing the ID of the table that was snapshot.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("baseTableReference")]
         public virtual TableReference BaseTableReference { get; set; }
 
-        /// <summary>[Required] The time at which the base table was snapshot.</summary>
+        /// <summary>
+        /// [Required] The time at which the base table was snapshot. This value is reported in the JSON response using
+        /// RFC3339 format.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("snapshotTime")]
         public virtual string SnapshotTimeRaw { get; set; }
 
@@ -8615,13 +8678,6 @@ namespace Google.Apis.Bigquery.v2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("evaluationMetrics")]
         public virtual EvaluationMetrics EvaluationMetrics { get; set; }
 
-        /// <summary>
-        /// Global explanations for important features of the model. For multi-class models, there is one entry for each
-        /// label class. For other models, there is only one entry in the list.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("globalExplanations")]
-        public virtual System.Collections.Generic.IList<GlobalExplanation> GlobalExplanations { get; set; }
-
         /// <summary>Output of each iteration run, results.size() &lt;= max_iterations.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("results")]
         public virtual System.Collections.Generic.IList<IterationResult> Results { get; set; }
@@ -8678,6 +8734,13 @@ namespace Google.Apis.Bigquery.v2.Data
         /// <summary>[Required] A query that BigQuery executes when the view is referenced.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("query")]
         public virtual string Query { get; set; }
+
+        /// <summary>
+        /// True if the column names are explicitly specified. For example by using the 'CREATE VIEW v(c1, c2) AS ...'
+        /// syntax. Can only be set using BigQuery's standard SQL: https://cloud.google.com/bigquery/sql-reference/
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("useExplicitColumnNames")]
+        public virtual System.Nullable<bool> UseExplicitColumnNames { get; set; }
 
         /// <summary>
         /// Specifies whether to use BigQuery's legacy SQL for this view. The default value is true. If set to false,

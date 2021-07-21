@@ -18,7 +18,6 @@ using Google.Apis.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,7 +32,7 @@ namespace Google.Apis.Auth.OAuth2
     /// See <see cref="GetApplicationDefaultAsync(CancellationToken)"/> for the credential retrieval logic.
     /// </para>
     /// </summary>
-    public class GoogleCredential : ICredential, ITokenAccessWithHeaders, IOidcTokenProvider
+    public class GoogleCredential : ICredential, ITokenAccessWithHeaders, IOidcTokenProvider, IBlobSigner
     {
         /// <summary>Provider implements the logic for creating the application default credential.</summary>
         private static readonly DefaultCredentialProvider defaultCredentialProvider = new DefaultCredentialProvider();
@@ -183,46 +182,6 @@ namespace Google.Apis.Auth.OAuth2
             return new GoogleCredential(new AccessTokenCredential(accessToken, accessMethod));
         }
 
-        internal class AccessTokenCredential : IGoogleCredential, IHttpExecuteInterceptor
-        {
-            private readonly string _accessToken;
-            private readonly IAccessMethod _accessMethod;
-
-            /// <inheritdoc/>
-            public string QuotaProject { get; }
-
-            public AccessTokenCredential(string accessToken, IAccessMethod accessMethod, string quotaProject = null)
-            {
-                _accessToken = accessToken;
-                _accessMethod = accessMethod;
-                QuotaProject = quotaProject;
-            }
-
-            /// <inheritdoc/>
-            IGoogleCredential IGoogleCredential.WithQuotaProject(string quotaProject) =>
-                new AccessTokenCredential(_accessToken, _accessMethod, quotaProject);
-
-            public void Initialize(ConfigurableHttpClient httpClient) =>
-                httpClient.MessageHandler.Credential = this;
-
-            public Task<string> GetAccessTokenForRequestAsync(string authUri = null, CancellationToken cancellationToken = default(CancellationToken)) =>
-                Task.FromResult(_accessToken);
-
-            /// <inheritdoc />
-            public Task<AccessTokenWithHeaders> GetAccessTokenWithHeadersForRequestAsync(string authUri = null, CancellationToken cancellationToken = default) =>
-                Task.FromResult(new AccessTokenWithHeaders.Builder { QuotaProject = QuotaProject }.Build(_accessToken));
-
-            // Only method in IHttpExecuteInterceptor
-            public Task InterceptAsync(HttpRequestMessage request, CancellationToken taskCancellationToken)
-            {
-                var accessToken = new AccessTokenWithHeaders.Builder { QuotaProject = QuotaProject }.Build(_accessToken);
-                _accessMethod.Intercept(request, accessToken.AccessToken);
-                accessToken.AddHeaders(request);
-
-                return Task.FromResult(true);
-            }
-        }
-
         /// <summary>
         /// Create a <see cref="GoogleCredential"/> from a <see cref="ComputeCredential"/>.
         /// In general, do not use this method. Call <see cref="GetApplicationDefault"/> or
@@ -237,33 +196,52 @@ namespace Google.Apis.Auth.OAuth2
             new GoogleCredential(computeCredential ?? new ComputeCredential());
 
         /// <summary>
-        /// <para>Returns <c>true</c> only if this credential type has no scopes by default and requires
-        /// a call to <see cref="CreateScoped(IEnumerable{string})"/> before use.</para>
-        ///
-        /// <para>Credentials need to have scopes in them before they can be used to access Google services.
-        /// Some Credential types have scopes built-in, and some don't. This property indicates whether
-        /// the Credential type has scopes built-in.</para>
-        /// 
+        /// <para>
+        /// Returns <c>true</c> only if this credential supports explicit scopes to be set
+        /// via this library but no explicit scopes have been set.
+        /// A credential with explicit scopes set
+        /// may be created by calling <see cref="CreateScoped(IEnumerable{string})"/>.
+        /// </para>
+        /// <para>
+        /// For accessing Google services, credentials need to be scoped. Credentials 
+        /// have some default scoping, but this library supports explicit scopes to be set
+        /// for certain credentials.
+        /// </para>
         /// <list type="number">
         /// <item>
         /// <description>
-        /// <see cref="ComputeCredential"/> has scopes built-in. Nothing additional is required.
+        /// <see cref="ComputeCredential"/> is scoped by default. This library doesn't currently
+        /// support explicit scopes to be set on a <see cref="ComputeCredential"/>.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
-        /// <see cref="UserCredential"/> has scopes built-in, as they were obtained during the consent
-        /// screen. Nothing additional is required.</description>
+        /// <see cref="UserCredential"/> is scoped by default, as scopes were obtained during the consent
+        /// screen. It's not possible to change the default scopes of a <see cref="UserCredential"/>.
+        /// </description>
         /// </item>
         /// <item>
         /// <description>
-        /// <see cref="ServiceAccountCredential"/> does not have scopes built-in by default. Caller should
-        /// invoke <see cref="CreateScoped(IEnumerable{string})"/> to add scopes to the credential.
+        /// <see cref="ServiceAccountCredential"/> is not scoped by default but when used without
+        /// explicit scopes to access a Google service, the service's default scopes will be assumed.
+        /// It's possible to create a <see cref="ServiceAccountCredential"/> with explicit scopes set
+        /// by calling <see cref="CreateScoped(IEnumerable{string})"/>
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// <see cref="ImpersonatedCredential"/> is not scoped by default but when used without
+        /// explicit scopes to access a Google service, the service's default scopes will be assumed.
+        /// Note that the scopes of an <see cref="ImpersonatedCredential.SourceCredential"/> have no
+        /// bearings on the <see cref="ImpersonatedCredential"/> scopes.
+        /// It's possible to create an <see cref="ImpersonatedCredential"/> with explicit scopes set
+        /// by calling <see cref="CreateScoped(IEnumerable{string})"/>
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        public virtual bool IsCreateScopedRequired => false;
+        public virtual bool IsCreateScopedRequired => 
+            credential.SupportsExplicitScopes && !credential.HasExplicitScopes;
 
         /// <summary>
         /// The ID of the project associated to this credential for the purposes of
@@ -272,10 +250,21 @@ namespace Google.Apis.Auth.OAuth2
         public string QuotaProject => credential.QuotaProject;
 
         /// <summary>
-        /// If the credential supports scopes, creates a copy with the specified scopes. Otherwise, it returns the same
-        /// instance.
+        /// Gets the underlying credential instance being wrapped.
         /// </summary>
-        public virtual GoogleCredential CreateScoped(IEnumerable<string> scopes) => this;
+        public ICredential UnderlyingCredential => credential;
+
+        /// <summary>
+        /// If this library supports setting explicit scopes on this credential,
+        /// this method will creates a copy of the credential with the specified scopes.
+        /// Otherwise, it returns the same instance.
+        /// See <see cref="IsCreateScopedRequired"/> for more information.
+        /// </summary>
+        public virtual GoogleCredential CreateScoped(IEnumerable<string> scopes)
+        {
+            var maybeScoped = credential.MaybeWithScopes(scopes);
+            return maybeScoped == credential ? this : new GoogleCredential(maybeScoped);
+        }
 
         /// <summary>
         /// If the credential supports scopes, creates a copy with the specified scopes. Otherwise, it returns the same
@@ -284,14 +273,17 @@ namespace Google.Apis.Auth.OAuth2
         public GoogleCredential CreateScoped(params string[] scopes) => CreateScoped((IEnumerable<string>)scopes);
 
         /// <summary>
-        /// If the credential supports setting the user, creates a copy with the specified user.
+        /// If the credential supports Domain Wide Delegation, this method creates a copy of the credential
+        /// with the specified user.
         /// Otherwise, it throws <see cref="InvalidOperationException"/>.
-        /// Only Service Credentials support this operation.
+        /// At the moment only <see cref="ServiceAccountCredential"/> supports Domain Wide Delegation.
         /// </summary>
-        /// <param name="user">The user to set in the returned credential.</param>
-        /// <returns>This credential with the user set to <paramref name="user"/>.</returns>
-        /// <exception cref="InvalidOperationException">When the credential type doesn't support setting the user.</exception>
-        public virtual GoogleCredential CreateWithUser(string user) => throw new InvalidOperationException();
+        /// <param name="user">The user that the returned credential will be a delegate for.</param>
+        /// <returns>A copy of this credential with the user set to <paramref name="user"/>.</returns>
+        /// <exception cref="InvalidOperationException">When the credential type doesn't support
+        /// Domain Wide Delegation.</exception>
+        public virtual GoogleCredential CreateWithUser(string user) => 
+            new GoogleCredential(credential.WithUserForDomainWideDelegation(user));
 
         /// <summary>
         /// Creates a copy of this credential with the specified quota project.
@@ -300,6 +292,14 @@ namespace Google.Apis.Auth.OAuth2
         /// <returns>A copy of this credential with <see cref="QuotaProject"/> set to <paramref name="quotaProject"/>.</returns>
         public virtual GoogleCredential CreateWithQuotaProject(string quotaProject) =>
             new GoogleCredential(credential.WithQuotaProject(quotaProject));
+
+        /// <summary>
+        /// Creates a copy of this credential with the specified HTTP client factory.
+        /// </summary>
+        /// <param name="factory">The HTTP client factory to be used by the new credential.
+        /// May be null, in which case the default <see cref="HttpClientFactory"/> will be used.</param>
+        public virtual GoogleCredential CreateWithHttpClientFactory(IHttpClientFactory factory) =>
+            new GoogleCredential(credential.WithHttpClientFactory(factory));
 
         void IConfigurableHttpClientInitializer.Initialize(ConfigurableHttpClient httpClient)
         {
@@ -313,59 +313,40 @@ namespace Google.Apis.Auth.OAuth2
             string authUri, CancellationToken cancellationToken) =>
             credential.GetAccessTokenWithHeadersForRequestAsync(authUri, cancellationToken);
 
-
         /// <inheritdoc/>
         public Task<OidcToken> GetOidcTokenAsync(OidcTokenOptions options, CancellationToken cancellationToken = default) =>
             (credential is IOidcTokenProvider provider) ?
             provider.GetOidcTokenAsync(options, cancellationToken) :
             throw new InvalidOperationException(
-                $"{nameof(UnderlyingCredential)} is not an OIDC token provider. Only {nameof(ServiceAccountCredential)}, {nameof(ComputeCredential)} are supported OIDC token providers.");
+                $"{nameof(UnderlyingCredential)} is not an OIDC token provider. Only {nameof(ServiceAccountCredential)}, {nameof(ComputeCredential)}, {nameof(ImpersonatedCredential)} are supported OIDC token providers.");
+
+        /// <inheritdoc/>
+        public async Task<string> SignBlobAsync(byte[] blob, CancellationToken cancellationToken = default) =>
+            UnderlyingCredential is IBlobSigner ?
+                await (UnderlyingCredential as IBlobSigner).SignBlobAsync(blob, cancellationToken).ConfigureAwait(false) :
+                throw new InvalidOperationException(
+                    $"{nameof(UnderlyingCredential)} is not a blob signer. Only {nameof(ServiceAccountCredential)}, {nameof(ImpersonatedCredential)} are supported blob signers.");
 
         /// <summary>
-        /// Gets the underlying credential instance being wrapped.
+        /// Allows this credential to impersonate the <see cref="ImpersonatedCredential.Initializer.TargetPrincipal"/>.
+        /// Only <see cref="ServiceAccountCredential"/> and <see cref="UserCredential"/> support impersonation,
+        /// so this method will throw <see cref="InvalidOperationException"/> if this credential's
+        /// <see cref="UnderlyingCredential"/> is not of one of those supported types.
         /// </summary>
-        public ICredential UnderlyingCredential => credential;
+        /// <param name="initializer">Initializer containing the configuration for the impersonated credential.</param>
+        /// <remarks>
+        /// For impersonation, a credential needs to be scoped to https://www.googleapis.com/auth/iam. When using a
+        /// <see cref="ServiceAccountCredential"/> as the source credential, this is not a problem, since the credential
+        /// can be scoped on demand. When using a <see cref="UserCredential"/> the credential needs to have been obtained
+        /// with the required scope, else, when attempting and impersonated request, you'll receive an authorization error.
+        /// </remarks>
+        public GoogleCredential Impersonate(ImpersonatedCredential.Initializer initializer) =>
+            new GoogleCredential(ImpersonatedCredential.Create(this, initializer));
 
         /// <summary>Creates a <c>GoogleCredential</c> wrapping a <see cref="ServiceAccountCredential"/>.</summary>
         public static GoogleCredential FromServiceAccountCredential(ServiceAccountCredential credential)
         {
-            return new ServiceAccountGoogleCredential(credential);
-        }
-
-        /// <summary>
-        /// Wraps <c>ServiceAccountCredential</c> as <c>GoogleCredential</c>.
-        /// We need this subclass because wrapping <c>ServiceAccountCredential</c> (unlike other wrapped credential
-        /// types) requires special handling for <c>IsCreateScopedRequired</c> and <c>CreateScoped</c> members.
-        /// </summary>
-        internal class ServiceAccountGoogleCredential : GoogleCredential
-        {
-            public ServiceAccountGoogleCredential(ServiceAccountCredential credential)
-                : base(credential) { }
-
-            public override bool IsCreateScopedRequired => !(credential as ServiceAccountCredential).HasScopes;
-
-            public override GoogleCredential CreateScoped(IEnumerable<string> scopes)
-            {
-                var serviceAccountCredential = credential as ServiceAccountCredential;
-                var initializer = new ServiceAccountCredential.Initializer(serviceAccountCredential)
-                {
-                    Scopes = scopes
-                };
-                return new ServiceAccountGoogleCredential(new ServiceAccountCredential(initializer));
-            }
-
-            public override GoogleCredential CreateWithUser(string user)
-            {
-                var serviceAccountCredential = credential as ServiceAccountCredential;
-                var initializer = new ServiceAccountCredential.Initializer(serviceAccountCredential)
-                {
-                    User = user
-                };
-                return new ServiceAccountGoogleCredential(new ServiceAccountCredential(initializer));
-            }
-
-            public override GoogleCredential CreateWithQuotaProject(string quotaProject) =>
-                new ServiceAccountGoogleCredential(credential.WithQuotaProject(quotaProject) as ServiceAccountCredential);
+            return new GoogleCredential(credential);
         }
     }
 }

@@ -284,73 +284,6 @@ namespace Google.Apis.Document.v1
         }
 
         /// <summary>
-        /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the
-        /// operation, but success is not guaranteed. If the server doesn't support this method, it returns
-        /// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether
-        /// the cancellation succeeded or whether the operation completed despite cancellation. On successful
-        /// cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value
-        /// with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-        /// </summary>
-        /// <param name="body">The body of the request.</param>
-        /// <param name="name">The name of the operation resource to be cancelled.</param>
-        public virtual CancelRequest Cancel(Google.Apis.Document.v1.Data.GoogleLongrunningCancelOperationRequest body, string name)
-        {
-            return new CancelRequest(service, body, name);
-        }
-
-        /// <summary>
-        /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the
-        /// operation, but success is not guaranteed. If the server doesn't support this method, it returns
-        /// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether
-        /// the cancellation succeeded or whether the operation completed despite cancellation. On successful
-        /// cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value
-        /// with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-        /// </summary>
-        public class CancelRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleProtobufEmpty>
-        {
-            /// <summary>Constructs a new Cancel request.</summary>
-            public CancelRequest(Google.Apis.Services.IClientService service, Google.Apis.Document.v1.Data.GoogleLongrunningCancelOperationRequest body, string name) : base(service)
-            {
-                Name = name;
-                Body = body;
-                InitParameters();
-            }
-
-            /// <summary>The name of the operation resource to be cancelled.</summary>
-            [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
-            public virtual string Name { get; private set; }
-
-            /// <summary>Gets or sets the body of this request.</summary>
-            Google.Apis.Document.v1.Data.GoogleLongrunningCancelOperationRequest Body { get; set; }
-
-            /// <summary>Returns the body of the request.</summary>
-            protected override object GetBody() => Body;
-
-            /// <summary>Gets the method name.</summary>
-            public override string MethodName => "cancel";
-
-            /// <summary>Gets the HTTP method.</summary>
-            public override string HttpMethod => "POST";
-
-            /// <summary>Gets the REST path.</summary>
-            public override string RestPath => "v1/{+name}:cancel";
-
-            /// <summary>Initializes Cancel parameter list.</summary>
-            protected override void InitParameters()
-            {
-                base.InitParameters();
-                RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
-                {
-                    Name = "name",
-                    IsRequired = true,
-                    ParameterType = "path",
-                    DefaultValue = null,
-                    Pattern = @"^operations/.*$",
-                });
-            }
-        }
-
-        /// <summary>
         /// Deletes a long-running operation. This method indicates that the client is no longer interested in the
         /// operation result. It does not cancel the operation. If the server doesn't support this method, it returns
         /// `google.rpc.Code.UNIMPLEMENTED`.
@@ -399,101 +332,6 @@ namespace Google.Apis.Document.v1
                     ParameterType = "path",
                     DefaultValue = null,
                     Pattern = @"^operations/.*$",
-                });
-            }
-        }
-
-        /// <summary>
-        /// Lists operations that match the specified filter in the request. If the server doesn't support this method,
-        /// it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use
-        /// different resource name schemes, such as `users/*/operations`. To override the binding, API services can add
-        /// a binding such as `"/v1/{name=users/*}/operations"` to their service configuration. For backwards
-        /// compatibility, the default name includes the operations collection id, however overriding users must ensure
-        /// the name binding is the parent resource, without the operations collection id.
-        /// </summary>
-        /// <param name="name">The name of the operation's parent resource.</param>
-        public virtual ListRequest List(string name)
-        {
-            return new ListRequest(service, name);
-        }
-
-        /// <summary>
-        /// Lists operations that match the specified filter in the request. If the server doesn't support this method,
-        /// it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use
-        /// different resource name schemes, such as `users/*/operations`. To override the binding, API services can add
-        /// a binding such as `"/v1/{name=users/*}/operations"` to their service configuration. For backwards
-        /// compatibility, the default name includes the operations collection id, however overriding users must ensure
-        /// the name binding is the parent resource, without the operations collection id.
-        /// </summary>
-        public class ListRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleLongrunningListOperationsResponse>
-        {
-            /// <summary>Constructs a new List request.</summary>
-            public ListRequest(Google.Apis.Services.IClientService service, string name) : base(service)
-            {
-                Name = name;
-                InitParameters();
-            }
-
-            /// <summary>The name of the operation's parent resource.</summary>
-            [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
-            public virtual string Name { get; private set; }
-
-            /// <summary>The standard list filter.</summary>
-            [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
-            public virtual string Filter { get; set; }
-
-            /// <summary>The standard list page size.</summary>
-            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
-            public virtual System.Nullable<int> PageSize { get; set; }
-
-            /// <summary>The standard list page token.</summary>
-            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
-            public virtual string PageToken { get; set; }
-
-            /// <summary>Gets the method name.</summary>
-            public override string MethodName => "list";
-
-            /// <summary>Gets the HTTP method.</summary>
-            public override string HttpMethod => "GET";
-
-            /// <summary>Gets the REST path.</summary>
-            public override string RestPath => "v1/{+name}";
-
-            /// <summary>Initializes List parameter list.</summary>
-            protected override void InitParameters()
-            {
-                base.InitParameters();
-                RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
-                {
-                    Name = "name",
-                    IsRequired = true,
-                    ParameterType = "path",
-                    DefaultValue = null,
-                    Pattern = @"^operations$",
-                });
-                RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
-                {
-                    Name = "filter",
-                    IsRequired = false,
-                    ParameterType = "query",
-                    DefaultValue = null,
-                    Pattern = null,
-                });
-                RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
-                {
-                    Name = "pageSize",
-                    IsRequired = false,
-                    ParameterType = "query",
-                    DefaultValue = null,
-                    Pattern = null,
-                });
-                RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
-                {
-                    Name = "pageToken",
-                    IsRequired = false,
-                    ParameterType = "query",
-                    DefaultValue = null,
-                    Pattern = null,
                 });
             }
         }
@@ -552,6 +390,65 @@ namespace Google.Apis.Document.v1
                 }
 
                 /// <summary>
+                /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                /// cancel the operation, but success is not guaranteed. If the server doesn't support this method, it
+                /// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to
+                /// check whether the cancellation succeeded or whether the operation completed despite cancellation. On
+                /// successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+                /// Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+                /// </summary>
+                /// <param name="name">The name of the operation resource to be cancelled.</param>
+                public virtual CancelOperationRequest CancelOperation(string name)
+                {
+                    return new CancelOperationRequest(service, name);
+                }
+
+                /// <summary>
+                /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                /// cancel the operation, but success is not guaranteed. If the server doesn't support this method, it
+                /// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to
+                /// check whether the cancellation succeeded or whether the operation completed despite cancellation. On
+                /// successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+                /// Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+                /// </summary>
+                public class CancelOperationRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleProtobufEmpty>
+                {
+                    /// <summary>Constructs a new CancelOperation request.</summary>
+                    public CancelOperationRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The name of the operation resource to be cancelled.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "cancelOperation";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "DELETE";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes CancelOperation parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>
                 /// Gets the latest state of a long-running operation. Clients can use this method to poll the operation
                 /// result at intervals as recommended by the API service.
                 /// </summary>
@@ -598,6 +495,103 @@ namespace Google.Apis.Document.v1
                             ParameterType = "path",
                             DefaultValue = null,
                             Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>
+                /// Lists operations that match the specified filter in the request. If the server doesn't support this
+                /// method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the
+                /// binding to use different resource name schemes, such as `users/*/operations`. To override the
+                /// binding, API services can add a binding such as `"/v1/{name=users/*}/operations"` to their service
+                /// configuration. For backwards compatibility, the default name includes the operations collection id,
+                /// however overriding users must ensure the name binding is the parent resource, without the operations
+                /// collection id.
+                /// </summary>
+                /// <param name="name">The name of the operation's parent resource.</param>
+                public virtual ListRequest List(string name)
+                {
+                    return new ListRequest(service, name);
+                }
+
+                /// <summary>
+                /// Lists operations that match the specified filter in the request. If the server doesn't support this
+                /// method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the
+                /// binding to use different resource name schemes, such as `users/*/operations`. To override the
+                /// binding, API services can add a binding such as `"/v1/{name=users/*}/operations"` to their service
+                /// configuration. For backwards compatibility, the default name includes the operations collection id,
+                /// however overriding users must ensure the name binding is the parent resource, without the operations
+                /// collection id.
+                /// </summary>
+                public class ListRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleLongrunningListOperationsResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The name of the operation's parent resource.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>The standard list filter.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Filter { get; set; }
+
+                    /// <summary>The standard list page size.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>The standard list page token.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/operations$",
+                        });
+                        RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "filter",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
                         });
                     }
                 }
@@ -1257,6 +1251,67 @@ namespace Google.Apis.Document.v1
                     }
 
                     /// <summary>
+                    /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                    /// cancel the operation, but success is not guaranteed. If the server doesn't support this method,
+                    /// it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other
+                    /// methods to check whether the cancellation succeeded or whether the operation completed despite
+                    /// cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an
+                    /// operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to
+                    /// `Code.CANCELLED`.
+                    /// </summary>
+                    /// <param name="name">The name of the operation resource to be cancelled.</param>
+                    public virtual CancelOperationRequest CancelOperation(string name)
+                    {
+                        return new CancelOperationRequest(service, name);
+                    }
+
+                    /// <summary>
+                    /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                    /// cancel the operation, but success is not guaranteed. If the server doesn't support this method,
+                    /// it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other
+                    /// methods to check whether the cancellation succeeded or whether the operation completed despite
+                    /// cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an
+                    /// operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to
+                    /// `Code.CANCELLED`.
+                    /// </summary>
+                    public class CancelOperationRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleProtobufEmpty>
+                    {
+                        /// <summary>Constructs a new CancelOperation request.</summary>
+                        public CancelOperationRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                        {
+                            Name = name;
+                            InitParameters();
+                        }
+
+                        /// <summary>The name of the operation resource to be cancelled.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Name { get; private set; }
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "cancelOperation";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "DELETE";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "uiv1beta3/{+name}";
+
+                        /// <summary>Initializes CancelOperation parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "name",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                            });
+                        }
+                    }
+
+                    /// <summary>
                     /// Gets the latest state of a long-running operation. Clients can use this method to poll the
                     /// operation result at intervals as recommended by the API service.
                     /// </summary>
@@ -1303,6 +1358,103 @@ namespace Google.Apis.Document.v1
                                 ParameterType = "path",
                                 DefaultValue = null,
                                 Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                            });
+                        }
+                    }
+
+                    /// <summary>
+                    /// Lists operations that match the specified filter in the request. If the server doesn't support
+                    /// this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+                    /// override the binding to use different resource name schemes, such as `users/*/operations`. To
+                    /// override the binding, API services can add a binding such as `"/v1/{name=users/*}/operations"`
+                    /// to their service configuration. For backwards compatibility, the default name includes the
+                    /// operations collection id, however overriding users must ensure the name binding is the parent
+                    /// resource, without the operations collection id.
+                    /// </summary>
+                    /// <param name="name">The name of the operation's parent resource.</param>
+                    public virtual ListRequest List(string name)
+                    {
+                        return new ListRequest(service, name);
+                    }
+
+                    /// <summary>
+                    /// Lists operations that match the specified filter in the request. If the server doesn't support
+                    /// this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+                    /// override the binding to use different resource name schemes, such as `users/*/operations`. To
+                    /// override the binding, API services can add a binding such as `"/v1/{name=users/*}/operations"`
+                    /// to their service configuration. For backwards compatibility, the default name includes the
+                    /// operations collection id, however overriding users must ensure the name binding is the parent
+                    /// resource, without the operations collection id.
+                    /// </summary>
+                    public class ListRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1.Data.GoogleLongrunningListOperationsResponse>
+                    {
+                        /// <summary>Constructs a new List request.</summary>
+                        public ListRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                        {
+                            Name = name;
+                            InitParameters();
+                        }
+
+                        /// <summary>The name of the operation's parent resource.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Name { get; private set; }
+
+                        /// <summary>The standard list filter.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
+                        public virtual string Filter { get; set; }
+
+                        /// <summary>The standard list page size.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                        public virtual System.Nullable<int> PageSize { get; set; }
+
+                        /// <summary>The standard list page token.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                        public virtual string PageToken { get; set; }
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "list";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "GET";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "uiv1beta3/{+name}";
+
+                        /// <summary>Initializes List parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "name",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/operations$",
+                            });
+                            RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "filter",
+                                IsRequired = false,
+                                ParameterType = "query",
+                                DefaultValue = null,
+                                Pattern = null,
+                            });
+                            RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "pageSize",
+                                IsRequired = false,
+                                ParameterType = "query",
+                                DefaultValue = null,
+                                Pattern = null,
+                            });
+                            RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "pageToken",
+                                IsRequired = false,
+                                ParameterType = "query",
+                                DefaultValue = null,
+                                Pattern = null,
                             });
                         }
                     }
@@ -1590,6 +1742,28 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>The resource name of the created evaluation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("evaluation")]
         public virtual string Evaluation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The common metadata about the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Cloud Storage URI containing the output artifacts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsUri")]
+        public virtual string GcsUri { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2135,6 +2309,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1DocumentPageTable> Tables { get; set; }
@@ -2178,6 +2356,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -2188,7 +2370,8 @@ namespace Google.Apis.Document.v1.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -2271,6 +2454,10 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -2549,6 +2736,13 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -2888,12 +3082,20 @@ namespace Google.Apis.Document.v1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Request message for review document method.</summary>
+    /// <summary>Request message for review document method. Next Id: 6.</summary>
     public class GoogleCloudDocumentaiV1ReviewDocumentRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether the validation should be performed on the ad-hoc review request.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSchemaValidation")]
+        public virtual System.Nullable<bool> EnableSchemaValidation { get; set; }
+
         /// <summary>An inline document proto.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("inlineDocument")]
         public virtual GoogleCloudDocumentaiV1Document InlineDocument { get; set; }
+
+        /// <summary>The priority of the human review task.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("priority")]
+        public virtual string Priority { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -3217,6 +3419,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageTable> Tables { get; set; }
@@ -3260,6 +3466,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta1BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -3270,7 +3480,8 @@ namespace Google.Apis.Document.v1.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -3353,6 +3564,10 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -3631,6 +3846,13 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -4295,6 +4517,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageTable> Tables { get; set; }
@@ -4338,6 +4564,10 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta2BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -4348,7 +4578,8 @@ namespace Google.Apis.Document.v1.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -4431,6 +4662,10 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -4709,6 +4944,13 @@ namespace Google.Apis.Document.v1.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -5157,6 +5399,57 @@ namespace Google.Apis.Document.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The long running operation metadata for delete processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for disable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the disable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for enable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the enable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The status of human review on a processed document.</summary>
     public class GoogleCloudDocumentaiV1beta3HumanReviewStatus : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -5264,13 +5557,6 @@ namespace Google.Apis.Document.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
 
-        /// <summary>The ETag of the item.</summary>
-        public virtual string ETag { get; set; }
-    }
-
-    /// <summary>The request message for Operations.CancelOperation.</summary>
-    public class GoogleLongrunningCancelOperationRequest : Google.Apis.Requests.IDirectResponseSchema
-    {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }

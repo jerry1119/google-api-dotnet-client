@@ -595,32 +595,34 @@ namespace Google.Apis.CloudComposer.v1
                     /// to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14,
                     /// the `updateMask` would contain the path "config.softwareConfig.pypiPackages", and the patch
                     /// environment would be the following: { "config":{ "softwareConfig":{ "pypiPackages":{
-                    /// "botocore":"==1.7.14" } } } } **Note:** Only the following fields can be updated: *Mask*
-                    /// *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a
-                    /// replacement package map is not included in `environment`, all custom PyPI packages are cleared.
-                    /// It is an error to provide both this mask and a mask specifying an individual package.
-                    /// config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename,
+                    /// "botocore":"==1.7.14" } } } } **Note:** Only the following fields can be updated: *
+                    /// `config.softwareConfig.pypiPackages` * Replace all custom custom PyPI packages. If a replacement
+                    /// package map is not included in `environment`, all custom PyPI packages are cleared. It is an
+                    /// error to provide both this mask and a mask specifying an individual package. *
+                    /// `config.softwareConfig.pypiPackages.`packagename * Update the custom PyPI package *packagename*,
                     /// preserving other packages. To delete the package, include it in `updateMask`, and omit the
                     /// mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide
-                    /// both a mask of this form and the "config.softwareConfig.pypiPackages" mask. labels Replace all
-                    /// environment labels. If a replacement labels map is not included in `environment`, all labels are
-                    /// cleared. It is an error to provide both this mask and a mask specifying one or more individual
-                    /// labels. labels.labelName Set the label named labelName, while preserving other labels. To delete
-                    /// the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an
-                    /// error to provide both a mask of this form and the "labels" mask. config.nodeCount Horizontally
-                    /// scale the number of nodes in the environment. An integer greater than or equal to 3 must be
-                    /// provided in the `config.nodeCount` field. config.webServerNetworkAccessControl Replace the
-                    /// environment's current WebServerNetworkAccessControl. config.databaseConfig Replace the
-                    /// environment's current DatabaseConfig. config.webServerConfig Replace the environment's current
-                    /// WebServerConfig. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config
-                    /// overrides. If a replacement config overrides map is not included in `environment`, all config
-                    /// overrides are cleared. It is an error to provide both this mask and a mask specifying one or
-                    /// more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name
-                    /// Override the Apache Airflow config property name in the section named section, preserving other
-                    /// properties. To delete the property override, include it in `updateMask` and omit its mapping in
+                    /// both a mask of this form and the `config.softwareConfig.pypiPackages` mask. * `labels` * Replace
+                    /// all environment labels. If a replacement labels map is not included in `environment`, all labels
+                    /// are cleared. It is an error to provide both this mask and a mask specifying one or more
+                    /// individual labels. * `labels.`labelName * Set the label named *labelName*, while preserving
+                    /// other labels. To delete the label, include it in `updateMask` and omit its mapping in
+                    /// `environment.labels`. It is an error to provide both a mask of this form and the `labels` mask.
+                    /// * `config.nodeCount` * Horizontally scale the number of nodes in the environment. An integer
+                    /// greater than or equal to 3 must be provided in the `config.nodeCount` field. *
+                    /// `config.webServerNetworkAccessControl` * Replace the environment's current
+                    /// `WebServerNetworkAccessControl`. * `config.databaseConfig` * Replace the environment's current
+                    /// `DatabaseConfig`. * `config.webServerConfig` * Replace the environment's current
+                    /// `WebServerConfig`. * `config.softwareConfig.airflowConfigOverrides` * Replace all Apache Airflow
+                    /// config overrides. If a replacement config overrides map is not included in `environment`, all
+                    /// config overrides are cleared. It is an error to provide both this mask and a mask specifying one
+                    /// or more individual config overrides. *
+                    /// `config.softwareConfig.airflowConfigOverrides.`section-name * Override the Apache Airflow config
+                    /// property *name* in the section named *section*, preserving other properties. To delete the
+                    /// property override, include it in `updateMask` and omit its mapping in
                     /// `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a
-                    /// mask of this form and the "config.softwareConfig.airflowConfigOverrides" mask.
-                    /// config.softwareConfig.envVariables Replace all environment variables. If a replacement
+                    /// mask of this form and the `config.softwareConfig.airflowConfigOverrides` mask. *
+                    /// `config.softwareConfig.envVariables` * Replace all environment variables. If a replacement
                     /// environment variable map is not included in `environment`, all custom environment variables are
                     /// cleared. It is an error to provide both this mask and a mask specifying one or more individual
                     /// environment variables.
@@ -1010,6 +1012,37 @@ namespace Google.Apis.CloudComposer.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("value")]
         public virtual string Value { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Message containing information about the result of an upgrade check operation.</summary>
+    public class CheckUpgradeResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Url for a docker build log of an upgraded image.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("buildLogUri")]
+        public virtual string BuildLogUri { get; set; }
+
+        /// <summary>Output only. Whether build has succeeded or failed on modules conflicts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("containsPypiModulesConflict")]
+        public virtual string ContainsPypiModulesConflict { get; set; }
+
+        /// <summary>Composer image for which the build was happening.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("imageVersion")]
+        public virtual string ImageVersion { get; set; }
+
+        /// <summary>
+        /// Output only. Extract from a docker image build log containing information about pypi modules conflicts.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pypiConflictBuildLogExtract")]
+        public virtual string PypiConflictBuildLogExtract { get; set; }
+
+        /// <summary>
+        /// Pypi dependencies specified in the environment configuration, at the time when the build was triggered.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pypiDependencies")]
+        public virtual System.Collections.Generic.IDictionary<string, string> PypiDependencies { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

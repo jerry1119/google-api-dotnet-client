@@ -993,6 +993,10 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("timing")]
         public virtual System.Collections.Generic.IDictionary<string, TimeSpan> Timing { get; set; }
 
+        /// <summary>Output only. Non-fatal problems encountered during the execution of the build.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
+        public virtual System.Collections.Generic.IList<Warning> Warnings { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1047,6 +1051,13 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("machineType")]
         public virtual string MachineType { get; set; }
 
+        /// <summary>
+        /// Optional. Specification for execution on a `WorkerPool`. See [running builds in a private
+        /// pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pool")]
+        public virtual PoolOption Pool { get; set; }
+
         /// <summary>Requested verifiability options.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("requestedVerifyOption")]
         public virtual string RequestedVerifyOption { get; set; }
@@ -1080,11 +1091,7 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("volumes")]
         public virtual System.Collections.Generic.IList<Volume> Volumes { get; set; }
 
-        /// <summary>
-        /// Option to specify a `WorkerPool` for the build. Format:
-        /// projects/{project}/locations/{location}/workerPools/{workerPool} This field is in beta and is available only
-        /// to restricted users.
-        /// </summary>
+        /// <summary>This field deprecated; please use `pool.name` instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
         public virtual string WorkerPool { get; set; }
 
@@ -1221,6 +1228,50 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
     /// <summary>The request message for Operations.CancelOperation.</summary>
     public class CancelOperationRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata for the `CreateWorkerPool` operation.</summary>
+    public class CreateWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` to create. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata for the `DeleteWorkerPool` operation.</summary>
+    public class DeleteWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` being deleted. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1501,6 +1552,23 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>
+    /// Details about how a build should be executed on a `WorkerPool`. See [running builds in a private
+    /// pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.
+    /// </summary>
+    public class PoolOption : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project
+        /// hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Location of the source in a Google Cloud Source Repository.</summary>
     public class RepoSource : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1705,7 +1773,8 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         public virtual StorageSource StorageSource { get; set; }
 
         /// <summary>
-        /// If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview.
+        /// If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview; see
+        /// description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("storageSourceManifest")]
         public virtual StorageSourceManifest StorageSourceManifest { get; set; }
@@ -1795,8 +1864,8 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         public virtual System.Nullable<long> Generation { get; set; }
 
         /// <summary>
-        /// Google Cloud Storage object containing the source. This object must be a gzipped archive file (`.tar.gz`)
-        /// containing source to build.
+        /// Google Cloud Storage object containing the source. This object must be a zipped (`.zip`) or gzipped archive
+        /// file (`.tar.gz`) containing source to build.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("object")]
         public virtual string Object__ { get; set; }
@@ -1805,7 +1874,10 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Location of the source manifest in Google Cloud Storage. This feature is in Preview.</summary>
+    /// <summary>
+    /// Location of the source manifest in Google Cloud Storage. This feature is in Preview; see description
+    /// [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
+    /// </summary>
     public class StorageSourceManifest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -1847,6 +1919,28 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata for the `UpdateWorkerPool` operation.</summary>
+    public class UpdateWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` being updated. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// Volume describes a Docker container volume which is mounted into build steps in order to persist files across
     /// build step execution.
@@ -1866,6 +1960,21 @@ namespace Google.Apis.CloudBuild.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("path")]
         public virtual string Path { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A non-fatal problem encountered during the execution of the build.</summary>
+    public class Warning : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The priority for this warning.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("priority")]
+        public virtual string Priority { get; set; }
+
+        /// <summary>Explanation of the warning generated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("text")]
+        public virtual string Text { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

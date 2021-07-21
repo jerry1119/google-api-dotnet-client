@@ -2720,10 +2720,13 @@ namespace Google.Apis.CloudHealthcare.v1
                     /// <summary>
                     /// Queries all data_ids that are consented for a specified use in the given consent store and
                     /// writes them to a specified destination. The returned Operation includes a progress counter for
-                    /// the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing
-                    /// error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For
-                    /// example, the following sample log entry shows a `failed to evaluate consent policy` error that
-                    /// occurred during a QueryAccessibleData call to consent store
+                    /// the number of User data mappings processed. If the request is successful, a detailed response is
+                    /// returned of type QueryAccessibleDataResponse, contained in the response field when the operation
+                    /// finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see
+                    /// [Viewing error logs in Cloud
+                    /// Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following
+                    /// sample log entry shows a `failed to evaluate consent policy` error that occurred during a
+                    /// QueryAccessibleData call to consent store
                     /// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.
                     /// ```json jsonPayload: { @type:
                     /// "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: { code:
@@ -2749,10 +2752,13 @@ namespace Google.Apis.CloudHealthcare.v1
                     /// <summary>
                     /// Queries all data_ids that are consented for a specified use in the given consent store and
                     /// writes them to a specified destination. The returned Operation includes a progress counter for
-                    /// the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing
-                    /// error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For
-                    /// example, the following sample log entry shows a `failed to evaluate consent policy` error that
-                    /// occurred during a QueryAccessibleData call to consent store
+                    /// the number of User data mappings processed. If the request is successful, a detailed response is
+                    /// returned of type QueryAccessibleDataResponse, contained in the response field when the operation
+                    /// finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see
+                    /// [Viewing error logs in Cloud
+                    /// Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following
+                    /// sample log entry shows a `failed to evaluate consent policy` error that occurred during a
+                    /// QueryAccessibleData call to consent store
                     /// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.
                     /// ```json jsonPayload: { @type:
                     /// "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: { code:
@@ -7963,13 +7969,15 @@ namespace Google.Apis.CloudHealthcare.v1
                                 MESSAGEVIEWUNSPECIFIED = 0,
 
                                 /// <summary>
-                                /// Server responses include all the message fields except parsed_data field.
+                                /// Server responses include all the message fields except parsed_data field, and
+                                /// schematized_data fields.
                                 /// </summary>
                                 [Google.Apis.Util.StringValueAttribute("RAW_ONLY")]
                                 RAWONLY = 1,
 
                                 /// <summary>
-                                /// Server responses include all the message fields except data field.
+                                /// Server responses include all the message fields except data field, and
+                                /// schematized_data fields.
                                 /// </summary>
                                 [Google.Apis.Util.StringValueAttribute("PARSED_ONLY")]
                                 PARSEDONLY = 2,
@@ -7977,6 +7985,12 @@ namespace Google.Apis.CloudHealthcare.v1
                                 /// <summary>Server responses include all the message fields.</summary>
                                 [Google.Apis.Util.StringValueAttribute("FULL")]
                                 FULL = 3,
+
+                                /// <summary>
+                                /// Server responses include all the message fields except data and parsed_data fields.
+                                /// </summary>
+                                [Google.Apis.Util.StringValueAttribute("SCHEMATIZED_ONLY")]
+                                SCHEMATIZEDONLY = 5,
 
                                 /// <summary>Server responses include only the name field.</summary>
                                 [Google.Apis.Util.StringValueAttribute("BASIC")]
@@ -8195,13 +8209,15 @@ namespace Google.Apis.CloudHealthcare.v1
                                 MESSAGEVIEWUNSPECIFIED = 0,
 
                                 /// <summary>
-                                /// Server responses include all the message fields except parsed_data field.
+                                /// Server responses include all the message fields except parsed_data field, and
+                                /// schematized_data fields.
                                 /// </summary>
                                 [Google.Apis.Util.StringValueAttribute("RAW_ONLY")]
                                 RAWONLY = 1,
 
                                 /// <summary>
-                                /// Server responses include all the message fields except data field.
+                                /// Server responses include all the message fields except data field, and
+                                /// schematized_data fields.
                                 /// </summary>
                                 [Google.Apis.Util.StringValueAttribute("PARSED_ONLY")]
                                 PARSEDONLY = 2,
@@ -8209,6 +8225,12 @@ namespace Google.Apis.CloudHealthcare.v1
                                 /// <summary>Server responses include all the message fields.</summary>
                                 [Google.Apis.Util.StringValueAttribute("FULL")]
                                 FULL = 3,
+
+                                /// <summary>
+                                /// Server responses include all the message fields except data and parsed_data fields.
+                                /// </summary>
+                                [Google.Apis.Util.StringValueAttribute("SCHEMATIZED_ONLY")]
+                                SCHEMATIZEDONLY = 5,
 
                                 /// <summary>Server responses include only the name field.</summary>
                                 [Google.Apis.Util.StringValueAttribute("BASIC")]
@@ -9853,7 +9875,7 @@ namespace Google.Apis.CloudHealthcare.v1
                 public virtual string Filter { get; set; }
 
                 /// <summary>
-                /// The maximum number of results to return. If not set, the service will select a default.
+                /// The maximum number of results to return. If not set, the service selects a default.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<int> PageSize { get; set; }
@@ -10486,8 +10508,8 @@ namespace Google.Apis.CloudHealthcare.v1.Data
 
         /// <summary>
         /// The name of the dataset resource to create and write the redacted data to. * The destination dataset must
-        /// not exist. * The destination dataset must be in the same project and location as the source dataset.
-        /// De-identifying data across multiple projects or locations is not supported.
+        /// not exist. * The destination dataset must be in the same location as the source dataset. De-identifying data
+        /// across multiple locations is not supported.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("destinationDataset")]
         public virtual string DestinationDataset { get; set; }
@@ -10507,7 +10529,7 @@ namespace Google.Apis.CloudHealthcare.v1.Data
         /// The name of the DICOM store to create and write the redacted data to. For example,
         /// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`. * The
         /// destination dataset must exist. * The source dataset and destination dataset must both reside in the same
-        /// project. De-identifying data across multiple projects is not supported. * The destination DICOM store must
+        /// location. De-identifying data across multiple locations is not supported. * The destination DICOM store must
         /// not exist. * The caller must have the necessary permissions to create the destination DICOM store.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("destinationStore")]
@@ -10532,7 +10554,7 @@ namespace Google.Apis.CloudHealthcare.v1.Data
         /// The name of the FHIR store to create and write the redacted data to. For example,
         /// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`. * The
         /// destination dataset must exist. * The source dataset and destination dataset must both reside in the same
-        /// project. De-identifying data across multiple projects is not supported. * The destination FHIR store must
+        /// location. De-identifying data across multiple locations is not supported. * The destination FHIR store must
         /// exist. * The caller must have the healthcare.fhirResources.update permission to write to the destination
         /// FHIR store.
         /// </summary>
@@ -10753,7 +10775,8 @@ namespace Google.Apis.CloudHealthcare.v1.Data
         /// <summary>
         /// The BigQuery output destination. The Cloud Healthcare Service Agent requires two IAM roles on the BigQuery
         /// location: `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`. The output is one BigQuery table per
-        /// resource type.
+        /// resource type. Note that unlike in FhirStore.StreamConfig.BigQueryDestination, BigQuery views will not be
+        /// created by ExportResources.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("bigqueryDestination")]
         public virtual GoogleCloudHealthcareV1FhirBigQueryDestination BigqueryDestination { get; set; }
@@ -10856,6 +10879,15 @@ namespace Google.Apis.CloudHealthcare.v1.Data
     /// <summary>Represents a FHIR store.</summary>
     public class FhirStore : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// If true, overrides the default search behavior for this FHIR store to `handling=strict` which returns an
+        /// error for unrecognized search parameters. If false, uses the FHIR specification default `handling=lenient`
+        /// which ignores unrecognized search parameters. The handling can always be changed from the default on an
+        /// individual API call by setting the HTTP header `Prefer: handling=strict` or `Prefer: handling=lenient`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("defaultSearchHandlingStrict")]
+        public virtual System.Nullable<bool> DefaultSearchHandlingStrict { get; set; }
+
         /// <summary>
         /// Immutable. Whether to disable referential integrity in this FHIR store. This field is immutable after FHIR
         /// store creation. The default value is false, meaning that the API enforces referential integrity and fails
@@ -12123,6 +12155,23 @@ namespace Google.Apis.CloudHealthcare.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("resourceAttributes")]
         public virtual System.Collections.Generic.IDictionary<string, string> ResourceAttributes { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response for successful QueryAccessibleData operations. This structure is included in the response upon
+    /// operation completion.
+    /// </summary>
+    public class QueryAccessibleDataResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// List of files, each of which contains a list of data_id(s) that are consented for a specified use in the
+        /// request.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsUris")]
+        public virtual System.Collections.Generic.IList<string> GcsUris { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

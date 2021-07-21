@@ -872,6 +872,8 @@ namespace Google.Apis.CloudBuild.v1
                 this.service = service;
                 Builds = new BuildsResource(service);
                 Operations = new OperationsResource(service);
+                Triggers = new TriggersResource(service);
+                WorkerPools = new WorkerPoolsResource(service);
             }
 
             /// <summary>Gets the Builds resource.</summary>
@@ -1437,6 +1439,1003 @@ namespace Google.Apis.CloudBuild.v1
                     }
                 }
             }
+
+            /// <summary>Gets the Triggers resource.</summary>
+            public virtual TriggersResource Triggers { get; }
+
+            /// <summary>The "triggers" collection of methods.</summary>
+            public class TriggersResource
+            {
+                private const string Resource = "triggers";
+
+                /// <summary>The service which this resource belongs to.</summary>
+                private readonly Google.Apis.Services.IClientService service;
+
+                /// <summary>Constructs a new resource.</summary>
+                public TriggersResource(Google.Apis.Services.IClientService service)
+                {
+                    this.service = service;
+                }
+
+                /// <summary>Creates a new `BuildTrigger`. This API is experimental.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="parent">
+                /// The parent resource where this trigger will be created. Format:
+                /// `projects/{project}/locations/{location}`
+                /// </param>
+                public virtual CreateRequest Create(Google.Apis.CloudBuild.v1.Data.BuildTrigger body, string parent)
+                {
+                    return new CreateRequest(service, body, parent);
+                }
+
+                /// <summary>Creates a new `BuildTrigger`. This API is experimental.</summary>
+                public class CreateRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.BuildTrigger>
+                {
+                    /// <summary>Constructs a new Create request.</summary>
+                    public CreateRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.BuildTrigger body, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The parent resource where this trigger will be created. Format:
+                    /// `projects/{project}/locations/{location}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>Required. ID of the project for which to configure automatic builds.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.BuildTrigger Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "create";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+parent}/triggers";
+
+                    /// <summary>Initializes Create parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>
+                /// Deletes a `BuildTrigger` by its project ID and trigger ID. This API is experimental.
+                /// </summary>
+                /// <param name="name">
+                /// The name of the `Trigger` to delete. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </param>
+                public virtual DeleteRequest Delete(string name)
+                {
+                    return new DeleteRequest(service, name);
+                }
+
+                /// <summary>
+                /// Deletes a `BuildTrigger` by its project ID and trigger ID. This API is experimental.
+                /// </summary>
+                public class DeleteRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.Empty>
+                {
+                    /// <summary>Constructs a new Delete request.</summary>
+                    public DeleteRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The name of the `Trigger` to delete. Format:
+                    /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Required. ID of the project that owns the trigger.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Required. ID of the `BuildTrigger` to delete.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string TriggerId { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "delete";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "DELETE";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Delete parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("triggerId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "triggerId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Returns information about a `BuildTrigger`. This API is experimental.</summary>
+                /// <param name="name">
+                /// The name of the `Trigger` to retrieve. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </param>
+                public virtual GetRequest Get(string name)
+                {
+                    return new GetRequest(service, name);
+                }
+
+                /// <summary>Returns information about a `BuildTrigger`. This API is experimental.</summary>
+                public class GetRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.BuildTrigger>
+                {
+                    /// <summary>Constructs a new Get request.</summary>
+                    public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The name of the `Trigger` to retrieve. Format:
+                    /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Required. ID of the project that owns the trigger.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Required. Identifier (`id` or `name`) of the `BuildTrigger` to get.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string TriggerId { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "get";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Get parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("triggerId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "triggerId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Lists existing `BuildTrigger`s. This API is experimental.</summary>
+                /// <param name="parent">
+                /// The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}`
+                /// </param>
+                public virtual ListRequest List(string parent)
+                {
+                    return new ListRequest(service, parent);
+                }
+
+                /// <summary>Lists existing `BuildTrigger`s. This API is experimental.</summary>
+                public class ListRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.ListBuildTriggersResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>Number of results to return in the list.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>Token to provide to skip to a particular spot in the list.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Required. ID of the project for which to list BuildTriggers.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+parent}/triggers";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>
+                /// Updates a `BuildTrigger` by its project ID and trigger ID. This API is experimental.
+                /// </summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="resourceName">
+                /// The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where
+                /// {trigger} is a unique identifier generated by the service.
+                /// </param>
+                public virtual PatchRequest Patch(Google.Apis.CloudBuild.v1.Data.BuildTrigger body, string resourceName)
+                {
+                    return new PatchRequest(service, body, resourceName);
+                }
+
+                /// <summary>
+                /// Updates a `BuildTrigger` by its project ID and trigger ID. This API is experimental.
+                /// </summary>
+                public class PatchRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.BuildTrigger>
+                {
+                    /// <summary>Constructs a new Patch request.</summary>
+                    public PatchRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.BuildTrigger body, string resourceName) : base(service)
+                    {
+                        ResourceName = resourceName;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`,
+                    /// where {trigger} is a unique identifier generated by the service.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("resourceName", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string ResourceName { get; private set; }
+
+                    /// <summary>Required. ID of the project that owns the trigger.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Required. ID of the `BuildTrigger` to update.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string TriggerId { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.BuildTrigger Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "patch";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "PATCH";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+resourceName}";
+
+                    /// <summary>Initializes Patch parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("resourceName", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "resourceName",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("triggerId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "triggerId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Runs a `BuildTrigger` at a particular source revision.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// The name of the `Trigger` to run. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </param>
+                public virtual RunRequest Run(Google.Apis.CloudBuild.v1.Data.RunBuildTriggerRequest body, string name)
+                {
+                    return new RunRequest(service, body, name);
+                }
+
+                /// <summary>Runs a `BuildTrigger` at a particular source revision.</summary>
+                public class RunRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new Run request.</summary>
+                    public RunRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.RunBuildTriggerRequest body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The name of the `Trigger` to run. Format:
+                    /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.RunBuildTriggerRequest Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "run";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}:run";
+
+                    /// <summary>Initializes Run parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>
+                /// ReceiveTriggerWebhook [Experimental] is called when the API receives a webhook request targeted at a
+                /// specific trigger.
+                /// </summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// The name of the `ReceiveTriggerWebhook` to retrieve. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </param>
+                public virtual WebhookRequest Webhook(Google.Apis.CloudBuild.v1.Data.HttpBody body, string name)
+                {
+                    return new WebhookRequest(service, body, name);
+                }
+
+                /// <summary>
+                /// ReceiveTriggerWebhook [Experimental] is called when the API receives a webhook request targeted at a
+                /// specific trigger.
+                /// </summary>
+                public class WebhookRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.ReceiveTriggerWebhookResponse>
+                {
+                    /// <summary>Constructs a new Webhook request.</summary>
+                    public WebhookRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.HttpBody body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The name of the `ReceiveTriggerWebhook` to retrieve. Format:
+                    /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Project in which the specified trigger lives</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string ProjectId { get; set; }
+
+                    /// <summary>Secret token used for authorization if an OAuth token isn't provided.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("secret", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Secret { get; set; }
+
+                    /// <summary>Name of the trigger to run the payload against</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("trigger", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Trigger { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.HttpBody Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "webhook";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}:webhook";
+
+                    /// <summary>Initializes Webhook parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                        });
+                        RequestParameters.Add("projectId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "projectId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("secret", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "secret",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("trigger", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "trigger",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+            }
+
+            /// <summary>Gets the WorkerPools resource.</summary>
+            public virtual WorkerPoolsResource WorkerPools { get; }
+
+            /// <summary>The "workerPools" collection of methods.</summary>
+            public class WorkerPoolsResource
+            {
+                private const string Resource = "workerPools";
+
+                /// <summary>The service which this resource belongs to.</summary>
+                private readonly Google.Apis.Services.IClientService service;
+
+                /// <summary>Constructs a new resource.</summary>
+                public WorkerPoolsResource(Google.Apis.Services.IClientService service)
+                {
+                    this.service = service;
+                }
+
+                /// <summary>Creates a `WorkerPool`.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="parent">
+                /// Required. The parent resource where this worker pool will be created. Format:
+                /// `projects/{project}/locations/{location}`.
+                /// </param>
+                public virtual CreateRequest Create(Google.Apis.CloudBuild.v1.Data.WorkerPool body, string parent)
+                {
+                    return new CreateRequest(service, body, parent);
+                }
+
+                /// <summary>Creates a `WorkerPool`.</summary>
+                public class CreateRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new Create request.</summary>
+                    public CreateRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.WorkerPool body, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. The parent resource where this worker pool will be created. Format:
+                    /// `projects/{project}/locations/{location}`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>
+                    /// If set, validate the request and preview the response, but do not actually post it.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("validateOnly", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<bool> ValidateOnly { get; set; }
+
+                    /// <summary>
+                    /// Required. Immutable. The ID to use for the `WorkerPool`, which will become the final component
+                    /// of the resource name. This value should be 1-63 characters, and valid characters are /a-z-/.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("workerPoolId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string WorkerPoolId { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.WorkerPool Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "create";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+parent}/workerPools";
+
+                    /// <summary>Initializes Create parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("validateOnly", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "validateOnly",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("workerPoolId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "workerPoolId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Deletes a `WorkerPool`.</summary>
+                /// <param name="name">
+                /// Required. The name of the `WorkerPool` to delete. Format:
+                /// `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.
+                /// </param>
+                public virtual DeleteRequest Delete(string name)
+                {
+                    return new DeleteRequest(service, name);
+                }
+
+                /// <summary>Deletes a `WorkerPool`.</summary>
+                public class DeleteRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new Delete request.</summary>
+                    public DeleteRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. The name of the `WorkerPool` to delete. Format:
+                    /// `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>
+                    /// If set to true, and the `WorkerPool` is not found, the request will succeed but no action will
+                    /// be taken on the server.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("allowMissing", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<bool> AllowMissing { get; set; }
+
+                    /// <summary>
+                    /// Optional. If this is provided, it must match the server's etag on the workerpool for the request
+                    /// to be processed.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("etag", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Etag { get; set; }
+
+                    /// <summary>
+                    /// If set, validate the request and preview the response, but do not actually post it.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("validateOnly", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<bool> ValidateOnly { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "delete";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "DELETE";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Delete parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                        });
+                        RequestParameters.Add("allowMissing", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "allowMissing",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("etag", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "etag",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("validateOnly", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "validateOnly",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Returns details of a `WorkerPool`.</summary>
+                /// <param name="name">
+                /// Required. The name of the `WorkerPool` to retrieve. Format:
+                /// `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+                /// </param>
+                public virtual GetRequest Get(string name)
+                {
+                    return new GetRequest(service, name);
+                }
+
+                /// <summary>Returns details of a `WorkerPool`.</summary>
+                public class GetRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.WorkerPool>
+                {
+                    /// <summary>Constructs a new Get request.</summary>
+                    public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. The name of the `WorkerPool` to retrieve. Format:
+                    /// `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "get";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Get parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>Lists `WorkerPool`s.</summary>
+                /// <param name="parent">
+                /// Required. The parent of the collection of `WorkerPools`. Format:
+                /// `projects/{project}/locations/location`.
+                /// </param>
+                public virtual ListRequest List(string parent)
+                {
+                    return new ListRequest(service, parent);
+                }
+
+                /// <summary>Lists `WorkerPool`s.</summary>
+                public class ListRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.ListWorkerPoolsResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Required. The parent of the collection of `WorkerPools`. Format:
+                    /// `projects/{project}/locations/location`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>
+                    /// The maximum number of `WorkerPool`s to return. The service may return fewer than this value. If
+                    /// omitted, the server will use a sensible default.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>
+                    /// A page token, received from a previous `ListWorkerPools` call. Provide this to retrieve the
+                    /// subsequent page.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+parent}/workerPools";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Updates a `WorkerPool`.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// Output only. The resource name of the `WorkerPool`, with format
+                /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`. The value of `{worker_pool}` is
+                /// provided by `worker_pool_id` in `CreateWorkerPool` request and the value of `{location}` is
+                /// determined by the endpoint accessed.
+                /// </param>
+                public virtual PatchRequest Patch(Google.Apis.CloudBuild.v1.Data.WorkerPool body, string name)
+                {
+                    return new PatchRequest(service, body, name);
+                }
+
+                /// <summary>Updates a `WorkerPool`.</summary>
+                public class PatchRequest : CloudBuildBaseServiceRequest<Google.Apis.CloudBuild.v1.Data.Operation>
+                {
+                    /// <summary>Constructs a new Patch request.</summary>
+                    public PatchRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudBuild.v1.Data.WorkerPool body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// Output only. The resource name of the `WorkerPool`, with format
+                    /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`. The value of
+                    /// `{worker_pool}` is provided by `worker_pool_id` in `CreateWorkerPool` request and the value of
+                    /// `{location}` is determined by the endpoint accessed.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>A mask specifying which fields in `worker_pool` to update.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual object UpdateMask { get; set; }
+
+                    /// <summary>
+                    /// If set, validate the request and preview the response, but do not actually post it.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("validateOnly", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<bool> ValidateOnly { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudBuild.v1.Data.WorkerPool Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "patch";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "PATCH";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Patch parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                        });
+                        RequestParameters.Add("updateMask", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "updateMask",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("validateOnly", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "validateOnly",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+            }
         }
 
         /// <summary>Gets the Triggers resource.</summary>
@@ -1479,6 +2478,13 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("projectId", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string ProjectId { get; private set; }
 
+                /// <summary>
+                /// The parent resource where this trigger will be created. Format:
+                /// `projects/{project}/locations/{location}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Parent { get; set; }
+
                 /// <summary>Gets or sets the body of this request.</summary>
                 Google.Apis.CloudBuild.v1.Data.BuildTrigger Body { get; set; }
 
@@ -1503,6 +2509,14 @@ namespace Google.Apis.CloudBuild.v1
                         Name = "projectId",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "parent",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });
@@ -1536,6 +2550,13 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string TriggerId { get; private set; }
 
+                /// <summary>
+                /// The name of the `Trigger` to delete. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Name { get; set; }
+
                 /// <summary>Gets the method name.</summary>
                 public override string MethodName => "delete";
 
@@ -1562,6 +2583,14 @@ namespace Google.Apis.CloudBuild.v1
                         Name = "triggerId",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "name",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });
@@ -1595,6 +2624,13 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string TriggerId { get; private set; }
 
+                /// <summary>
+                /// The name of the `Trigger` to retrieve. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Name { get; set; }
+
                 /// <summary>Gets the method name.</summary>
                 public override string MethodName => "get";
 
@@ -1621,6 +2657,14 @@ namespace Google.Apis.CloudBuild.v1
                         Name = "triggerId",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "name",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });
@@ -1656,6 +2700,12 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual string PageToken { get; set; }
 
+                /// <summary>
+                /// The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Parent { get; set; }
+
                 /// <summary>Gets the method name.</summary>
                 public override string MethodName => "list";
 
@@ -1688,6 +2738,14 @@ namespace Google.Apis.CloudBuild.v1
                     RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
                     {
                         Name = "pageToken",
+                        IsRequired = false,
+                        ParameterType = "query",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "parent",
                         IsRequired = false,
                         ParameterType = "query",
                         DefaultValue = null,
@@ -1792,6 +2850,13 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("triggerId", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string TriggerId { get; private set; }
 
+                /// <summary>
+                /// The name of the `Trigger` to run. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Name { get; set; }
+
                 /// <summary>Gets or sets the body of this request.</summary>
                 Google.Apis.CloudBuild.v1.Data.RepoSource Body { get; set; }
 
@@ -1824,6 +2889,14 @@ namespace Google.Apis.CloudBuild.v1
                         Name = "triggerId",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "name",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });
@@ -1865,6 +2938,13 @@ namespace Google.Apis.CloudBuild.v1
                 [Google.Apis.Util.RequestParameterAttribute("trigger", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string Trigger { get; private set; }
 
+                /// <summary>
+                /// The name of the `ReceiveTriggerWebhook` to retrieve. Format:
+                /// `projects/{project}/locations/{location}/triggers/{trigger}`
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Query)]
+                public virtual string Name { get; set; }
+
                 /// <summary>Secret token used for authorization if an OAuth token isn't provided.</summary>
                 [Google.Apis.Util.RequestParameterAttribute("secret", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual string Secret { get; set; }
@@ -1901,6 +2981,14 @@ namespace Google.Apis.CloudBuild.v1
                         Name = "trigger",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                    RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "name",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });
@@ -2143,6 +3231,10 @@ namespace Google.Apis.CloudBuild.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("timing")]
         public virtual System.Collections.Generic.IDictionary<string, TimeSpan> Timing { get; set; }
 
+        /// <summary>Output only. Non-fatal problems encountered during the execution of the build.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
+        public virtual System.Collections.Generic.IList<Warning> Warnings { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -2197,6 +3289,13 @@ namespace Google.Apis.CloudBuild.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("machineType")]
         public virtual string MachineType { get; set; }
 
+        /// <summary>
+        /// Optional. Specification for execution on a `WorkerPool`. See [running builds in a private
+        /// pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pool")]
+        public virtual PoolOption Pool { get; set; }
+
         /// <summary>Requested verifiability options.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("requestedVerifyOption")]
         public virtual string RequestedVerifyOption { get; set; }
@@ -2230,11 +3329,7 @@ namespace Google.Apis.CloudBuild.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("volumes")]
         public virtual System.Collections.Generic.IList<Volume> Volumes { get; set; }
 
-        /// <summary>
-        /// Option to specify a `WorkerPool` for the build. Format:
-        /// projects/{project}/locations/{location}/workerPools/{workerPool} This field is in beta and is available only
-        /// to restricted users.
-        /// </summary>
+        /// <summary>This field deprecated; please use `pool.name` instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
         public virtual string WorkerPool { get; set; }
 
@@ -2350,6 +3445,13 @@ namespace Google.Apis.CloudBuild.v1.Data
     /// <summary>Configuration for an automated build in response to source repository changes.</summary>
     public class BuildTrigger : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Autodetect build configuration. The following precedence is used (case insensitive): 1. cloudbuild.yaml 2.
+        /// cloudbuild.yml 3. cloudbuild.json 4. Dockerfile Currently only available for GitHub App Triggers.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("autodetect")]
+        public virtual System.Nullable<bool> Autodetect { get; set; }
+
         /// <summary>Contents of the build template.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("build")]
         public virtual Build Build { get; set; }
@@ -2413,11 +3515,18 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Optional. PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub
-        /// message is published.
+        /// PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub message is
+        /// published.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pubsubConfig")]
         public virtual PubsubConfig PubsubConfig { get; set; }
+
+        /// <summary>
+        /// The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where
+        /// {trigger} is a unique identifier generated by the service.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("resourceName")]
+        public virtual string ResourceName { get; set; }
 
         /// <summary>
         /// Substitutions for Build resource. The keys must match the following regular expression: `^_[A-Z0-9_]+$`.
@@ -2436,6 +3545,13 @@ namespace Google.Apis.CloudBuild.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("triggerTemplate")]
         public virtual RepoSource TriggerTemplate { get; set; }
+
+        /// <summary>
+        /// WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a
+        /// trigger's webhook URL.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("webhookConfig")]
+        public virtual WebhookConfig WebhookConfig { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2486,6 +3602,50 @@ namespace Google.Apis.CloudBuild.v1.Data
     /// <summary>The request message for Operations.CancelOperation.</summary>
     public class CancelOperationRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata for the `CreateWorkerPool` operation.</summary>
+    public class CreateWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` to create. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata for the `DeleteWorkerPool` operation.</summary>
+    public class DeleteWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` being deleted. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -2669,6 +3829,45 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Response containing existing `WorkerPools`.</summary>
+    public class ListWorkerPoolsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Continuation token used to page through large result sets. Provide this value in a subsequent
+        /// ListWorkerPoolsRequest to return the next page of results.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>`WorkerPools` for the specified project.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPools")]
+        public virtual System.Collections.Generic.IList<WorkerPool> WorkerPools { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Defines the network configuration for the pool.</summary>
+    public class NetworkConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Option to configure network egress for the workers.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("egressOption")]
+        public virtual string EgressOption { get; set; }
+
+        /// <summary>
+        /// Required. Immutable. The network definition that the workers are peered to. If this section is left empty,
+        /// the workers will be peered to `WorkerPool.project_id` on the service producer network. Must be in the format
+        /// `projects/{project}/global/networks/{network}`, where `{project}` is a project number, such as `12345`, and
+        /// `{network}` is the name of a VPC network in the project. See [Understanding network configuration
+        /// options](https://cloud.google.com/build/docs/private-pools/set-up-private-pool-environment)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("peeredNetwork")]
+        public virtual string PeeredNetwork { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// Notification is the container which holds the data that is relevant to this particular notification.
     /// </summary>
@@ -2835,6 +4034,38 @@ namespace Google.Apis.CloudBuild.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("response")]
         public virtual System.Collections.Generic.IDictionary<string, object> Response { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Details about how a build should be executed on a `WorkerPool`. See [running builds in a private
+    /// pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.
+    /// </summary>
+    public class PoolOption : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project
+        /// hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Configuration for a V1 `PrivatePool`.</summary>
+    public class PrivatePoolV1Config : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Network configuration for the pool.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("networkConfig")]
+        public virtual NetworkConfig NetworkConfig { get; set; }
+
+        /// <summary>Machine configuration for the workers in the pool.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerConfig")]
+        public virtual WorkerConfig WorkerConfig { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -3038,6 +4269,25 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Specifies a build trigger to run and the source to use.</summary>
+    public class RunBuildTriggerRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Required. ID of the project.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("projectId")]
+        public virtual string ProjectId { get; set; }
+
+        /// <summary>Source to build against this trigger.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("source")]
+        public virtual RepoSource Source { get; set; }
+
+        /// <summary>Required. ID of the trigger.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("triggerId")]
+        public virtual string TriggerId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>SMTPDelivery is the delivery configuration for an SMTP (email) notification.</summary>
     public class SMTPDelivery : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -3156,7 +4406,8 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual StorageSource StorageSource { get; set; }
 
         /// <summary>
-        /// If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview.
+        /// If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview; see
+        /// description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("storageSourceManifest")]
         public virtual StorageSourceManifest StorageSourceManifest { get; set; }
@@ -3246,8 +4497,8 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual System.Nullable<long> Generation { get; set; }
 
         /// <summary>
-        /// Google Cloud Storage object containing the source. This object must be a gzipped archive file (`.tar.gz`)
-        /// containing source to build.
+        /// Google Cloud Storage object containing the source. This object must be a zipped (`.zip`) or gzipped archive
+        /// file (`.tar.gz`) containing source to build.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("object")]
         public virtual string Object__ { get; set; }
@@ -3256,7 +4507,10 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Location of the source manifest in Google Cloud Storage. This feature is in Preview.</summary>
+    /// <summary>
+    /// Location of the source manifest in Google Cloud Storage. This feature is in Preview; see description
+    /// [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
+    /// </summary>
     public class StorageSourceManifest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -3298,6 +4552,28 @@ namespace Google.Apis.CloudBuild.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata for the `UpdateWorkerPool` operation.</summary>
+    public class UpdateWorkerPoolOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Time the operation was completed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("completeTime")]
+        public virtual object CompleteTime { get; set; }
+
+        /// <summary>Time the operation was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The resource name of the `WorkerPool` being updated. Format:
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workerPool")]
+        public virtual string WorkerPool { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// Volume describes a Docker container volume which is mounted into build steps in order to persist files across
     /// build step execution.
@@ -3320,5 +4596,127 @@ namespace Google.Apis.CloudBuild.v1.Data
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A non-fatal problem encountered during the execution of the build.</summary>
+    public class Warning : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The priority for this warning.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("priority")]
+        public virtual string Priority { get; set; }
+
+        /// <summary>Explanation of the warning generated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("text")]
+        public virtual string Text { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a
+    /// trigger's webhook URL.
+    /// </summary>
+    public class WebhookConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Required. Resource name for the secret required as a URL parameter.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("secret")]
+        public virtual string Secret { get; set; }
+
+        /// <summary>
+        /// Potential issues with the underlying Pub/Sub subscription configuration. Only populated on get requests.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("state")]
+        public virtual string State { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Defines the configuration to be used for creating workers in the pool.</summary>
+    public class WorkerConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Size of the disk attached to the worker, in GB. See [Worker pool config
+        /// file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). Specify a value of
+        /// up to 1000. If `0` is specified, Cloud Build will use a standard disk size.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("diskSizeGb")]
+        public virtual System.Nullable<long> DiskSizeGb { get; set; }
+
+        /// <summary>
+        /// Machine type of a worker, such as `e2-medium`. See [Worker pool config
+        /// file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). If left blank,
+        /// Cloud Build will use a sensible default.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("machineType")]
+        public virtual string MachineType { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Configuration for a `WorkerPool`. Cloud Build owns and maintains a pool of workers for general use and have no
+    /// access to a project's private network. By default, builds submitted to Cloud Build will use a worker from this
+    /// pool. If your build needs access to resources on a private network, create and use a `WorkerPool` to run your
+    /// builds. Private `WorkerPool`s give your builds access to any single VPC network that you administer, including
+    /// any on-prem resources connected to that VPC network. For an overview of private pools, see [Private pools
+    /// overview](https://cloud.google.com/build/docs/private-pools/private-pools-overview).
+    /// </summary>
+    public class WorkerPool : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// User specified annotations. See https://google.aip.dev/128#annotations for more details such as format and
+        /// size limitations.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("annotations")]
+        public virtual System.Collections.Generic.IDictionary<string, string> Annotations { get; set; }
+
+        /// <summary>Output only. Time at which the request to create the `WorkerPool` was received.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>Output only. Time at which the request to delete the `WorkerPool` was received.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("deleteTime")]
+        public virtual object DeleteTime { get; set; }
+
+        /// <summary>
+        /// A user-specified, human-readable name for the `WorkerPool`. If provided, this value must be 1-63 characters.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayName")]
+        public virtual string DisplayName { get; set; }
+
+        /// <summary>
+        /// Output only. Checksum computed by the server. May be sent on update and delete requests to ensure that the
+        /// client has an up-to-date value before proceeding.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("etag")]
+        public virtual string ETag { get; set; }
+
+        /// <summary>
+        /// Output only. The resource name of the `WorkerPool`, with format
+        /// `projects/{project}/locations/{location}/workerPools/{worker_pool}`. The value of `{worker_pool}` is
+        /// provided by `worker_pool_id` in `CreateWorkerPool` request and the value of `{location}` is determined by
+        /// the endpoint accessed.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Private Pool using a v1 configuration.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("privatePoolV1Config")]
+        public virtual PrivatePoolV1Config PrivatePoolV1Config { get; set; }
+
+        /// <summary>Output only. `WorkerPool` state.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("state")]
+        public virtual string State { get; set; }
+
+        /// <summary>Output only. A unique identifier for the `WorkerPool`.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("uid")]
+        public virtual string Uid { get; set; }
+
+        /// <summary>Output only. Time at which the request to update the `WorkerPool` was received.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
+        public virtual object UpdateTime { get; set; }
     }
 }

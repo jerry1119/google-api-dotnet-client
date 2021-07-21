@@ -1138,6 +1138,22 @@ namespace Google.Apis.ServiceControl.v2.Data
     /// <summary>Describes a resource referenced in the request.</summary>
     public class ResourceInfo : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Optional. The identifier of the container of this resource. For Google Cloud APIs, the resource container
+        /// must be one of the following formats: - `projects/` - `folders/` - `organizations/` For the policy
+        /// enforcement on the container level (VPCSC and Location Policy check), this field takes precedence on the
+        /// container extracted from name when presents.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("container")]
+        public virtual string Container { get; set; }
+
+        /// <summary>
+        /// Optional. The location of the resource. The value must be a valid zone, region or multiregion. For example:
+        /// "europe-west4" or "northamerica-northeast1-a"
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("location")]
+        public virtual string Location { get; set; }
+
         /// <summary>The name of the resource referenced in the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -1224,8 +1240,10 @@ namespace Google.Apis.ServiceControl.v2.Data
         public virtual FirstPartyPrincipal FirstPartyPrincipal { get; set; }
 
         /// <summary>
-        /// A string representing the principal_subject associated with the identity. See go/3pical for more info on how
-        /// principal_subject is formatted.
+        /// A string representing the principal_subject associated with the identity. For most identities, the format
+        /// will be `principal://iam.googleapis.com/{identity pool name}/subject/{subject)` except for some GKE
+        /// identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the legacy format
+        /// `serviceAccount:{identity pool name}[{subject}]`
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("principalSubject")]
         public virtual string PrincipalSubject { get; set; }
@@ -1239,8 +1257,8 @@ namespace Google.Apis.ServiceControl.v2.Data
     }
 
     /// <summary>
-    /// The context of a span, attached to Exemplars in Distribution values during aggregation. It contains the name of
-    /// a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
+    /// The context of a span. This is attached to an Exemplar in Distribution values during aggregation. It contains
+    /// the name of a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
     /// </summary>
     public class SpanContext : Google.Apis.Requests.IDirectResponseSchema
     {

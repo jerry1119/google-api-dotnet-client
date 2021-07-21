@@ -2234,7 +2234,7 @@ namespace Google.Apis.Drive.v2
                 InitParameters();
             }
 
-            /// <summary>Maximum number of shared drives to return.</summary>
+            /// <summary>Maximum number of shared drives to return per page.</summary>
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> MaxResults { get; set; }
 
@@ -2958,10 +2958,17 @@ namespace Google.Apis.Drive.v2
 
             /// <summary>
             /// The space in which the IDs can be used to create new files. Supported values are 'drive' and
-            /// 'appDataFolder'.
+            /// 'appDataFolder'. (Default: 'drive')
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("space", Google.Apis.Util.RequestParameterType.Query)]
             public virtual string Space { get; set; }
+
+            /// <summary>
+            /// The type of items which the IDs can be used for. Supported values are 'files' and 'shortcuts'. Note that
+            /// 'shortcuts' are only supported in the drive 'space'. (Default: 'files')
+            /// </summary>
+            [Google.Apis.Util.RequestParameterAttribute("type", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string Type { get; set; }
 
             /// <summary>Gets the method name.</summary>
             public override string MethodName => "generateIds";
@@ -2990,6 +2997,14 @@ namespace Google.Apis.Drive.v2
                     IsRequired = false,
                     ParameterType = "query",
                     DefaultValue = "drive",
+                    Pattern = null,
+                });
+                RequestParameters.Add("type", new Google.Apis.Discovery.Parameter
+                {
+                    Name = "type",
+                    IsRequired = false,
+                    ParameterType = "query",
+                    DefaultValue = "files",
                     Pattern = null,
                 });
             }
@@ -6239,8 +6254,12 @@ namespace Google.Apis.Drive.v2
             public virtual System.Nullable<bool> SupportsTeamDrives { get; set; }
 
             /// <summary>
-            /// Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the
-            /// specified role is not 'owner'.
+            /// Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This
+            /// parameter is required as an acknowledgement of the side effect. File owners can only transfer ownership
+            /// of files existing on My Drive. Files existing in a shared drive are owned by the organization that owns
+            /// that shared drive. Ownership transfers are not supported for files and folders in shared drives.
+            /// Organizers of a shared drive can move items from that shared drive into their My Drive which transfers
+            /// the ownership to them.
             /// </summary>
             [Google.Apis.Util.RequestParameterAttribute("transferOwnership", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<bool> TransferOwnership { get; set; }
@@ -9333,6 +9352,10 @@ namespace Google.Apis.Drive.v2.Data
             set => LastViewedByMeDateRaw = Google.Apis.Util.Utilities.GetStringFromDateTime(value);
         }
 
+        /// <summary>Contains details about the link URLs that clients are using to refer to this item.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("linkShareMetadata")]
+        public virtual LinkShareMetadataData LinkShareMetadata { get; set; }
+
         /// <summary>Deprecated.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("markedViewedByMeDate")]
         public virtual string MarkedViewedByMeDateRaw { get; set; }
@@ -9413,7 +9436,10 @@ namespace Google.Apis.Drive.v2.Data
         [Newtonsoft.Json.JsonPropertyAttribute("ownerNames")]
         public virtual System.Collections.Generic.IList<string> OwnerNames { get; set; }
 
-        /// <summary>The owner(s) of this file. Not populated for items in shared drives.</summary>
+        /// <summary>
+        /// The owner of this file. Only certain legacy files may have more than one owner. This field isn't populated
+        /// for items in shared drives.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("owners")]
         public virtual System.Collections.Generic.IList<User> Owners { get; set; }
 
@@ -9443,6 +9469,10 @@ namespace Google.Apis.Drive.v2.Data
         /// <summary>The number of quota bytes used by this file.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("quotaBytesUsed")]
         public virtual System.Nullable<long> QuotaBytesUsed { get; set; }
+
+        /// <summary>A key needed to access the item via a shared link.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("resourceKey")]
+        public virtual string ResourceKey { get; set; }
 
         /// <summary>A link back to this file.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("selfLink")]
@@ -9606,6 +9636,12 @@ namespace Google.Apis.Drive.v2.Data
             /// <summary>Deprecated</summary>
             [Newtonsoft.Json.JsonPropertyAttribute("canChangeRestrictedDownload")]
             public virtual System.Nullable<bool> CanChangeRestrictedDownload { get; set; }
+
+            /// <summary>
+            /// Whether the current user can change the securityUpdateEnabled field on link share metadata.
+            /// </summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("canChangeSecurityUpdateEnabled")]
+            public virtual System.Nullable<bool> CanChangeSecurityUpdateEnabled { get; set; }
 
             /// <summary>Whether the current user can comment on this file.</summary>
             [Newtonsoft.Json.JsonPropertyAttribute("canComment")]
@@ -9918,6 +9954,18 @@ namespace Google.Apis.Drive.v2.Data
             public virtual System.Nullable<bool> Viewed { get; set; }
         }
 
+        /// <summary>Contains details about the link URLs that clients are using to refer to this item.</summary>
+        public class LinkShareMetadataData
+        {
+            /// <summary>Whether the file is eligible for security update.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("securityUpdateEligible")]
+            public virtual System.Nullable<bool> SecurityUpdateEligible { get; set; }
+
+            /// <summary>Whether the security update is enabled for this file.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("securityUpdateEnabled")]
+            public virtual System.Nullable<bool> SecurityUpdateEnabled { get; set; }
+        }
+
         /// <summary>
         /// Shortcut file details. Only populated for shortcut files, which have the mimeType field set to
         /// application/vnd.google-apps.shortcut.
@@ -9934,6 +9982,10 @@ namespace Google.Apis.Drive.v2.Data
             /// </summary>
             [Newtonsoft.Json.JsonPropertyAttribute("targetMimeType")]
             public virtual string TargetMimeType { get; set; }
+
+            /// <summary>The ResourceKey for the target file.</summary>
+            [Newtonsoft.Json.JsonPropertyAttribute("targetResourceKey")]
+            public virtual string TargetResourceKey { get; set; }
         }
 
         /// <summary>
@@ -10434,10 +10486,11 @@ namespace Google.Apis.Drive.v2.Data
         public virtual string OriginalFilename { get; set; }
 
         /// <summary>
-        /// Whether this revision is pinned to prevent automatic purging. This will only be populated and can only be
-        /// modified on files with content stored in Drive, excluding Docs Editors files. Revisions can also be pinned
-        /// when they are created through the drive.files.insert/update/copy by using the pinned query parameter. Pinned
-        /// revisions are stored indefinitely using additional storage quota, up to a maximum of 200 revisions.
+        /// Whether this revision is pinned to prevent automatic purging. If not set, the revision is automatically
+        /// purged 30 days after newer content is uploaded. This field can only be modified on files with content stored
+        /// in Drive, excluding Docs Editors files. Revisions can also be pinned when they are created through the
+        /// drive.files.insert/update/copy by using the pinned query parameter. Pinned revisions are stored indefinitely
+        /// using additional storage quota, up to a maximum of 200 revisions.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pinned")]
         public virtual System.Nullable<bool> Pinned { get; set; }

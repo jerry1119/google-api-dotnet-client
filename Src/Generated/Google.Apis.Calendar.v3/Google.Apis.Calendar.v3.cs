@@ -4525,14 +4525,14 @@ namespace Google.Apis.Calendar.v3.Data
     {
         /// <summary>
         /// A global palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry
-        /// resource refers to one of these color IDs in its color field. Read-only.
+        /// resource refers to one of these color IDs in its colorId field. Read-only.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("calendar")]
         public virtual System.Collections.Generic.IDictionary<string, ColorDefinition> Calendar { get; set; }
 
         /// <summary>
         /// A global palette of event colors, mapping from the color ID to its definition. An event resource may refer
-        /// to one of these color IDs in its color field. Read-only.
+        /// to one of these color IDs in its colorId field. Read-only.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("event")]
         public virtual System.Collections.Generic.IDictionary<string, ColorDefinition> Event__ { get; set; }
@@ -4561,9 +4561,9 @@ namespace Google.Apis.Calendar.v3.Data
     {
         /// <summary>
         /// The ID of the conference. Can be used by developers to keep track of conferences, should not be displayed to
-        /// users. Values for solution types:   - "eventHangout": unset. - "eventNamedHangout": the name of the Hangout.
-        /// - "hangoutsMeet": the 10-letter meeting code, for example "aaa-bbbb-ccc". - "addOn": defined by 3P
-        /// conference provider.  Optional.
+        /// users. The ID value is formed differently for each conference solution type:   - eventHangout: ID is not
+        /// set. - eventNamedHangout: ID is the name of the Hangout. - hangoutsMeet: ID is the 10-letter meeting code,
+        /// for example aaa-bbbb-ccc. - addOn: ID is defined by the third-party provider.  Optional.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("conferenceId")]
         public virtual string ConferenceId { get; set; }
@@ -4687,8 +4687,8 @@ namespace Google.Apis.Calendar.v3.Data
         /// The conference solution type. If a client encounters an unfamiliar or empty type, it should still be able to
         /// display the entry points. However, it should disallow modifications. The possible values are:   -
         /// "eventHangout" for Hangouts for consumers (http://hangouts.google.com) - "eventNamedHangout" for classic
-        /// Hangouts for Google Workspace users (http://hangouts.google.com) - "hangoutsMeet" for Google Meet
-        /// (http://meet.google.com) - "addOn" for 3P conference providers
+        /// Hangouts for Google Workspace users (deprecated; http://hangouts.google.com) - "hangoutsMeet" for Google
+        /// Meet (http://meet.google.com) - "addOn" for 3P conference providers
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("type")]
         public virtual string Type { get; set; }
@@ -4830,8 +4830,7 @@ namespace Google.Apis.Calendar.v3.Data
     public class Event : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Whether anyone can invite themselves to the event (currently works for Google+ events only). Optional. The
-        /// default is False.
+        /// Whether anyone can invite themselves to the event (deprecated). Optional. The default is False.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("anyoneCanAddSelf")]
         public virtual System.Nullable<bool> AnyoneCanAddSelf { get; set; }
@@ -4949,7 +4948,7 @@ namespace Google.Apis.Calendar.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("guestsCanSeeOtherGuests")]
         public virtual System.Nullable<bool> GuestsCanSeeOtherGuests { get; set; }
 
-        /// <summary>An absolute link to the Google+ hangout associated with this event. Read-only.</summary>
+        /// <summary>An absolute link to the Google Hangout associated with this event. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("hangoutLink")]
         public virtual string HangoutLink { get; set; }
 
@@ -5125,10 +5124,7 @@ namespace Google.Apis.Calendar.v3.Data
             [Newtonsoft.Json.JsonPropertyAttribute("email")]
             public virtual string Email { get; set; }
 
-            /// <summary>
-            /// The creator's Profile ID, if available. It corresponds to the id field in the People collection of the
-            /// Google+ API
-            /// </summary>
+            /// <summary>The creator's Profile ID, if available.</summary>
             [Newtonsoft.Json.JsonPropertyAttribute("id")]
             public virtual string Id { get; set; }
 
@@ -5215,10 +5211,7 @@ namespace Google.Apis.Calendar.v3.Data
             [Newtonsoft.Json.JsonPropertyAttribute("email")]
             public virtual string Email { get; set; }
 
-            /// <summary>
-            /// The organizer's Profile ID, if available. It corresponds to the id field in the People collection of the
-            /// Google+ API
-            /// </summary>
+            /// <summary>The organizer's Profile ID, if available.</summary>
             [Newtonsoft.Json.JsonPropertyAttribute("id")]
             public virtual string Id { get; set; }
 
@@ -5315,10 +5308,7 @@ namespace Google.Apis.Calendar.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("email")]
         public virtual string Email { get; set; }
 
-        /// <summary>
-        /// The attendee's Profile ID, if available. It corresponds to the id field in the People collection of the
-        /// Google+ API
-        /// </summary>
+        /// <summary>The attendee's Profile ID, if available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual string Id { get; set; }
 

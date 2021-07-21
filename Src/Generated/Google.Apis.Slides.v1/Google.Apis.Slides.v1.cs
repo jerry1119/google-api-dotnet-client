@@ -76,16 +76,16 @@ namespace Google.Apis.Slides.v1
             /// <summary>See and download all your Google Drive files</summary>
             public static string DriveReadonly = "https://www.googleapis.com/auth/drive.readonly";
 
-            /// <summary>View and manage your Google Slides presentations</summary>
+            /// <summary>See, edit, create, and delete all your Google Slides presentations</summary>
             public static string Presentations = "https://www.googleapis.com/auth/presentations";
 
-            /// <summary>View your Google Slides presentations</summary>
+            /// <summary>See all your Google Slides presentations</summary>
             public static string PresentationsReadonly = "https://www.googleapis.com/auth/presentations.readonly";
 
-            /// <summary>See, edit, create, and delete your spreadsheets in Google Drive</summary>
+            /// <summary>See, edit, create, and delete all your Google Sheets spreadsheets</summary>
             public static string Spreadsheets = "https://www.googleapis.com/auth/spreadsheets";
 
-            /// <summary>View your Google Spreadsheets</summary>
+            /// <summary>See all your Google Sheets spreadsheets</summary>
             public static string SpreadsheetsReadonly = "https://www.googleapis.com/auth/spreadsheets.readonly";
         }
 
@@ -103,16 +103,16 @@ namespace Google.Apis.Slides.v1
             /// <summary>See and download all your Google Drive files</summary>
             public const string DriveReadonly = "https://www.googleapis.com/auth/drive.readonly";
 
-            /// <summary>View and manage your Google Slides presentations</summary>
+            /// <summary>See, edit, create, and delete all your Google Slides presentations</summary>
             public const string Presentations = "https://www.googleapis.com/auth/presentations";
 
-            /// <summary>View your Google Slides presentations</summary>
+            /// <summary>See all your Google Slides presentations</summary>
             public const string PresentationsReadonly = "https://www.googleapis.com/auth/presentations.readonly";
 
-            /// <summary>See, edit, create, and delete your spreadsheets in Google Drive</summary>
+            /// <summary>See, edit, create, and delete all your Google Sheets spreadsheets</summary>
             public const string Spreadsheets = "https://www.googleapis.com/auth/spreadsheets";
 
-            /// <summary>View your Google Spreadsheets</summary>
+            /// <summary>See all your Google Sheets spreadsheets</summary>
             public const string SpreadsheetsReadonly = "https://www.googleapis.com/auth/spreadsheets.readonly";
         }
 
@@ -1083,7 +1083,11 @@ namespace Google.Apis.Slides.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("objectId")]
         public virtual string ObjectId { get; set; }
 
-        /// <summary>The ID of the Google Sheets spreadsheet that contains the chart.</summary>
+        /// <summary>
+        /// The ID of the Google Sheets spreadsheet that contains the chart. You might need to add a resource key to the
+        /// HTTP header for a subset of old files. For more information, see [Access link-shared files using resource
+        /// keys](https://developers.google.com/drive/api/v3/resource-keys).
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("spreadsheetId")]
         public virtual string SpreadsheetId { get; set; }
 
@@ -1218,7 +1222,9 @@ namespace Google.Apis.Slides.v1.Data
         /// The video source's unique identifier for this video. e.g. For YouTube video
         /// https://www.youtube.com/watch?v=7U3axjORYZ0, the ID is 7U3axjORYZ0. For a Google Drive video
         /// https://drive.google.com/file/d/1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q the ID is
-        /// 1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q.
+        /// 1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q. To access a Google Drive video file, you might need to add a resource key
+        /// to the HTTP header for a subset of old files. For more information, see [Access link-shared files using
+        /// resource keys](https://developers.google.com/drive/api/v3/resource-keys).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual string Id { get; set; }
@@ -1311,7 +1317,7 @@ namespace Google.Apis.Slides.v1.Data
         /// <summary>
         /// The object ID of the page or page element to delete. If after a delete operation a group contains only 1 or
         /// no page elements, the group is also deleted. If a placeholder is deleted on a layout, any empty inheriting
-        /// shapes are also deleted.
+        /// placeholders are also deleted.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("objectId")]
         public virtual string ObjectId { get; set; }
@@ -1489,7 +1495,7 @@ namespace Google.Apis.Slides.v1.Data
         /// <summary>
         /// The object IDs of the objects to group. Only page elements can be grouped. There should be at least two page
         /// elements on the same page that are not already in another group. Some page elements, such as videos, tables
-        /// and placeholder shapes cannot be grouped.
+        /// and placeholders cannot be grouped.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("childrenObjectIds")]
         public virtual System.Collections.Generic.IList<string> ChildrenObjectIds { get; set; }
@@ -2811,6 +2817,10 @@ namespace Google.Apis.Slides.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("updateShapeProperties")]
         public virtual UpdateShapePropertiesRequest UpdateShapeProperties { get; set; }
 
+        /// <summary>Updates the properties of a Slide</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateSlideProperties")]
+        public virtual UpdateSlidePropertiesRequest UpdateSlideProperties { get; set; }
+
         /// <summary>Updates the position of a set of slides in the presentation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateSlidesPosition")]
         public virtual UpdateSlidesPositionRequest UpdateSlidesPosition { get; set; }
@@ -2993,8 +3003,8 @@ namespace Google.Apis.Slides.v1.Data
     public class Shape : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Placeholders are shapes that are inherit from corresponding placeholders on layouts and masters. If set, the
-        /// shape is a placeholder shape and any inherited properties can be resolved by looking at the parent
+        /// Placeholders are page elements that inherit from corresponding placeholders on layouts and masters. If set,
+        /// the shape is a placeholder shape and any inherited properties can be resolved by looking at the parent
         /// placeholder identified by the Placeholder.parent_object_id field.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("placeholder")]
@@ -3148,6 +3158,10 @@ namespace Google.Apis.Slides.v1.Data
     /// <summary>The properties of Page that are only relevant for pages with page_type SLIDE.</summary>
     public class SlideProperties : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether the slide is skipped in the presentation mode. Defaults to false.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("isSkipped")]
+        public virtual System.Nullable<bool> IsSkipped { get; set; }
+
         /// <summary>The object ID of the layout that this slide is based on. This property is read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutObjectId")]
         public virtual string LayoutObjectId { get; set; }
@@ -3976,6 +3990,30 @@ namespace Google.Apis.Slides.v1.Data
         /// <summary>The shape properties to update.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shapeProperties")]
         public virtual ShapeProperties ShapeProperties { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Updates the properties of a Slide.</summary>
+    public class UpdateSlidePropertiesRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The fields that should be updated. At least one field must be specified. The root 'slideProperties' is
+        /// implied and should not be specified. A single `"*"` can be used as short-hand for listing every field. For
+        /// example to update whether a slide is skipped, set `fields` to `"isSkipped"`. To reset a property to its
+        /// default value, include its field name in the field mask but leave the field itself unset.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("fields")]
+        public virtual object Fields { get; set; }
+
+        /// <summary>The object ID of the slide the update is applied to.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("objectId")]
+        public virtual string ObjectId { get; set; }
+
+        /// <summary>The slide properties to update.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("slideProperties")]
+        public virtual SlideProperties SlideProperties { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

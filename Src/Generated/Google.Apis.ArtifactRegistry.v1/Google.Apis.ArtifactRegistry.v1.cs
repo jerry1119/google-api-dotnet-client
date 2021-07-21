@@ -691,12 +691,162 @@ namespace Google.Apis.ArtifactRegistry.v1
                         }
                     }
                 }
+
+                /// <summary>Gets a repository.</summary>
+                /// <param name="name">Required. The name of the repository to retrieve.</param>
+                public virtual GetRequest Get(string name)
+                {
+                    return new GetRequest(service, name);
+                }
+
+                /// <summary>Gets a repository.</summary>
+                public class GetRequest : ArtifactRegistryBaseServiceRequest<Google.Apis.ArtifactRegistry.v1.Data.Repository>
+                {
+                    /// <summary>Constructs a new Get request.</summary>
+                    public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>Required. The name of the repository to retrieve.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "get";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+name}";
+
+                    /// <summary>Initializes Get parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>Lists repositories.</summary>
+                /// <param name="parent">
+                /// Required. The name of the parent resource whose repositories will be listed.
+                /// </param>
+                public virtual ListRequest List(string parent)
+                {
+                    return new ListRequest(service, parent);
+                }
+
+                /// <summary>Lists repositories.</summary>
+                public class ListRequest : ArtifactRegistryBaseServiceRequest<Google.Apis.ArtifactRegistry.v1.Data.ListRepositoriesResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        InitParameters();
+                    }
+
+                    /// <summary>Required. The name of the parent resource whose repositories will be listed.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>The maximum number of repositories to return.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>The next_page_token value returned from a previous list request, if any.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1/{+parent}/repositories";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
             }
         }
     }
 }
 namespace Google.Apis.ArtifactRegistry.v1.Data
 {
+    /// <summary>
+    /// A detailed representation of an Apt artifact. Information in the record is derived from the archive's control
+    /// file. See https://www.debian.org/doc/debian-policy/ch-controlfields.html
+    /// </summary>
+    public class AptArtifact : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Operating system architecture of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("architecture")]
+        public virtual string Architecture { get; set; }
+
+        /// <summary>Output only. Repository component of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("component")]
+        public virtual string Component { get; set; }
+
+        /// <summary>Output only. Contents of the artifact's control metadata file.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("controlFile")]
+        public virtual string ControlFile { get; set; }
+
+        /// <summary>Output only. The Artifact Registry resource name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Output only. The Apt package name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageName")]
+        public virtual string PackageName { get; set; }
+
+        /// <summary>Output only. An artifact is a binary or source package.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageType")]
+        public virtual string PackageType { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The request message for Operations.CancelOperation.</summary>
     public class CancelOperationRequest : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -704,14 +854,32 @@ namespace Google.Apis.ArtifactRegistry.v1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>DockerImage represents a docker artifact.</summary>
+    /// <summary>
+    /// DockerImage represents a docker artifact. The following fields are returned as untyped metadata in the Version
+    /// resource, using camelcase keys (i.e. metadata.imageSizeBytes): - imageSizeBytes - mediaType - buildTime
+    /// </summary>
     public class DockerImage : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>Calculated size of the image.</summary>
+        /// <summary>
+        /// The time this image was built. This field is returned as the 'metadata.buildTime' field in the Version
+        /// resource. The build time is returned to the client as an RFC 3339 string, which can be easily used with the
+        /// JavaScript Date constructor and keeps the Version timestamps returned via OnePlatform consistent, as JSON
+        /// marshals google.protobuf.Timestamp into an RFC 3339 string.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("buildTime")]
+        public virtual object BuildTime { get; set; }
+
+        /// <summary>
+        /// Calculated size of the image. This field is returned as the 'metadata.imageSizeBytes' field in the Version
+        /// resource.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("imageSizeBytes")]
         public virtual System.Nullable<long> ImageSizeBytes { get; set; }
 
-        /// <summary>Media type of this image, e.g. "application/vnd.docker.distribution.manifest.v2+json".</summary>
+        /// <summary>
+        /// Media type of this image, e.g. "application/vnd.docker.distribution.manifest.v2+json". This field is
+        /// returned as the 'metadata.mediaType' field in the Version resource.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("mediaType")]
         public virtual string MediaType { get; set; }
 
@@ -757,6 +925,96 @@ namespace Google.Apis.ArtifactRegistry.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Error information explaining why a package was not imported.</summary>
+    public class ImportAptArtifactsErrorInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The detailed error status.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("error")]
+        public virtual Status Error { get; set; }
+
+        /// <summary>Google Cloud Storage location requested.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsSource")]
+        public virtual ImportAptArtifactsGcsSource GcsSource { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Google Cloud Storage location where the artifacts currently reside.</summary>
+    public class ImportAptArtifactsGcsSource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Cloud Storage paths URI (e.g., gs://my_bucket//my_object).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("uris")]
+        public virtual System.Collections.Generic.IList<string> Uris { get; set; }
+
+        /// <summary>Supports URI wildcards for matching multiple objects from a single URI.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("useWildcards")]
+        public virtual System.Nullable<bool> UseWildcards { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message from importing artifacts.</summary>
+    public class ImportAptArtifactsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aptArtifacts")]
+        public virtual System.Collections.Generic.IList<AptArtifact> AptArtifacts { get; set; }
+
+        /// <summary>Detailed error info for packages that were not imported.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<ImportAptArtifactsErrorInfo> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Error information explaining why a package was not imported.</summary>
+    public class ImportYumArtifactsErrorInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The detailed error status.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("error")]
+        public virtual Status Error { get; set; }
+
+        /// <summary>Google Cloud Storage location requested.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsSource")]
+        public virtual ImportYumArtifactsGcsSource GcsSource { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Google Cloud Storage location where the artifacts currently reside.</summary>
+    public class ImportYumArtifactsGcsSource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Cloud Storage paths URI (e.g., gs://my_bucket//my_object).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("uris")]
+        public virtual System.Collections.Generic.IList<string> Uris { get; set; }
+
+        /// <summary>Supports URI wildcards for matching multiple objects from a single URI.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("useWildcards")]
+        public virtual System.Nullable<bool> UseWildcards { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message from importing artifacts.</summary>
+    public class ImportYumArtifactsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Detailed error info for packages that were not imported.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<ImportYumArtifactsErrorInfo> Errors { get; set; }
+
+        /// <summary>The yum artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("yumArtifacts")]
+        public virtual System.Collections.Generic.IList<YumArtifact> YumArtifacts { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The response from listing docker images.</summary>
     public class ListDockerImagesResponse : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -784,6 +1042,23 @@ namespace Google.Apis.ArtifactRegistry.v1.Data
         /// <summary>A list of operations that matches the specified filter in the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("operations")]
         public virtual System.Collections.Generic.IList<Operation> Operations { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response from listing repositories.</summary>
+    public class ListRepositoriesResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The token to retrieve the next page of repositories, or empty if there are no more repositories to return.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>The repositories returned.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("repositories")]
+        public virtual System.Collections.Generic.IList<Repository> Repositories { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -832,6 +1107,51 @@ namespace Google.Apis.ArtifactRegistry.v1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>A Repository for storing artifacts with a specific format.</summary>
+    public class Repository : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The time when the repository was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>The user-provided description of the repository.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        public virtual string Description { get; set; }
+
+        /// <summary>The format of packages that are stored in the repository.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("format")]
+        public virtual string Format { get; set; }
+
+        /// <summary>
+        /// The Cloud KMS resource name of the customer managed encryption key that’s used to encrypt the contents of
+        /// the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`.
+        /// This value may not be changed after the Repository has been created.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("kmsKeyName")]
+        public virtual string KmsKeyName { get; set; }
+
+        /// <summary>
+        /// Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no
+        /// longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase
+        /// letters, numeric characters, underscores, and dashes.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("labels")]
+        public virtual System.Collections.Generic.IDictionary<string, string> Labels { get; set; }
+
+        /// <summary>
+        /// The name of the repository, for example: "projects/p1/locations/us-central1/repositories/repo1".
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>The time when the repository was last updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
+        public virtual object UpdateTime { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// The `Status` type defines a logical error model that is suitable for different programming environments,
     /// including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains
@@ -856,6 +1176,79 @@ namespace Google.Apis.ArtifactRegistry.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("message")]
         public virtual string Message { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response to upload an artifact.</summary>
+    public class UploadAptArtifactMediaResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Operation to be returned to the user.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        public virtual Operation Operation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// The response of the completed artifact upload operation. This response is contained in the Operation and
+    /// available to users.
+    /// </summary>
+    public class UploadAptArtifactResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aptArtifacts")]
+        public virtual System.Collections.Generic.IList<AptArtifact> AptArtifacts { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response to upload an artifact.</summary>
+    public class UploadYumArtifactMediaResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Operation to be returned to the user.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        public virtual Operation Operation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// The response of the completed artifact upload operation. This response is contained in the Operation and
+    /// available to users.
+    /// </summary>
+    public class UploadYumArtifactResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("yumArtifacts")]
+        public virtual System.Collections.Generic.IList<YumArtifact> YumArtifacts { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A detailed representation of a Yum artifact.</summary>
+    public class YumArtifact : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Operating system architecture of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("architecture")]
+        public virtual string Architecture { get; set; }
+
+        /// <summary>Output only. The Artifact Registry resource name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Output only. The yum package name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageName")]
+        public virtual string PackageName { get; set; }
+
+        /// <summary>Output only. An artifact is a binary or source package.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageType")]
+        public virtual string PackageType { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

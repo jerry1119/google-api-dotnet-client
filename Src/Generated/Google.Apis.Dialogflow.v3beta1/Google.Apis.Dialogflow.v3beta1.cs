@@ -419,7 +419,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Deletes the specified entity type.</summary>
+                    /// <summary>
+                    /// Deletes the specified entity type. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="name">
                     /// Required. The name of the entity type to delete. Format:
                     /// `projects//locations//agents//entityTypes/`.
@@ -429,7 +433,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new DeleteRequest(service, name);
                     }
 
-                    /// <summary>Deletes the specified entity type.</summary>
+                    /// <summary>
+                    /// Deletes the specified entity type. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleProtobufEmpty>
                     {
                         /// <summary>Constructs a new Delete request.</summary>
@@ -649,7 +657,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Updates the specified entity type.</summary>
+                    /// <summary>
+                    /// Updates the specified entity type. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType. Format:
@@ -660,7 +672,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new PatchRequest(service, body, name);
                     }
 
-                    /// <summary>Updates the specified entity type.</summary>
+                    /// <summary>
+                    /// Updates the specified entity type. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1EntityType>
                     {
                         /// <summary>Constructs a new Patch request.</summary>
@@ -754,8 +770,104 @@ namespace Google.Apis.Dialogflow.v3beta1
                     public EnvironmentsResource(Google.Apis.Services.IClientService service)
                     {
                         this.service = service;
+                        ContinuousTestResults = new ContinuousTestResultsResource(service);
                         Experiments = new ExperimentsResource(service);
                         Sessions = new SessionsResource(service);
+                    }
+
+                    /// <summary>Gets the ContinuousTestResults resource.</summary>
+                    public virtual ContinuousTestResultsResource ContinuousTestResults { get; }
+
+                    /// <summary>The "continuousTestResults" collection of methods.</summary>
+                    public class ContinuousTestResultsResource
+                    {
+                        private const string Resource = "continuousTestResults";
+
+                        /// <summary>The service which this resource belongs to.</summary>
+                        private readonly Google.Apis.Services.IClientService service;
+
+                        /// <summary>Constructs a new resource.</summary>
+                        public ContinuousTestResultsResource(Google.Apis.Services.IClientService service)
+                        {
+                            this.service = service;
+                        }
+
+                        /// <summary>Fetches a list of continuous test results for a given environment.</summary>
+                        /// <param name="parent">
+                        /// Required. The environment to list results for. Format: `projects//locations//agents//
+                        /// environments/`.
+                        /// </param>
+                        public virtual ListRequest List(string parent)
+                        {
+                            return new ListRequest(service, parent);
+                        }
+
+                        /// <summary>Fetches a list of continuous test results for a given environment.</summary>
+                        public class ListRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ListContinuousTestResultsResponse>
+                        {
+                            /// <summary>Constructs a new List request.</summary>
+                            public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                            {
+                                Parent = parent;
+                                InitParameters();
+                            }
+
+                            /// <summary>
+                            /// Required. The environment to list results for. Format: `projects//locations//agents//
+                            /// environments/`.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                            public virtual string Parent { get; private set; }
+
+                            /// <summary>
+                            /// The maximum number of items to return in a single page. By default 100 and at most 1000.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual System.Nullable<int> PageSize { get; set; }
+
+                            /// <summary>The next_page_token value returned from a previous list request.</summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string PageToken { get; set; }
+
+                            /// <summary>Gets the method name.</summary>
+                            public override string MethodName => "list";
+
+                            /// <summary>Gets the HTTP method.</summary>
+                            public override string HttpMethod => "GET";
+
+                            /// <summary>Gets the REST path.</summary>
+                            public override string RestPath => "v3beta1/{+parent}/continuousTestResults";
+
+                            /// <summary>Initializes List parameter list.</summary>
+                            protected override void InitParameters()
+                            {
+                                base.InitParameters();
+                                RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "parent",
+                                    IsRequired = true,
+                                    ParameterType = "path",
+                                    DefaultValue = null,
+                                    Pattern = @"^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                                });
+                                RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageSize",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageToken",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                            }
+                        }
                     }
 
                     /// <summary>Gets the Experiments resource.</summary>
@@ -2202,6 +2314,61 @@ namespace Google.Apis.Dialogflow.v3beta1
                             });
                         }
                     }
+
+                    /// <summary>Kicks off a continuous test under the specified Environment.</summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="environment">
+                    /// Required. Format: `projects//locations//agents//environments/`.
+                    /// </param>
+                    public virtual RunContinuousTestRequest RunContinuousTest(Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1RunContinuousTestRequest body, string environment)
+                    {
+                        return new RunContinuousTestRequest(service, body, environment);
+                    }
+
+                    /// <summary>Kicks off a continuous test under the specified Environment.</summary>
+                    public class RunContinuousTestRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleLongrunningOperation>
+                    {
+                        /// <summary>Constructs a new RunContinuousTest request.</summary>
+                        public RunContinuousTestRequest(Google.Apis.Services.IClientService service, Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1RunContinuousTestRequest body, string environment) : base(service)
+                        {
+                            Environment = environment;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>Required. Format: `projects//locations//agents//environments/`.</summary>
+                        [Google.Apis.Util.RequestParameterAttribute("environment", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Environment { get; private set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1RunContinuousTestRequest Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "runContinuousTest";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "POST";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v3beta1/{+environment}:runContinuousTest";
+
+                        /// <summary>Initializes RunContinuousTest parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("environment", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "environment",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                            });
+                        }
+                    }
                 }
 
                 /// <summary>Gets the Flows resource.</summary>
@@ -2689,7 +2856,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             this.service = service;
                         }
 
-                        /// <summary>Creates an TransitionRouteGroup in the specified flow.</summary>
+                        /// <summary>
+                        /// Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow
+                        /// prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         /// <param name="body">The body of the request.</param>
                         /// <param name="parent">
                         /// Required. The flow to create an TransitionRouteGroup for. Format:
@@ -2700,7 +2871,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             return new CreateRequest(service, body, parent);
                         }
 
-                        /// <summary>Creates an TransitionRouteGroup in the specified flow.</summary>
+                        /// <summary>
+                        /// Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow
+                        /// prior to sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1TransitionRouteGroup>
                         {
                             /// <summary>Constructs a new Create request.</summary>
@@ -2767,7 +2942,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             }
                         }
 
-                        /// <summary>Deletes the specified TransitionRouteGroup.</summary>
+                        /// <summary>
+                        /// Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to
+                        /// sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         /// <param name="name">
                         /// Required. The name of the TransitionRouteGroup to delete. Format:
                         /// `projects//locations//agents//flows//transitionRouteGroups/`.
@@ -2777,7 +2956,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             return new DeleteRequest(service, name);
                         }
 
-                        /// <summary>Deletes the specified TransitionRouteGroup.</summary>
+                        /// <summary>
+                        /// Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to
+                        /// sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleProtobufEmpty>
                         {
                             /// <summary>Constructs a new Delete request.</summary>
@@ -3003,7 +3186,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             }
                         }
 
-                        /// <summary>Updates the specified TransitionRouteGroup.</summary>
+                        /// <summary>
+                        /// Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to
+                        /// sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         /// <param name="body">The body of the request.</param>
                         /// <param name="name">
                         /// The unique identifier of the transition route group.
@@ -3015,7 +3202,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                             return new PatchRequest(service, body, name);
                         }
 
-                        /// <summary>Updates the specified TransitionRouteGroup.</summary>
+                        /// <summary>
+                        /// Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to
+                        /// sending it queries. See the [training
+                        /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                        /// </summary>
                         public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1TransitionRouteGroup>
                         {
                             /// <summary>Constructs a new Patch request.</summary>
@@ -3482,7 +3673,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Creates a flow in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates a flow in the specified agent. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The agent to create a flow for. Format: `projects//locations//agents/`.
@@ -3492,7 +3687,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new CreateRequest(service, body, parent);
                     }
 
-                    /// <summary>Creates a flow in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates a flow in the specified agent. Note: You should always train a flow prior to sending it
+                    /// queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Flow>
                     {
                         /// <summary>Constructs a new Create request.</summary>
@@ -3623,6 +3822,69 @@ namespace Google.Apis.Dialogflow.v3beta1
                                 ParameterType = "query",
                                 DefaultValue = null,
                                 Pattern = null,
+                            });
+                        }
+                    }
+
+                    /// <summary>
+                    /// Exports the specified flow to a binary file. Note that resources (e.g. intents, entities,
+                    /// webhooks) that the flow references will also be exported.
+                    /// </summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="name">
+                    /// Required. The name of the flow to export. Format: `projects//locations//agents//flows/`.
+                    /// </param>
+                    public virtual ExportRequest Export(Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ExportFlowRequest body, string name)
+                    {
+                        return new ExportRequest(service, body, name);
+                    }
+
+                    /// <summary>
+                    /// Exports the specified flow to a binary file. Note that resources (e.g. intents, entities,
+                    /// webhooks) that the flow references will also be exported.
+                    /// </summary>
+                    public class ExportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleLongrunningOperation>
+                    {
+                        /// <summary>Constructs a new Export request.</summary>
+                        public ExportRequest(Google.Apis.Services.IClientService service, Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ExportFlowRequest body, string name) : base(service)
+                        {
+                            Name = name;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>
+                        /// Required. The name of the flow to export. Format: `projects//locations//agents//flows/`.
+                        /// </summary>
+                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Name { get; private set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ExportFlowRequest Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "export";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "POST";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v3beta1/{+name}:export";
+
+                        /// <summary>Initializes Export parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "name",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
                             });
                         }
                     }
@@ -3764,6 +4026,71 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
+                    /// <summary>
+                    /// Imports the specified flow to the specified agent from a binary file. Note: You should always
+                    /// train a flow prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="parent">
+                    /// Required. The agent to import the flow into. Format: `projects//locations//agents/`.
+                    /// </param>
+                    public virtual ImportRequest Import(Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ImportFlowRequest body, string parent)
+                    {
+                        return new ImportRequest(service, body, parent);
+                    }
+
+                    /// <summary>
+                    /// Imports the specified flow to the specified agent from a binary file. Note: You should always
+                    /// train a flow prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
+                    public class ImportRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleLongrunningOperation>
+                    {
+                        /// <summary>Constructs a new Import request.</summary>
+                        public ImportRequest(Google.Apis.Services.IClientService service, Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ImportFlowRequest body, string parent) : base(service)
+                        {
+                            Parent = parent;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>
+                        /// Required. The agent to import the flow into. Format: `projects//locations//agents/`.
+                        /// </summary>
+                        [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Parent { get; private set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1ImportFlowRequest Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "import";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "POST";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v3beta1/{+parent}/flows:import";
+
+                        /// <summary>Initializes Import parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "parent",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                            });
+                        }
+                    }
+
                     /// <summary>Returns the list of all flows in the specified agent.</summary>
                     /// <param name="parent">
                     /// Required. The agent containing the flows. Format: `projects//locations//agents/`.
@@ -3860,7 +4187,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Updates the specified flow.</summary>
+                    /// <summary>
+                    /// Updates the specified flow. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// The unique identifier of the flow. Format: `projects//locations//agents//flows/`.
@@ -3870,7 +4200,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new PatchRequest(service, body, name);
                     }
 
-                    /// <summary>Updates the specified flow.</summary>
+                    /// <summary>
+                    /// Updates the specified flow. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Flow>
                     {
                         /// <summary>Constructs a new Patch request.</summary>
@@ -3954,7 +4287,9 @@ namespace Google.Apis.Dialogflow.v3beta1
                     }
 
                     /// <summary>
-                    /// Trains the specified flow. Note that only the flow in 'draft' environment is trained.
+                    /// Trains the specified flow. Note that only the flow in 'draft' environment is trained. Note: You
+                    /// should always train a flow prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
                     /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
@@ -3966,7 +4301,9 @@ namespace Google.Apis.Dialogflow.v3beta1
                     }
 
                     /// <summary>
-                    /// Trains the specified flow. Note that only the flow in 'draft' environment is trained.
+                    /// Trains the specified flow. Note that only the flow in 'draft' environment is trained. Note: You
+                    /// should always train a flow prior to sending it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
                     /// </summary>
                     public class TrainRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleLongrunningOperation>
                     {
@@ -4095,7 +4432,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         this.service = service;
                     }
 
-                    /// <summary>Creates an intent in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an intent in the specified agent. Note: You should always train a flow prior to sending
+                    /// it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="parent">
                     /// Required. The agent to create an intent for. Format: `projects//locations//agents/`.
@@ -4105,7 +4446,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new CreateRequest(service, body, parent);
                     }
 
-                    /// <summary>Creates an intent in the specified agent.</summary>
+                    /// <summary>
+                    /// Creates an intent in the specified agent. Note: You should always train a flow prior to sending
+                    /// it queries. See the [training
+                    /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Intent>
                     {
                         /// <summary>Constructs a new Create request.</summary>
@@ -4169,7 +4514,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Deletes the specified intent.</summary>
+                    /// <summary>
+                    /// Deletes the specified intent. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="name">
                     /// Required. The name of the intent to delete. Format: `projects//locations//agents//intents/`.
                     /// </param>
@@ -4178,7 +4526,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new DeleteRequest(service, name);
                     }
 
-                    /// <summary>Deletes the specified intent.</summary>
+                    /// <summary>
+                    /// Deletes the specified intent. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class DeleteRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleProtobufEmpty>
                     {
                         /// <summary>Constructs a new Delete request.</summary>
@@ -4404,7 +4755,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         }
                     }
 
-                    /// <summary>Updates the specified intent.</summary>
+                    /// <summary>
+                    /// Updates the specified intent. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     /// <param name="body">The body of the request.</param>
                     /// <param name="name">
                     /// The unique identifier of the intent. Required for the Intents.UpdateIntent method.
@@ -4416,7 +4770,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                         return new PatchRequest(service, body, name);
                     }
 
-                    /// <summary>Updates the specified intent.</summary>
+                    /// <summary>
+                    /// Updates the specified intent. Note: You should always train a flow prior to sending it queries.
+                    /// See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                    /// </summary>
                     public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Intent>
                     {
                         /// <summary>Constructs a new Patch request.</summary>
@@ -6296,7 +6653,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                     }
                 }
 
-                /// <summary>Creates an agent in the specified location.</summary>
+                /// <summary>
+                /// Creates an agent in the specified location. Note: You should always train a flow prior to sending it
+                /// queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
                 /// Required. The location to create a agent for. Format: `projects//locations/`.
@@ -6306,7 +6667,11 @@ namespace Google.Apis.Dialogflow.v3beta1
                     return new CreateRequest(service, body, parent);
                 }
 
-                /// <summary>Creates an agent in the specified location.</summary>
+                /// <summary>
+                /// Creates an agent in the specified location. Note: You should always train a flow prior to sending it
+                /// queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                /// </summary>
                 public class CreateRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Agent>
                 {
                     /// <summary>Constructs a new Create request.</summary>
@@ -6642,7 +7007,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                     }
                 }
 
-                /// <summary>Updates the specified agent.</summary>
+                /// <summary>
+                /// Updates the specified agent. Note: You should always train a flow prior to sending it queries. See
+                /// the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
                 /// The unique identifier of the agent. Required for the Agents.UpdateAgent method. Agents.CreateAgent
@@ -6653,7 +7021,10 @@ namespace Google.Apis.Dialogflow.v3beta1
                     return new PatchRequest(service, body, name);
                 }
 
-                /// <summary>Updates the specified agent.</summary>
+                /// <summary>
+                /// Updates the specified agent. Note: You should always train a flow prior to sending it queries. See
+                /// the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
+                /// </summary>
                 public class PatchRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleCloudDialogflowCxV3beta1Agent>
                 {
                     /// <summary>Constructs a new Patch request.</summary>
@@ -6718,7 +7089,9 @@ namespace Google.Apis.Dialogflow.v3beta1
 
                 /// <summary>
                 /// Restores the specified agent from a binary file. Replaces the current agent with a new one. Note
-                /// that all existing resources in agent (e.g. intents, entity types, flows) will be removed.
+                /// that all existing resources in agent (e.g. intents, entity types, flows) will be removed. Note: You
+                /// should always train a flow prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
                 /// </summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="name">
@@ -6731,7 +7104,9 @@ namespace Google.Apis.Dialogflow.v3beta1
 
                 /// <summary>
                 /// Restores the specified agent from a binary file. Replaces the current agent with a new one. Note
-                /// that all existing resources in agent (e.g. intents, entity types, flows) will be removed.
+                /// that all existing resources in agent (e.g. intents, entity types, flows) will be removed. Note: You
+                /// should always train a flow prior to sending it queries. See the [training
+                /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
                 /// </summary>
                 public class RestoreRequest : DialogflowBaseServiceRequest<Google.Apis.Dialogflow.v3beta1.Data.GoogleLongrunningOperation>
                 {
@@ -7661,6 +8036,34 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Represents a result from running a test case in an agent environment.</summary>
+    public class GoogleCloudDialogflowCxV3ContinuousTestResult : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The resource name for the continuous test result. Format:
+        /// `projects//locations//agents//environments//continuousTestResults/`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>
+        /// The result of this continuous test run, i.e. whether all the tests in this continuous test run pass or not.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("result")]
+        public virtual string Result { get; set; }
+
+        /// <summary>Time when the continuous testing run starts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("runTime")]
+        public virtual object RunTime { get; set; }
+
+        /// <summary>A list of individual test case results names in this continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("testCaseResults")]
+        public virtual System.Collections.Generic.IList<string> TestCaseResults { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// One interaction between a human and virtual agent. The human provides some input and the virtual agent provides
     /// a response.
@@ -7682,6 +8085,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
     /// <summary>The input from the human user.</summary>
     public class GoogleCloudDialogflowCxV3ConversationTurnUserInput : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether sentiment analysis is enabled.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSentimentAnalysis")]
+        public virtual System.Nullable<bool> EnableSentimentAnalysis { get; set; }
+
         /// <summary>Parameters that need to be injected into the conversation during intent detection.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("injectedParameters")]
         public virtual System.Collections.Generic.IDictionary<string, object> InjectedParameters { get; set; }
@@ -7853,6 +8260,24 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for Flows.ExportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3ExportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Uncompressed raw byte content for flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowContent")]
+        public virtual string FlowContent { get; set; }
+
+        /// <summary>
+        /// The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in
+        /// ExportFlowRequest.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.ExportTestCases long running operation.</summary>
     public class GoogleCloudDialogflowCxV3ExportTestCasesMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -7991,6 +8416,16 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("messages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3ResponseMessage> Messages { get; set; }
 
+        /// <summary>
+        /// Whether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a
+        /// webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects
+        /// streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled
+        /// in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to
+        /// fulfillments that have slow webhooks.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnPartialResponses")]
+        public virtual System.Nullable<bool> ReturnPartialResponses { get; set; }
+
         /// <summary>Set parameter values before executing the webhook.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("setParameterActions")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3FulfillmentSetParameterAction> SetParameterActions { get; set; }
@@ -8109,6 +8544,17 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response message for Flows.ImportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3ImportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flow")]
+        public virtual string Flow { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.ImportTestCases long running operation.</summary>
     public class GoogleCloudDialogflowCxV3ImportTestCasesMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -8222,9 +8668,9 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// <summary>
         /// The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-'
         /// and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start
-        /// with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys."
-        /// is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys.head *
-        /// sys.contextual The above labels do not require value. "sys.head" means the intent is a head intent.
+        /// with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix "sys-"
+        /// is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head *
+        /// sys-contextual The above labels do not require value. "sys-head" means the intent is a head intent.
         /// "sys.contextual" means the intent is a contextual intent.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("labels")]
@@ -8761,6 +9207,28 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata returned for the Environments.RunContinuousTest long running operation.</summary>
+    public class GoogleCloudDialogflowCxV3RunContinuousTestMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The test errors.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3TestError> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Environments.RunContinuousTest.</summary>
+    public class GoogleCloudDialogflowCxV3RunContinuousTestResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The result for a continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("continuousTestResult")]
+        public virtual GoogleCloudDialogflowCxV3ContinuousTestResult ContinuousTestResult { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.RunTestCase long running operation.</summary>
     public class GoogleCloudDialogflowCxV3RunTestCaseMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -9249,7 +9717,7 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string AvatarUri { get; set; }
 
         /// <summary>
-        /// Immutable. The default language of the agent as a language tag. See [Language
+        /// Required. Immutable. The default language of the agent as a language tag. See [Language
         /// Support](https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list of the currently
         /// supported language codes. This field cannot be set by the Agents.UpdateAgent method.
         /// </summary>
@@ -9297,6 +9765,12 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("startFlow")]
         public virtual string StartFlow { get; set; }
+
+        /// <summary>
+        /// The list of all languages supported by the agent (except for the `default_language_code`).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("supportedLanguageCodes")]
+        public virtual System.Collections.Generic.IList<string> SupportedLanguageCodes { get; set; }
 
         /// <summary>
         /// Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g.,
@@ -9420,6 +9894,34 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Represents a result from running a test case in an agent environment.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ContinuousTestResult : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The resource name for the continuous test result. Format:
+        /// `projects//locations//agents//environments//continuousTestResults/`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>
+        /// The result of this continuous test run, i.e. whether all the tests in this continuous test run pass or not.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("result")]
+        public virtual string Result { get; set; }
+
+        /// <summary>Time when the continuous testing run starts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("runTime")]
+        public virtual object RunTime { get; set; }
+
+        /// <summary>A list of individual test case results names in this continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("testCaseResults")]
+        public virtual System.Collections.Generic.IList<string> TestCaseResults { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// One interaction between a human and virtual agent. The human provides some input and the virtual agent provides
     /// a response.
@@ -9441,6 +9943,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
     /// <summary>The input from the human user.</summary>
     public class GoogleCloudDialogflowCxV3beta1ConversationTurnUserInput : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>Whether sentiment analysis is enabled.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSentimentAnalysis")]
+        public virtual System.Nullable<bool> EnableSentimentAnalysis { get; set; }
+
         /// <summary>Parameters that need to be injected into the conversation during intent detection.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("injectedParameters")]
         public virtual System.Collections.Generic.IDictionary<string, object> InjectedParameters { get; set; }
@@ -9554,6 +10060,13 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
     public class GoogleCloudDialogflowCxV3beta1DetectIntentResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
+        /// Indicates whether the partial response can be cancelled when a later response arrives. e.g. if the agent
+        /// specified some music as partial response, it can be cancelled.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allowCancellation")]
+        public virtual System.Nullable<bool> AllowCancellation { get; set; }
+
+        /// <summary>
         /// The audio data bytes encoded as specified in the request. Note: The output audio is generated based on the
         /// values of default platform text responses found in the `query_result.response_messages` field. If multiple
         /// default text responses exist, they will be concatenated when generating audio. If no default platform text
@@ -9577,6 +10090,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("responseId")]
         public virtual string ResponseId { get; set; }
+
+        /// <summary>Response type.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("responseType")]
+        public virtual string ResponseType { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -9822,8 +10339,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual object EndTime { get; set; }
 
         /// <summary>
-        /// Maximum number of days to run the experiment. If auto-rollout is not enabled, default value and maximum will
-        /// be 30 days. If auto-rollout is enabled, default value and maximum will be 6 days.
+        /// LINT.IfChange(default_experiment_length) Maximum number of days to run the experiment. If auto-rollout is
+        /// not enabled, default value and maximum will be 30 days. If auto-rollout is enabled, default value and
+        /// maximum will be 6 days.
+        /// LINT.ThenChange(//depot/google3/cloud/ml/api/conversation/analytics/compute.cc:default_experiment_length)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("experimentLength")]
         public virtual object ExperimentLength { get; set; }
@@ -9847,9 +10366,9 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual object StartTime { get; set; }
 
         /// <summary>
-        /// The current state of the experiment. Transition triggered by Expriments.StartExperiment:
-        /// PENDING-&amp;gt;RUNNING. Transition triggered by Expriments.CancelExperiment: PENDING-&amp;gt;CANCELLED or
-        /// RUNNING-&amp;gt;CANCELLED.
+        /// The current state of the experiment. Transition triggered by Experiments.StartExperiment:
+        /// DRAFT-&amp;gt;RUNNING. Transition triggered by Experiments.CancelExperiment: DRAFT-&amp;gt;DONE or
+        /// RUNNING-&amp;gt;DONE.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("state")]
         public virtual string State { get; set; }
@@ -9985,6 +10504,13 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("agentUri")]
         public virtual string AgentUri { get; set; }
 
+        /// <summary>
+        /// Optional. Environment name. If not set, draft environment is assumed. Format:
+        /// `projects//locations//agents//environments/`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("environment")]
+        public virtual string Environment { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -10002,6 +10528,42 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("agentUri")]
         public virtual string AgentUri { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The request message for Flows.ExportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ExportFlowRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Optional. The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to export the flow to. The
+        /// format of this URI must be `gs:///`. If left unspecified, the serialized flow is returned inline.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
+
+        /// <summary>Optional. Whether to export flows referenced by the specified flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("includeReferencedFlows")]
+        public virtual System.Nullable<bool> IncludeReferencedFlows { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Flows.ExportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ExportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Uncompressed raw byte content for flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowContent")]
+        public virtual string FlowContent { get; set; }
+
+        /// <summary>
+        /// The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in
+        /// ExportFlowRequest.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -10311,6 +10873,16 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("messages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1ResponseMessage> Messages { get; set; }
 
+        /// <summary>
+        /// Whether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a
+        /// webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects
+        /// streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled
+        /// in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to
+        /// fulfillments that have slow webhooks.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("returnPartialResponses")]
+        public virtual System.Nullable<bool> ReturnPartialResponses { get; set; }
+
         /// <summary>Set parameter values before executing the webhook.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("setParameterActions")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction> SetParameterActions { get; set; }
@@ -10424,6 +10996,39 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// <summary>Includes details about skipped documents or any other warnings.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("warnings")]
         public virtual System.Collections.Generic.IList<GoogleRpcStatus> Warnings { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The request message for Flows.ImportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ImportFlowRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Uncompressed raw byte content for flow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowContent")]
+        public virtual string FlowContent { get; set; }
+
+        /// <summary>
+        /// The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to import flow from. The format of
+        /// this URI must be `gs:///`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flowUri")]
+        public virtual string FlowUri { get; set; }
+
+        /// <summary>Flow import mode. If not specified, `KEEP` is assumed.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("importOption")]
+        public virtual string ImportOption { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Flows.ImportFlow.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ImportFlowResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("flow")]
+        public virtual string Flow { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -10732,6 +11337,23 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("agents")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1Agent> Agents { get; set; }
+
+        /// <summary>
+        /// Token to retrieve the next page of results, or empty if there are no more results in the list.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Environments.ListTestCaseResults.</summary>
+    public class GoogleCloudDialogflowCxV3beta1ListContinuousTestResultsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The list of continuous test results.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("continuousTestResults")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1ContinuousTestResult> ContinuousTestResults { get; set; }
 
         /// <summary>
         /// Token to retrieve the next page of results, or empty if there are no more results in the list.
@@ -11385,9 +12007,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
 
         /// <summary>
         /// The unique identifier of the page to override the current page in the session. Format:
-        /// `projects//locations//agents//pages/`. If `current_page` is specified, the previous state of the session
-        /// will be ignored by Dialogflow, including the previous page and the previous session parameters. In most
-        /// cases, current_page and parameters should be configured together to direct a session to a specific state.
+        /// `projects//locations//agents//flows//pages/`. If `current_page` is specified, the previous state of the
+        /// session will be ignored by Dialogflow, including the previous page and the previous session parameters. In
+        /// most cases, current_page and parameters should be configured together to direct a session to a specific
+        /// state.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("currentPage")]
         public virtual string CurrentPage { get; set; }
@@ -11402,19 +12025,22 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
 
         /// <summary>
         /// Additional parameters to be put into session parameters. To remove a parameter from the session, clients
-        /// should explicitly set the parameter value to null. Depending on your protocol or client library language,
-        /// this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of
-        /// (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If
-        /// parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one
-        /// of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite
-        /// entity: map from composite entity property names to property values - Else: parameter value
+        /// should explicitly set the parameter value to null. You can reference the session parameters in the agent
+        /// with the following format: $session.params.parameter-id. Depending on your protocol or client library
+        /// language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a
+        /// collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue
+        /// type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type,
+        /// could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is
+        /// a composite entity: map from composite entity property names to property values - Else: parameter value
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("parameters")]
         public virtual System.Collections.Generic.IDictionary<string, object> Parameters { get; set; }
 
         /// <summary>
         /// This field can be used to pass custom data into the webhook associated with the agent. Arbitrary JSON
-        /// objects are supported.
+        /// objects are supported. Some integrations that query a Dialogflow agent may provide additional information in
+        /// the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: ``` {
+        /// "telephony": { "caller_id": "+18558363987" } } ```
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("payload")]
         public virtual System.Collections.Generic.IDictionary<string, object> Payload { get; set; }
@@ -11822,6 +12448,35 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Metadata returned for the Environments.RunContinuousTest long running operation.</summary>
+    public class GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The test errors.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1TestError> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The request message for Environments.RunContinuousTest.</summary>
+    public class GoogleCloudDialogflowCxV3beta1RunContinuousTestRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Environments.RunContinuousTest.</summary>
+    public class GoogleCloudDialogflowCxV3beta1RunContinuousTestResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The result for a continuous test run.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("continuousTestResult")]
+        public virtual GoogleCloudDialogflowCxV3beta1ContinuousTestResult ContinuousTestResult { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Metadata returned for the TestCases.RunTestCase long running operation.</summary>
     public class GoogleCloudDialogflowCxV3beta1RunTestCaseMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -11865,10 +12520,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string DisplayName { get; set; }
 
         /// <summary>
-        /// DLP inspect template name. Use this template to define inspect base settings. If empty, we use the default
-        /// DLP inspect config. The template name will have one of the following formats:
-        /// `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR
-        /// `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`
+        /// [DLP](https://cloud.google.com/dlp/docs) inspect template name. Use this template to define inspect base
+        /// settings. If empty, we use the default DLP inspect config. The template name will have one of the following
+        /// formats: `projects//inspectTemplates/` OR `projects//locations//inspectTemplates/` OR
+        /// `organizations//inspectTemplates/`
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("inspectTemplate")]
         public virtual string InspectTemplate { get; set; }
@@ -11884,8 +12539,8 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual System.Collections.Generic.IList<string> PurgeDataTypes { get; set; }
 
         /// <summary>
-        /// Defines on what data we apply redaction. Note that we don't redact data to which we don't have access, e.g.,
-        /// Stackdriver logs.
+        /// Defines the data for which Dialogflow applies redaction. Dialogflow does not redact data that it does not
+        /// have access to – for example, Cloud logging.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("redactionScope")]
         public virtual string RedactionScope { get; set; }
@@ -11895,9 +12550,11 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string RedactionStrategy { get; set; }
 
         /// <summary>
-        /// Retains the data for the specified number of days. User must Set a value lower than Dialogflow's default 30d
-        /// TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use
-        /// Dialogflow's default TTL.
+        /// Retains data in interaction logging for the specified number of days. This does not apply to Cloud logging,
+        /// which is owned by the user - not Dialogflow. User must Set a value lower than Dialogflow's default 30d TTL.
+        /// Setting a value higher than that has no effect. A missing value or setting to 0 also means we use
+        /// Dialogflow's default TTL. Note: Interaction logging is a limited access feature. Talk to your Google
+        /// representative to check availability for you.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("retentionWindowDays")]
         public virtual System.Nullable<int> RetentionWindowDays { get; set; }
@@ -12613,6 +13270,12 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// Configuration for a [Service Directory](https://cloud.google.com/service-directory) service.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serviceDirectory")]
+        public virtual GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig ServiceDirectory { get; set; }
+
+        /// <summary>
         /// Webhook execution timeout. Execution is considered failed if Dialogflow doesn't receive a response from
         /// webhook at the end of the timeout period. Defaults to 5 seconds, maximum allowed timeout is 30 seconds.
         /// </summary>
@@ -12851,6 +13514,27 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// <summary>The list of rich message responses to present to the user.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("messages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDialogflowCxV3beta1ResponseMessage> Messages { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Represents configuration for a [Service Directory](https://cloud.google.com/service-directory) service.
+    /// </summary>
+    public class GoogleCloudDialogflowCxV3beta1WebhookServiceDirectoryConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Generic Service configuration of this webhook.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("genericWebService")]
+        public virtual GoogleCloudDialogflowCxV3beta1WebhookGenericWebService GenericWebService { get; set; }
+
+        /// <summary>
+        /// Required. The name of [Service Directory](https://cloud.google.com/service-directory) service. Format:
+        /// `projects//locations//namespaces//services/`. `Location ID` of the service directory must be the same as the
+        /// location of the agent.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("service")]
+        public virtual string Service { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -14148,6 +14832,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("allRequiredParamsPresent")]
         public virtual System.Nullable<bool> AllRequiredParamsPresent { get; set; }
+
+        /// <summary>Indicates whether the conversational query triggers a cancellation for slot filling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cancelsSlotFilling")]
+        public virtual System.Nullable<bool> CancelsSlotFilling { get; set; }
 
         /// <summary>
         /// Free-form diagnostic information for the associated detect intent request. The fields of this data can
@@ -16205,6 +16893,10 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("allRequiredParamsPresent")]
         public virtual System.Nullable<bool> AllRequiredParamsPresent { get; set; }
 
+        /// <summary>Indicates whether the conversational query triggers a cancellation for slot filling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cancelsSlotFilling")]
+        public virtual System.Nullable<bool> CancelsSlotFilling { get; set; }
+
         /// <summary>
         /// Free-form diagnostic information for the associated detect intent request. The fields of this data can
         /// change without notice, so you should not write code that depends on its structure. The data may contain: -
@@ -16825,8 +17517,8 @@ namespace Google.Apis.Dialogflow.v3beta1.Data
 
     /// <summary>
     /// An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees
-    /// latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must
-    /// be within normalized ranges.
+    /// latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard.
+    /// Values must be within normalized ranges.
     /// </summary>
     public class GoogleTypeLatLng : Google.Apis.Requests.IDirectResponseSchema
     {

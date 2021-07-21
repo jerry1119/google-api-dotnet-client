@@ -5792,6 +5792,10 @@ namespace Google.Apis.AndroidEnterprise.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("webApps")]
         public virtual AdministratorWebTokenSpecWebApps WebApps { get; set; }
 
+        /// <summary>Options for displaying the Zero Touch page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("zeroTouch")]
+        public virtual AdministratorWebTokenSpecZeroTouch ZeroTouch { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -5843,6 +5847,19 @@ namespace Google.Apis.AndroidEnterprise.v1.Data
     public class AdministratorWebTokenSpecWebApps : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Whether the Web Apps page is displayed. Default is true.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
+        public virtual System.Nullable<bool> Enabled { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    public class AdministratorWebTokenSpecZeroTouch : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Whether zero-touch embedded UI is usable with this token. If enabled, the admin can link zero-touch
+        /// customers to this enterprise.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
         public virtual System.Nullable<bool> Enabled { get; set; }
 
@@ -6930,9 +6947,10 @@ namespace Google.Apis.AndroidEnterprise.v1.Data
     public class Policy : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// The auto-update policy for apps installed on the device. "choiceToTheUser" allows the device's user to
-        /// configure the app update policy. "always" enables auto updates. "never" disables auto updates. "wifiOnly"
-        /// enables auto updates only when the device is connected to wifi.
+        /// Deprecated. Use autoUpdateMode instead. When autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+        /// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect. "choiceToTheUser" allows the device's user to configure
+        /// the app update policy. "always" enables auto updates. "never" disables auto updates. "wifiOnly" enables auto
+        /// updates only when the device is connected to wifi.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("autoUpdatePolicy")]
         public virtual string AutoUpdatePolicy { get; set; }

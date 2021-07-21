@@ -1169,7 +1169,7 @@ namespace Google.Apis.Appengine.v1beta
                 [Google.Apis.Util.RequestParameterAttribute("domainMappingsId", Google.Apis.Util.RequestParameterType.Path)]
                 public virtual string DomainMappingsId { get; private set; }
 
-                /// <summary>Standard field mask for the set of fields to be updated.</summary>
+                /// <summary>Required. Standard field mask for the set of fields to be updated.</summary>
                 [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual object UpdateMask { get; set; }
 
@@ -3311,7 +3311,7 @@ namespace Google.Apis.Appengine.v1beta
                 [Google.Apis.Util.RequestParameterAttribute("migrateTraffic", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<bool> MigrateTraffic { get; set; }
 
-                /// <summary>Standard field mask for the set of fields to be updated.</summary>
+                /// <summary>Required. Standard field mask for the set of fields to be updated.</summary>
                 [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual object UpdateMask { get; set; }
 
@@ -3469,7 +3469,7 @@ namespace Google.Apis.Appengine.v1beta
         /// <summary>
         /// Updates the specified Application resource. You can update the following fields: auth_domain - Google
         /// authentication domain for controlling user access to the application. default_cookie_expiration - Cookie
-        /// expiration policy for the application.
+        /// expiration policy for the application. iap - Identity-Aware Proxy properties for the application.
         /// </summary>
         /// <param name="body">The body of the request.</param>
         /// <param name="appsId">
@@ -3483,7 +3483,7 @@ namespace Google.Apis.Appengine.v1beta
         /// <summary>
         /// Updates the specified Application resource. You can update the following fields: auth_domain - Google
         /// authentication domain for controlling user access to the application. default_cookie_expiration - Cookie
-        /// expiration policy for the application.
+        /// expiration policy for the application. iap - Identity-Aware Proxy properties for the application.
         /// </summary>
         public class PatchRequest : AppengineBaseServiceRequest<Google.Apis.Appengine.v1beta.Data.Operation>
         {
@@ -3499,7 +3499,7 @@ namespace Google.Apis.Appengine.v1beta
             [Google.Apis.Util.RequestParameterAttribute("appsId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string AppsId { get; private set; }
 
-            /// <summary>Standard field mask for the set of fields to be updated.</summary>
+            /// <summary>Required. Standard field mask for the set of fields to be updated.</summary>
             [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
             public virtual object UpdateMask { get; set; }
 
@@ -5818,6 +5818,10 @@ namespace Google.Apis.Appengine.v1beta.Data
     /// <summary>VPC access connector specification.</summary>
     public class VpcAccessConnector : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The egress setting for the connector, controlling what traffic is diverted through it.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("egressSetting")]
+        public virtual string EgressSetting { get; set; }
+
         /// <summary>
         /// Full Serverless VPC Access Connector name e.g. /projects/my-project/locations/us-central1/connectors/c1.
         /// </summary>

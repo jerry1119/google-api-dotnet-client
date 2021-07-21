@@ -92,7 +92,7 @@ namespace Google.Apis.Gmail.v1
             /// <summary>View your email message metadata such as labels and headers, but not the email body</summary>
             public static string GmailMetadata = "https://www.googleapis.com/auth/gmail.metadata";
 
-            /// <summary>View and modify but not delete your email</summary>
+            /// <summary>Read, compose, and send emails from your Gmail account</summary>
             public static string GmailModify = "https://www.googleapis.com/auth/gmail.modify";
 
             /// <summary>View your email messages and settings</summary>
@@ -138,7 +138,7 @@ namespace Google.Apis.Gmail.v1
             /// <summary>View your email message metadata such as labels and headers, but not the email body</summary>
             public const string GmailMetadata = "https://www.googleapis.com/auth/gmail.metadata";
 
-            /// <summary>View and modify but not delete your email</summary>
+            /// <summary>Read, compose, and send emails from your Gmail account</summary>
             public const string GmailModify = "https://www.googleapis.com/auth/gmail.modify";
 
             /// <summary>View your email messages and settings</summary>
@@ -776,7 +776,10 @@ namespace Google.Apis.Gmail.v1
                 [Google.Apis.Util.RequestParameterAttribute("includeSpamTrash", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<bool> IncludeSpamTrash { get; set; }
 
-                /// <summary>Maximum number of drafts to return.</summary>
+                /// <summary>
+                /// Maximum number of drafts to return. This field defaults to 100. The maximum allowed value for this
+                /// field is 500.
+                /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<long> MaxResults { get; set; }
 
@@ -1358,7 +1361,10 @@ namespace Google.Apis.Gmail.v1
                 [Google.Apis.Util.RequestParameterAttribute("labelId", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual string LabelId { get; set; }
 
-                /// <summary>The maximum number of history records to return.</summary>
+                /// <summary>
+                /// Maximum number of history records to return. This field defaults to 100. The maximum allowed value
+                /// for this field is 500.
+                /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<long> MaxResults { get; set; }
 
@@ -2895,7 +2901,10 @@ namespace Google.Apis.Gmail.v1
                 [Google.Apis.Util.RequestParameterAttribute("labelIds", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual Google.Apis.Util.Repeatable<string> LabelIds { get; set; }
 
-                /// <summary>Maximum number of messages to return.</summary>
+                /// <summary>
+                /// Maximum number of messages to return. This field defaults to 100. The maximum allowed value for this
+                /// field is 500.
+                /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<long> MaxResults { get; set; }
 
@@ -5908,7 +5917,10 @@ namespace Google.Apis.Gmail.v1
                 [Google.Apis.Util.RequestParameterAttribute("labelIds", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual Google.Apis.Util.Repeatable<string> LabelIds { get; set; }
 
-                /// <summary>Maximum number of threads to return.</summary>
+                /// <summary>
+                /// Maximum number of threads to return. This field defaults to 100. The maximum allowed value for this
+                /// field is 500.
+                /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<long> MaxResults { get; set; }
 
@@ -6657,7 +6669,10 @@ namespace Google.Apis.Gmail.v1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Labels are used to categorize messages and threads within the user's mailbox.</summary>
+    /// <summary>
+    /// Labels are used to categorize messages and threads within the user's mailbox. The maximum number of labels
+    /// supported for a user's mailbox is 10,000.
+    /// </summary>
     public class Label : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>

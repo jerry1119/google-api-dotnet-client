@@ -394,7 +394,7 @@ namespace Google.Apis.Firestore.v1
                     /// Lists the field configuration and metadata for this database. Currently,
                     /// FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To
                     /// issue this query, call FirestoreAdmin.ListFields with the filter set to
-                    /// `indexConfig.usesAncestorConfig:false`.
+                    /// `indexConfig.usesAncestorConfig:false` .
                     /// </summary>
                     /// <param name="parent">
                     /// Required. A parent name of the form
@@ -409,7 +409,7 @@ namespace Google.Apis.Firestore.v1
                     /// Lists the field configuration and metadata for this database. Currently,
                     /// FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To
                     /// issue this query, call FirestoreAdmin.ListFields with the filter set to
-                    /// `indexConfig.usesAncestorConfig:false`.
+                    /// `indexConfig.usesAncestorConfig:false` .
                     /// </summary>
                     public class ListRequest : FirestoreBaseServiceRequest<Google.Apis.Firestore.v1.Data.GoogleFirestoreAdminV1ListFieldsResponse>
                     {
@@ -430,7 +430,8 @@ namespace Google.Apis.Firestore.v1
                         /// <summary>
                         /// The filter to apply to list results. Currently, FirestoreAdmin.ListFields only supports
                         /// listing fields that have been explicitly overridden. To issue this query, call
-                        /// FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false`.
+                        /// FirestoreAdmin.ListFields with a filter that includes `indexConfig.usesAncestorConfig:false`
+                        /// .
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual string Filter { get; set; }
@@ -2607,7 +2608,7 @@ namespace Google.Apis.Firestore.v1
                 public virtual string Filter { get; set; }
 
                 /// <summary>
-                /// The maximum number of results to return. If not set, the service will select a default.
+                /// The maximum number of results to return. If not set, the service selects a default.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<int> PageSize { get; set; }
@@ -3692,8 +3693,8 @@ namespace Google.Apis.Firestore.v1.Data
 
     /// <summary>
     /// An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees
-    /// latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must
-    /// be within normalized ranges.
+    /// latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard.
+    /// Values must be within normalized ranges.
     /// </summary>
     public class LatLng : Google.Apis.Requests.IDirectResponseSchema
     {

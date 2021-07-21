@@ -921,7 +921,8 @@ namespace Google.Apis.ArtifactRegistry.v1beta1
                         /// <param name="body">The body of the request.</param>
                         /// <param name="name">
                         /// The name of the tag, for example:
-                        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1".
+                        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the
+                        /// package or tag ID parts contain slashes, the slashes are escaped.
                         /// </param>
                         public virtual PatchRequest Patch(Google.Apis.ArtifactRegistry.v1beta1.Data.Tag body, string name)
                         {
@@ -941,7 +942,8 @@ namespace Google.Apis.ArtifactRegistry.v1beta1
 
                             /// <summary>
                             /// The name of the tag, for example:
-                            /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1".
+                            /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the
+                            /// package or tag ID parts contain slashes, the slashes are escaped.
                             /// </summary>
                             [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
                             public virtual string Name { get; private set; }
@@ -2071,6 +2073,40 @@ namespace Google.Apis.ArtifactRegistry.v1beta1
 }
 namespace Google.Apis.ArtifactRegistry.v1beta1.Data
 {
+    /// <summary>
+    /// A detailed representation of an Apt artifact. Information in the record is derived from the archive's control
+    /// file. See https://www.debian.org/doc/debian-policy/ch-controlfields.html
+    /// </summary>
+    public class AptArtifact : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Operating system architecture of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("architecture")]
+        public virtual string Architecture { get; set; }
+
+        /// <summary>Output only. Repository component of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("component")]
+        public virtual string Component { get; set; }
+
+        /// <summary>Output only. Contents of the artifact's control metadata file.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("controlFile")]
+        public virtual string ControlFile { get; set; }
+
+        /// <summary>Output only. The Artifact Registry resource name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Output only. The Apt package name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageName")]
+        public virtual string PackageName { get; set; }
+
+        /// <summary>Output only. An artifact is a binary or source package.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageType")]
+        public virtual string PackageType { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Associates `members` with a `role`.</summary>
     public class Binding : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -2186,7 +2222,9 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
         public virtual System.Collections.Generic.IList<Hash> Hashes { get; set; }
 
         /// <summary>
-        /// The name of the file, for example: "projects/p1/locations/us-central1/repositories/repo1/files/a/b/c.txt".
+        /// The name of the file, for example:
+        /// "projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt". If the file ID part contains
+        /// slashes, they are escaped.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2217,6 +2255,96 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
         /// <summary>The hash value.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("value")]
         public virtual string Value { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Error information explaining why a package was not imported.</summary>
+    public class ImportAptArtifactsErrorInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The detailed error status.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("error")]
+        public virtual Status Error { get; set; }
+
+        /// <summary>Google Cloud Storage location requested.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsSource")]
+        public virtual ImportAptArtifactsGcsSource GcsSource { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Google Cloud Storage location where the artifacts currently reside.</summary>
+    public class ImportAptArtifactsGcsSource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Cloud Storage paths URI (e.g., gs://my_bucket//my_object).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("uris")]
+        public virtual System.Collections.Generic.IList<string> Uris { get; set; }
+
+        /// <summary>Supports URI wildcards for matching multiple objects from a single URI.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("useWildcards")]
+        public virtual System.Nullable<bool> UseWildcards { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message from importing artifacts.</summary>
+    public class ImportAptArtifactsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aptArtifacts")]
+        public virtual System.Collections.Generic.IList<AptArtifact> AptArtifacts { get; set; }
+
+        /// <summary>Detailed error info for packages that were not imported.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<ImportAptArtifactsErrorInfo> Errors { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Error information explaining why a package was not imported.</summary>
+    public class ImportYumArtifactsErrorInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The detailed error status.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("error")]
+        public virtual Status Error { get; set; }
+
+        /// <summary>Google Cloud Storage location requested.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsSource")]
+        public virtual ImportYumArtifactsGcsSource GcsSource { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Google Cloud Storage location where the artifacts currently reside.</summary>
+    public class ImportYumArtifactsGcsSource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Cloud Storage paths URI (e.g., gs://my_bucket//my_object).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("uris")]
+        public virtual System.Collections.Generic.IList<string> Uris { get; set; }
+
+        /// <summary>Supports URI wildcards for matching multiple objects from a single URI.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("useWildcards")]
+        public virtual System.Nullable<bool> UseWildcards { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message from importing artifacts.</summary>
+    public class ImportYumArtifactsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Detailed error info for packages that were not imported.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("errors")]
+        public virtual System.Collections.Generic.IList<ImportYumArtifactsErrorInfo> Errors { get; set; }
+
+        /// <summary>The yum artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("yumArtifacts")]
+        public virtual System.Collections.Generic.IList<YumArtifact> YumArtifacts { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2425,6 +2553,7 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
 
         /// <summary>
         /// The name of the package, for example: "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1".
+        /// If the package ID part contains slashes, the slashes are escaped.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2595,7 +2724,8 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
     {
         /// <summary>
         /// The name of the tag, for example:
-        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1".
+        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1". If the package or tag ID
+        /// parts contain slashes, the slashes are escaped.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2637,6 +2767,56 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The response to upload an artifact.</summary>
+    public class UploadAptArtifactMediaResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Operation to be returned to the user.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        public virtual Operation Operation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// The response of the completed artifact upload operation. This response is contained in the Operation and
+    /// available to users.
+    /// </summary>
+    public class UploadAptArtifactResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("aptArtifacts")]
+        public virtual System.Collections.Generic.IList<AptArtifact> AptArtifacts { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response to upload an artifact.</summary>
+    public class UploadYumArtifactMediaResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Operation to be returned to the user.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        public virtual Operation Operation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// The response of the completed artifact upload operation. This response is contained in the Operation and
+    /// available to users.
+    /// </summary>
+    public class UploadYumArtifactResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Apt artifacts updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("yumArtifacts")]
+        public virtual System.Collections.Generic.IList<YumArtifact> YumArtifacts { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>
     /// The body of a version resource. A version resource represents a collection of components, such as files and
     /// other data. This may correspond to a version in many package management schemes.
@@ -2653,7 +2833,8 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
 
         /// <summary>
         /// The name of the version, for example:
-        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/art1".
+        /// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/art1". If the package or
+        /// version ID parts contain slashes, the slashes are escaped.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2667,6 +2848,29 @@ namespace Google.Apis.ArtifactRegistry.v1beta1.Data
         /// <summary>The time when the version was last updated.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
         public virtual object UpdateTime { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>A detailed representation of a Yum artifact.</summary>
+    public class YumArtifact : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Operating system architecture of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("architecture")]
+        public virtual string Architecture { get; set; }
+
+        /// <summary>Output only. The Artifact Registry resource name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Output only. The yum package name of the artifact.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageName")]
+        public virtual string PackageName { get; set; }
+
+        /// <summary>Output only. An artifact is a binary or source package.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("packageType")]
+        public virtual string PackageType { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

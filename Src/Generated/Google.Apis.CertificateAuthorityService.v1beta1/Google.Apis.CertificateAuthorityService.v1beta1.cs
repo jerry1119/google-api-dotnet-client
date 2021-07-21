@@ -2875,7 +2875,7 @@ namespace Google.Apis.CertificateAuthorityService.v1beta1
                 public virtual string Filter { get; set; }
 
                 /// <summary>
-                /// The maximum number of results to return. If not set, the service will select a default.
+                /// The maximum number of results to return. If not set, the service selects a default.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<int> PageSize { get; set; }
@@ -4201,11 +4201,12 @@ namespace Google.Apis.CertificateAuthorityService.v1beta1.Data
     /// <summary>Operation metadata returned by the CLH during resource state reconciliation.</summary>
     public class ReconciliationOperationMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>
-        /// If set to TRUE, the resource has to be deleted. When using this bit, the CLH should fail the operation.
-        /// </summary>
+        /// <summary>DEPRECATED. Use exclusive_action instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("deleteResource")]
         public virtual System.Nullable<bool> DeleteResource { get; set; }
+
+        [Newtonsoft.Json.JsonPropertyAttribute("exclusiveAction")]
+        public virtual string ExclusiveAction { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

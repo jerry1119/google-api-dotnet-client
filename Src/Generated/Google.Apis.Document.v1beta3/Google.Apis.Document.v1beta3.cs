@@ -313,6 +313,65 @@ namespace Google.Apis.Document.v1beta3
                 }
 
                 /// <summary>
+                /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                /// cancel the operation, but success is not guaranteed. If the server doesn't support this method, it
+                /// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to
+                /// check whether the cancellation succeeded or whether the operation completed despite cancellation. On
+                /// successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+                /// Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+                /// </summary>
+                /// <param name="name">The name of the operation resource to be cancelled.</param>
+                public virtual CancelOperationRequest CancelOperation(string name)
+                {
+                    return new CancelOperationRequest(service, name);
+                }
+
+                /// <summary>
+                /// Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+                /// cancel the operation, but success is not guaranteed. If the server doesn't support this method, it
+                /// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to
+                /// check whether the cancellation succeeded or whether the operation completed despite cancellation. On
+                /// successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+                /// Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+                /// </summary>
+                public class CancelOperationRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1beta3.Data.GoogleProtobufEmpty>
+                {
+                    /// <summary>Constructs a new CancelOperation request.</summary>
+                    public CancelOperationRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The name of the operation resource to be cancelled.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "cancelOperation";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "DELETE";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta3/{+name}";
+
+                    /// <summary>Initializes CancelOperation parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>
                 /// Gets the latest state of a long-running operation. Clients can use this method to poll the operation
                 /// result at intervals as recommended by the API service.
                 /// </summary>
@@ -359,6 +418,103 @@ namespace Google.Apis.Document.v1beta3
                             ParameterType = "path",
                             DefaultValue = null,
                             Pattern = @"^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                        });
+                    }
+                }
+
+                /// <summary>
+                /// Lists operations that match the specified filter in the request. If the server doesn't support this
+                /// method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the
+                /// binding to use different resource name schemes, such as `users/*/operations`. To override the
+                /// binding, API services can add a binding such as `"/v1/{name=users/*}/operations"` to their service
+                /// configuration. For backwards compatibility, the default name includes the operations collection id,
+                /// however overriding users must ensure the name binding is the parent resource, without the operations
+                /// collection id.
+                /// </summary>
+                /// <param name="name">The name of the operation's parent resource.</param>
+                public virtual ListRequest List(string name)
+                {
+                    return new ListRequest(service, name);
+                }
+
+                /// <summary>
+                /// Lists operations that match the specified filter in the request. If the server doesn't support this
+                /// method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the
+                /// binding to use different resource name schemes, such as `users/*/operations`. To override the
+                /// binding, API services can add a binding such as `"/v1/{name=users/*}/operations"` to their service
+                /// configuration. For backwards compatibility, the default name includes the operations collection id,
+                /// however overriding users must ensure the name binding is the parent resource, without the operations
+                /// collection id.
+                /// </summary>
+                public class ListRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1beta3.Data.GoogleLongrunningListOperationsResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The name of the operation's parent resource.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>The standard list filter.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Filter { get; set; }
+
+                    /// <summary>The standard list page size.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>The standard list page token.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta3/{+name}";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/operations$",
+                        });
+                        RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "filter",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
                         });
                     }
                 }
@@ -1047,6 +1203,57 @@ namespace Google.Apis.Document.v1beta3
                 }
             }
 
+            /// <summary>Fetches processor types.</summary>
+            /// <param name="parent">
+            /// Required. The project of processor type to list. The available processor types may depend on the
+            /// whitelisting on projects. Format: projects/{project}/locations/{location}
+            /// </param>
+            public virtual FetchProcessorTypesRequest FetchProcessorTypes(string parent)
+            {
+                return new FetchProcessorTypesRequest(service, parent);
+            }
+
+            /// <summary>Fetches processor types.</summary>
+            public class FetchProcessorTypesRequest : DocumentBaseServiceRequest<Google.Apis.Document.v1beta3.Data.GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse>
+            {
+                /// <summary>Constructs a new FetchProcessorTypes request.</summary>
+                public FetchProcessorTypesRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                {
+                    Parent = parent;
+                    InitParameters();
+                }
+
+                /// <summary>
+                /// Required. The project of processor type to list. The available processor types may depend on the
+                /// whitelisting on projects. Format: projects/{project}/locations/{location}
+                /// </summary>
+                [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                public virtual string Parent { get; private set; }
+
+                /// <summary>Gets the method name.</summary>
+                public override string MethodName => "fetchProcessorTypes";
+
+                /// <summary>Gets the HTTP method.</summary>
+                public override string HttpMethod => "GET";
+
+                /// <summary>Gets the REST path.</summary>
+                public override string RestPath => "v1beta3/{+parent}:fetchProcessorTypes";
+
+                /// <summary>Initializes FetchProcessorTypes parameter list.</summary>
+                protected override void InitParameters()
+                {
+                    base.InitParameters();
+                    RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "parent",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                    });
+                }
+            }
+
             /// <summary>Gets information about a location.</summary>
             /// <param name="name">Resource name for the location.</param>
             public virtual GetRequest Get(string name)
@@ -1327,6 +1534,28 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>The resource name of the created evaluation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("evaluation")]
         public virtual string Evaluation { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Metadata message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The common metadata about the operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response message associated with the ExportProcessorVersion operation.</summary>
+    public class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The Cloud Storage URI containing the output artifacts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gcsUri")]
+        public virtual string GcsUri { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -1875,6 +2104,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageTable> Tables { get; set; }
@@ -1918,6 +2151,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta1BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -1928,7 +2165,8 @@ namespace Google.Apis.Document.v1beta3.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -2011,6 +2249,10 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta1DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -2289,6 +2531,13 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -2953,6 +3202,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageTable> Tables { get; set; }
@@ -2996,6 +3249,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta2BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -3006,7 +3263,8 @@ namespace Google.Apis.Document.v1beta3.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -3089,6 +3347,10 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta2DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -3367,6 +3629,13 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>The id of the parent provenance.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
+
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
 
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
@@ -3901,8 +4170,39 @@ namespace Google.Apis.Document.v1beta3.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The long running operation metadata for delete processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The long running operation metadata for disable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Request message for the disable processor method.</summary>
     public class GoogleCloudDocumentaiV1beta3DisableProcessorRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the disable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3DisableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -4190,6 +4490,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("paragraphs")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta3DocumentPageParagraph> Paragraphs { get; set; }
 
+        /// <summary>The history of this page.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta3DocumentProvenance Provenance { get; set; }
+
         /// <summary>A list of visually detected tables on the page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tables")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta3DocumentPageTable> Tables { get; set; }
@@ -4233,6 +4537,10 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("boundingPoly")]
         public virtual GoogleCloudDocumentaiV1beta3BoundingPoly BoundingPoly { get; set; }
 
+        /// <summary>Optional. Confidence of detected page element, if applicable. Range [0, 1].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("confidence")]
+        public virtual System.Nullable<float> Confidence { get; set; }
+
         /// <summary>Optional. Deprecated. Use PageRef.bounding_poly instead.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("layoutId")]
         public virtual string LayoutId { get; set; }
@@ -4243,7 +4551,8 @@ namespace Google.Apis.Document.v1beta3.Data
 
         /// <summary>
         /// Required. Index into the Document.pages element, for example using Document.pages to locate the related page
-        /// element.
+        /// element. This field is skipped when its value is the default 0. See
+        /// https://developers.google.com/protocol-buffers/docs/proto3#json.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("page")]
         public virtual System.Nullable<long> Page { get; set; }
@@ -4326,6 +4635,10 @@ namespace Google.Apis.Document.v1beta3.Data
         /// <summary>A list of detected languages for name together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nameDetectedLanguages")]
         public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage> NameDetectedLanguages { get; set; }
+
+        /// <summary>The history of this annotation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("provenance")]
+        public virtual GoogleCloudDocumentaiV1beta3DocumentProvenance Provenance { get; set; }
 
         /// <summary>A list of detected languages for value together with confidence.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valueDetectedLanguages")]
@@ -4605,6 +4918,13 @@ namespace Google.Apis.Document.v1beta3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual System.Nullable<int> Id { get; set; }
 
+        /// <summary>
+        /// The index of the parent revisions corresponding collection of items (eg. list of entities, properties within
+        /// entities, etc.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        public virtual System.Nullable<int> Index { get; set; }
+
         /// <summary>The index of the [Document.revisions] identifying the parent revision.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revision")]
         public virtual System.Nullable<int> Revision { get; set; }
@@ -4805,9 +5125,40 @@ namespace Google.Apis.Document.v1beta3.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>The long running operation metadata for enable processor method.</summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorMetadata : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The basic metadata of the long running operation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commonMetadata")]
+        public virtual GoogleCloudDocumentaiV1beta3CommonOperationMetadata CommonMetadata { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Request message for the enable processor method.</summary>
     public class GoogleCloudDocumentaiV1beta3EnableProcessorRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// Response message for the enable processor method. Intentionally empty proto for adding fields in future.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3EnableProcessorResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Response message for fetch processor types.</summary>
+    public class GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The list of processor types.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("processorTypes")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta3ProcessorType> ProcessorTypes { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -4998,6 +5349,62 @@ namespace Google.Apis.Document.v1beta3.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>
+    /// A processor type is responsible for performing a certain document understanding task on a certain type of
+    /// document. All processor types are created by the documentai service internally. User will only list all
+    /// available processor types via UI. For different users (projects), the available processor types may be different
+    /// since we'll expose the access of some types via EAP whitelisting. We make the ProcessorType a resource under
+    /// location so we have a unified API and keep the possibility that UI will load different available processor types
+    /// from different regions. But for alpha the behavior is that the user will always get the union of all available
+    /// processor types among all regions no matter which regionalized endpoint is called, and then we use the
+    /// 'available_locations' field to show under which regions a processor type is available. For example, users can
+    /// call either the 'US' or 'EU' endpoint to feach processor types. In the return, we will have an 'invoice parsing'
+    /// processor with 'available_locations' field only containing 'US'. So the user can try to create an 'invoice
+    /// parsing' processor under the location 'US'. Such attempt of creating under the location 'EU' will fail. Next ID:
+    /// 7.
+    /// </summary>
+    public class GoogleCloudDocumentaiV1beta3ProcessorType : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Whether the processor type allows creation. If yes, user can create a processor of this processor type.
+        /// Otherwise, user needs to require for whitelisting.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allowCreation")]
+        public virtual System.Nullable<bool> AllowCreation { get; set; }
+
+        /// <summary>The locations in which this processor is available.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("availableLocations")]
+        public virtual System.Collections.Generic.IList<GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo> AvailableLocations { get; set; }
+
+        /// <summary>The processor category, used by UI to group processor types.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("category")]
+        public virtual string Category { get; set; }
+
+        /// <summary>
+        /// The resource name of the processor type. Format: projects/{project}/processorTypes/{processor_type}
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>The type of the processor, e.g, "invoice_parsing".</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("type")]
+        public virtual string Type { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The location information about where the processor is available.</summary>
+    public class GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The location id, currently must be one of [us, eu].</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("locationId")]
+        public virtual string LocationId { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Payload message of raw document content (bytes).</summary>
     public class GoogleCloudDocumentaiV1beta3RawDocument : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -5043,16 +5450,24 @@ namespace Google.Apis.Document.v1beta3.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Request message for review document method.</summary>
+    /// <summary>Request message for review document method. Next Id: 6.</summary>
     public class GoogleCloudDocumentaiV1beta3ReviewDocumentRequest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The document that needs human review.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("document")]
         public virtual GoogleCloudDocumentaiV1beta3Document Document { get; set; }
 
+        /// <summary>Whether the validation should be performed on the ad-hoc review request.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("enableSchemaValidation")]
+        public virtual System.Nullable<bool> EnableSchemaValidation { get; set; }
+
         /// <summary>An inline document proto.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("inlineDocument")]
         public virtual GoogleCloudDocumentaiV1beta3Document InlineDocument { get; set; }
+
+        /// <summary>The priority of the human review task.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("priority")]
+        public virtual string Priority { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -5129,6 +5544,21 @@ namespace Google.Apis.Document.v1beta3.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>The response message for Operations.ListOperations.</summary>
+    public class GoogleLongrunningListOperationsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The standard List next-page token.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>A list of operations that matches the specified filter in the request.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("operations")]
+        public virtual System.Collections.Generic.IList<GoogleLongrunningOperation> Operations { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

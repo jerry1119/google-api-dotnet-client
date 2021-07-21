@@ -4946,6 +4946,9 @@ namespace Google.Apis.AdExchangeBuyer.v1_4.Data
         [Newtonsoft.Json.JsonPropertyAttribute("exchange")]
         public virtual string Exchange { get; set; }
 
+        [Newtonsoft.Json.JsonPropertyAttribute("forecastInventory")]
+        public virtual string ForecastInventory { get; set; }
+
         /// <summary>Link to publisher's Google+ page.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("googlePlusLink")]
         public virtual string GooglePlusLink { get; set; }
@@ -4991,13 +4994,15 @@ namespace Google.Apis.AdExchangeBuyer.v1_4.Data
         public virtual string ProgrammaticContact { get; set; }
 
         /// <summary>
-        /// The list of app IDs represented in this pubisher profile. Empty if this is a parent profile. Deprecated in
+        /// The list of app IDs represented in this publisher profile. Empty if this is a parent profile. Deprecated in
         /// favor of publisher_app.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("publisherAppIds")]
         public virtual System.Collections.Generic.IList<System.Nullable<long>> PublisherAppIds { get; set; }
 
-        /// <summary>The list of apps represented in this pubisher profile. Empty if this is a parent profile.</summary>
+        /// <summary>
+        /// The list of apps represented in this publisher profile. Empty if this is a parent profile.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("publisherApps")]
         public virtual System.Collections.Generic.IList<MobileApplication> PublisherApps { get; set; }
 

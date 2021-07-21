@@ -292,7 +292,6 @@ namespace Google.Apis.GKEHub.v1beta
             {
                 this.service = service;
                 Features = new FeaturesResource(service);
-                Global = new GlobalResource(service);
                 Memberships = new MembershipsResource(service);
                 Operations = new OperationsResource(service);
             }
@@ -312,6 +311,229 @@ namespace Google.Apis.GKEHub.v1beta
                 public FeaturesResource(Google.Apis.Services.IClientService service)
                 {
                     this.service = service;
+                }
+
+                /// <summary>Adds a new Feature.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="parent">
+                /// The parent (project and location) where the Feature will be created. Specified in the format
+                /// `projects/*/locations/*`.
+                /// </param>
+                public virtual CreateRequest Create(Google.Apis.GKEHub.v1beta.Data.Feature body, string parent)
+                {
+                    return new CreateRequest(service, body, parent);
+                }
+
+                /// <summary>Adds a new Feature.</summary>
+                public class CreateRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
+                {
+                    /// <summary>Constructs a new Create request.</summary>
+                    public CreateRequest(Google.Apis.Services.IClientService service, Google.Apis.GKEHub.v1beta.Data.Feature body, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The parent (project and location) where the Feature will be created. Specified in the format
+                    /// `projects/*/locations/*`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>The ID of the feature to create.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("featureId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string FeatureId { get; set; }
+
+                    /// <summary>
+                    /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
+                    /// retry your request, the server will know to ignore the request if it has already been completed.
+                    /// The server will guarantee that for at least 60 minutes after the first request. For example,
+                    /// consider a situation where you make an initial request and the request times out. If you make
+                    /// the request again with the same request ID, the server can check if original operation with the
+                    /// same request ID was received, and if so, will ignore the second request. This prevents clients
+                    /// from accidentally creating duplicate commitments. The request ID must be a valid UUID with the
+                    /// exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string RequestId { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.GKEHub.v1beta.Data.Feature Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "create";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta/{+parent}/features";
+
+                    /// <summary>Initializes Create parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("featureId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "featureId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "requestId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Removes a Feature.</summary>
+                /// <param name="name">
+                /// The Feature resource name in the format `projects/*/locations/*/features/*`.
+                /// </param>
+                public virtual DeleteRequest Delete(string name)
+                {
+                    return new DeleteRequest(service, name);
+                }
+
+                /// <summary>Removes a Feature.</summary>
+                public class DeleteRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
+                {
+                    /// <summary>Constructs a new Delete request.</summary>
+                    public DeleteRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The Feature resource name in the format `projects/*/locations/*/features/*`.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>
+                    /// If set to true, the delete will ignore any outstanding resources for this Feature (that is,
+                    /// `FeatureState.has_resources` is set to true). These resources will NOT be cleaned up or modified
+                    /// in any way.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("force", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<bool> Force { get; set; }
+
+                    /// <summary>
+                    /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
+                    /// retry your request, the server will know to ignore the request if it has already been completed.
+                    /// The server will guarantee that for at least 60 minutes after the first request. For example,
+                    /// consider a situation where you make an initial request and the request times out. If you make
+                    /// the request again with the same request ID, the server can check if original operation with the
+                    /// same request ID was received, and if so, will ignore the second request. This prevents clients
+                    /// from accidentally creating duplicate commitments. The request ID must be a valid UUID with the
+                    /// exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string RequestId { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "delete";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "DELETE";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta/{+name}";
+
+                    /// <summary>Initializes Delete parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/features/[^/]+$",
+                        });
+                        RequestParameters.Add("force", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "force",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "requestId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Gets details of a single Feature.</summary>
+                /// <param name="name">
+                /// The Feature resource name in the format `projects/*/locations/*/features/*`
+                /// </param>
+                public virtual GetRequest Get(string name)
+                {
+                    return new GetRequest(service, name);
+                }
+
+                /// <summary>Gets details of a single Feature.</summary>
+                public class GetRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Feature>
+                {
+                    /// <summary>Constructs a new Get request.</summary>
+                    public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                    {
+                        Name = name;
+                        InitParameters();
+                    }
+
+                    /// <summary>The Feature resource name in the format `projects/*/locations/*/features/*`</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "get";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta/{+name}";
+
+                    /// <summary>Initializes Get parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/features/[^/]+$",
+                        });
+                    }
                 }
 
                 /// <summary>
@@ -382,6 +604,208 @@ namespace Google.Apis.GKEHub.v1beta
                         RequestParameters.Add("options.requestedPolicyVersion", new Google.Apis.Discovery.Parameter
                         {
                             Name = "options.requestedPolicyVersion",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Lists Features in a given project and location.</summary>
+                /// <param name="parent">
+                /// The parent (project and location) where the Features will be listed. Specified in the format
+                /// `projects/*/locations/*`.
+                /// </param>
+                public virtual ListRequest List(string parent)
+                {
+                    return new ListRequest(service, parent);
+                }
+
+                /// <summary>Lists Features in a given project and location.</summary>
+                public class ListRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.ListFeaturesResponse>
+                {
+                    /// <summary>Constructs a new List request.</summary>
+                    public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                    {
+                        Parent = parent;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The parent (project and location) where the Features will be listed. Specified in the format
+                    /// `projects/*/locations/*`.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Parent { get; private set; }
+
+                    /// <summary>
+                    /// Lists Features that match the filter expression, following the syntax outlined in
+                    /// https://google.aip.dev/160. Examples: - Feature with the name "servicemesh" in project
+                    /// "foo-proj": name = "projects/foo-proj/locations/global/features/servicemesh" - Features that
+                    /// have a label called `foo`: labels.foo:* - Features that have a label called `foo` whose value is
+                    /// `bar`: labels.foo = bar
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string Filter { get; set; }
+
+                    /// <summary>
+                    /// One or more fields to compare and use to sort the output. See
+                    /// https://google.aip.dev/132#ordering.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("orderBy", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string OrderBy { get; set; }
+
+                    /// <summary>
+                    /// When requesting a 'page' of resources, `page_size` specifies number of resources to return. If
+                    /// unspecified or set to 0, all resources will be returned.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual System.Nullable<int> PageSize { get; set; }
+
+                    /// <summary>
+                    /// Token returned by previous call to `ListFeatures` which specifies the position in the list from
+                    /// where to continue listing the resources.
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string PageToken { get; set; }
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "list";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "GET";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta/{+parent}/features";
+
+                    /// <summary>Initializes List parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "parent",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+$",
+                        });
+                        RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "filter",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("orderBy", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "orderBy",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageSize",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "pageToken",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                    }
+                }
+
+                /// <summary>Updates an existing Feature.</summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="name">
+                /// The Feature resource name in the format `projects/*/locations/*/features/*`.
+                /// </param>
+                public virtual PatchRequest Patch(Google.Apis.GKEHub.v1beta.Data.Feature body, string name)
+                {
+                    return new PatchRequest(service, body, name);
+                }
+
+                /// <summary>Updates an existing Feature.</summary>
+                public class PatchRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
+                {
+                    /// <summary>Constructs a new Patch request.</summary>
+                    public PatchRequest(Google.Apis.Services.IClientService service, Google.Apis.GKEHub.v1beta.Data.Feature body, string name) : base(service)
+                    {
+                        Name = name;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>The Feature resource name in the format `projects/*/locations/*/features/*`.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Name { get; private set; }
+
+                    /// <summary>
+                    /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
+                    /// retry your request, the server will know to ignore the request if it has already been completed.
+                    /// The server will guarantee that for at least 60 minutes after the first request. For example,
+                    /// consider a situation where you make an initial request and the request times out. If you make
+                    /// the request again with the same request ID, the server can check if original operation with the
+                    /// same request ID was received, and if so, will ignore the second request. This prevents clients
+                    /// from accidentally creating duplicate commitments. The request ID must be a valid UUID with the
+                    /// exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual string RequestId { get; set; }
+
+                    /// <summary>Mask of fields to update.</summary>
+                    [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
+                    public virtual object UpdateMask { get; set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.GKEHub.v1beta.Data.Feature Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "patch";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "PATCH";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta/{+name}";
+
+                    /// <summary>Initializes Patch parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "name",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/features/[^/]+$",
+                        });
+                        RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "requestId",
+                            IsRequired = false,
+                            ParameterType = "query",
+                            DefaultValue = null,
+                            Pattern = null,
+                        });
+                        RequestParameters.Add("updateMask", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "updateMask",
                             IsRequired = false,
                             ParameterType = "query",
                             DefaultValue = null,
@@ -521,477 +945,6 @@ namespace Google.Apis.GKEHub.v1beta
                             DefaultValue = null,
                             Pattern = @"^projects/[^/]+/locations/[^/]+/features/[^/]+$",
                         });
-                    }
-                }
-            }
-
-            /// <summary>Gets the Global resource.</summary>
-            public virtual GlobalResource Global { get; }
-
-            /// <summary>The "global" collection of methods.</summary>
-            public class GlobalResource
-            {
-                private const string Resource = "global";
-
-                /// <summary>The service which this resource belongs to.</summary>
-                private readonly Google.Apis.Services.IClientService service;
-
-                /// <summary>Constructs a new resource.</summary>
-                public GlobalResource(Google.Apis.Services.IClientService service)
-                {
-                    this.service = service;
-                    Features = new FeaturesResource(service);
-                }
-
-                /// <summary>Gets the Features resource.</summary>
-                public virtual FeaturesResource Features { get; }
-
-                /// <summary>The "features" collection of methods.</summary>
-                public class FeaturesResource
-                {
-                    private const string Resource = "features";
-
-                    /// <summary>The service which this resource belongs to.</summary>
-                    private readonly Google.Apis.Services.IClientService service;
-
-                    /// <summary>Constructs a new resource.</summary>
-                    public FeaturesResource(Google.Apis.Services.IClientService service)
-                    {
-                        this.service = service;
-                    }
-
-                    /// <summary>Adds a new Feature.</summary>
-                    /// <param name="body">The body of the request.</param>
-                    /// <param name="parent">
-                    /// The parent (project and location) where the Feature will be created. Specified in the format
-                    /// `projects/*/locations/global`.
-                    /// </param>
-                    public virtual CreateRequest Create(Google.Apis.GKEHub.v1beta.Data.Feature body, string parent)
-                    {
-                        return new CreateRequest(service, body, parent);
-                    }
-
-                    /// <summary>Adds a new Feature.</summary>
-                    public class CreateRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
-                    {
-                        /// <summary>Constructs a new Create request.</summary>
-                        public CreateRequest(Google.Apis.Services.IClientService service, Google.Apis.GKEHub.v1beta.Data.Feature body, string parent) : base(service)
-                        {
-                            Parent = parent;
-                            Body = body;
-                            InitParameters();
-                        }
-
-                        /// <summary>
-                        /// The parent (project and location) where the Feature will be created. Specified in the format
-                        /// `projects/*/locations/global`.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
-                        public virtual string Parent { get; private set; }
-
-                        /// <summary>The ID of the feature to create.</summary>
-                        [Google.Apis.Util.RequestParameterAttribute("featureId", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string FeatureId { get; set; }
-
-                        /// <summary>
-                        /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
-                        /// retry your request, the server will know to ignore the request if it has already been
-                        /// completed. The server will guarantee that for at least 60 minutes after the first request.
-                        /// For example, consider a situation where you make an initial request and the request times
-                        /// out. If you make the request again with the same request ID, the server can check if
-                        /// original operation with the same request ID was received, and if so, will ignore the second
-                        /// request. This prevents clients from accidentally creating duplicate commitments. The request
-                        /// ID must be a valid UUID with the exception that zero UUID is not supported
-                        /// (00000000-0000-0000-0000-000000000000).
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string RequestId { get; set; }
-
-                        /// <summary>Gets or sets the body of this request.</summary>
-                        Google.Apis.GKEHub.v1beta.Data.Feature Body { get; set; }
-
-                        /// <summary>Returns the body of the request.</summary>
-                        protected override object GetBody() => Body;
-
-                        /// <summary>Gets the method name.</summary>
-                        public override string MethodName => "create";
-
-                        /// <summary>Gets the HTTP method.</summary>
-                        public override string HttpMethod => "POST";
-
-                        /// <summary>Gets the REST path.</summary>
-                        public override string RestPath => "v1beta/{+parent}/features";
-
-                        /// <summary>Initializes Create parameter list.</summary>
-                        protected override void InitParameters()
-                        {
-                            base.InitParameters();
-                            RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "parent",
-                                IsRequired = true,
-                                ParameterType = "path",
-                                DefaultValue = null,
-                                Pattern = @"^projects/[^/]+/locations/global$",
-                            });
-                            RequestParameters.Add("featureId", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "featureId",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "requestId",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                        }
-                    }
-
-                    /// <summary>Removes a Feature.</summary>
-                    /// <param name="name">
-                    /// The Feature resource name in the format `projects/*/locations/global/features/*`.
-                    /// </param>
-                    public virtual DeleteRequest Delete(string name)
-                    {
-                        return new DeleteRequest(service, name);
-                    }
-
-                    /// <summary>Removes a Feature.</summary>
-                    public class DeleteRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
-                    {
-                        /// <summary>Constructs a new Delete request.</summary>
-                        public DeleteRequest(Google.Apis.Services.IClientService service, string name) : base(service)
-                        {
-                            Name = name;
-                            InitParameters();
-                        }
-
-                        /// <summary>
-                        /// The Feature resource name in the format `projects/*/locations/global/features/*`.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
-                        public virtual string Name { get; private set; }
-
-                        /// <summary>
-                        /// If set to true, the delete will ignore any outstanding resources for this Feature (that is,
-                        /// `FeatureState.has_resources` is set to true). These resources will NOT be cleaned up or
-                        /// modified in any way.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("force", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual System.Nullable<bool> Force { get; set; }
-
-                        /// <summary>
-                        /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
-                        /// retry your request, the server will know to ignore the request if it has already been
-                        /// completed. The server will guarantee that for at least 60 minutes after the first request.
-                        /// For example, consider a situation where you make an initial request and the request times
-                        /// out. If you make the request again with the same request ID, the server can check if
-                        /// original operation with the same request ID was received, and if so, will ignore the second
-                        /// request. This prevents clients from accidentally creating duplicate commitments. The request
-                        /// ID must be a valid UUID with the exception that zero UUID is not supported
-                        /// (00000000-0000-0000-0000-000000000000).
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string RequestId { get; set; }
-
-                        /// <summary>Gets the method name.</summary>
-                        public override string MethodName => "delete";
-
-                        /// <summary>Gets the HTTP method.</summary>
-                        public override string HttpMethod => "DELETE";
-
-                        /// <summary>Gets the REST path.</summary>
-                        public override string RestPath => "v1beta/{+name}";
-
-                        /// <summary>Initializes Delete parameter list.</summary>
-                        protected override void InitParameters()
-                        {
-                            base.InitParameters();
-                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "name",
-                                IsRequired = true,
-                                ParameterType = "path",
-                                DefaultValue = null,
-                                Pattern = @"^projects/[^/]+/locations/global/features/[^/]+$",
-                            });
-                            RequestParameters.Add("force", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "force",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "requestId",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                        }
-                    }
-
-                    /// <summary>Gets details of a single Feature.</summary>
-                    /// <param name="name">
-                    /// The Feature resource name in the format `projects/*/locations/global/features/*`
-                    /// </param>
-                    public virtual GetRequest Get(string name)
-                    {
-                        return new GetRequest(service, name);
-                    }
-
-                    /// <summary>Gets details of a single Feature.</summary>
-                    public class GetRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Feature>
-                    {
-                        /// <summary>Constructs a new Get request.</summary>
-                        public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
-                        {
-                            Name = name;
-                            InitParameters();
-                        }
-
-                        /// <summary>
-                        /// The Feature resource name in the format `projects/*/locations/global/features/*`
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
-                        public virtual string Name { get; private set; }
-
-                        /// <summary>Gets the method name.</summary>
-                        public override string MethodName => "get";
-
-                        /// <summary>Gets the HTTP method.</summary>
-                        public override string HttpMethod => "GET";
-
-                        /// <summary>Gets the REST path.</summary>
-                        public override string RestPath => "v1beta/{+name}";
-
-                        /// <summary>Initializes Get parameter list.</summary>
-                        protected override void InitParameters()
-                        {
-                            base.InitParameters();
-                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "name",
-                                IsRequired = true,
-                                ParameterType = "path",
-                                DefaultValue = null,
-                                Pattern = @"^projects/[^/]+/locations/global/features/[^/]+$",
-                            });
-                        }
-                    }
-
-                    /// <summary>Lists Features in a given project and location.</summary>
-                    /// <param name="parent">
-                    /// The parent (project and location) where the Features will be listed. Specified in the format
-                    /// `projects/*/locations/global`.
-                    /// </param>
-                    public virtual ListRequest List(string parent)
-                    {
-                        return new ListRequest(service, parent);
-                    }
-
-                    /// <summary>Lists Features in a given project and location.</summary>
-                    public class ListRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.ListFeaturesResponse>
-                    {
-                        /// <summary>Constructs a new List request.</summary>
-                        public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
-                        {
-                            Parent = parent;
-                            InitParameters();
-                        }
-
-                        /// <summary>
-                        /// The parent (project and location) where the Features will be listed. Specified in the format
-                        /// `projects/*/locations/global`.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
-                        public virtual string Parent { get; private set; }
-
-                        /// <summary>
-                        /// Lists Features that match the filter expression, following the syntax outlined in
-                        /// https://google.aip.dev/160. Examples: - Feature with the name "servicemesh" in project
-                        /// "foo-proj": name = "projects/foo-proj/locations/global/features/servicemesh" - Features that
-                        /// have a label called `foo`: labels.foo:* - Features that have a label called `foo` whose
-                        /// value is `bar`: labels.foo = bar
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string Filter { get; set; }
-
-                        /// <summary>
-                        /// One or more fields to compare and use to sort the output. See
-                        /// https://google.aip.dev/132#ordering.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("orderBy", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string OrderBy { get; set; }
-
-                        /// <summary>
-                        /// When requesting a 'page' of resources, `page_size` specifies number of resources to return.
-                        /// If unspecified or set to 0, all resources will be returned.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual System.Nullable<int> PageSize { get; set; }
-
-                        /// <summary>
-                        /// Token returned by previous call to `ListFeatures` which specifies the position in the list
-                        /// from where to continue listing the resources.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string PageToken { get; set; }
-
-                        /// <summary>Gets the method name.</summary>
-                        public override string MethodName => "list";
-
-                        /// <summary>Gets the HTTP method.</summary>
-                        public override string HttpMethod => "GET";
-
-                        /// <summary>Gets the REST path.</summary>
-                        public override string RestPath => "v1beta/{+parent}/features";
-
-                        /// <summary>Initializes List parameter list.</summary>
-                        protected override void InitParameters()
-                        {
-                            base.InitParameters();
-                            RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "parent",
-                                IsRequired = true,
-                                ParameterType = "path",
-                                DefaultValue = null,
-                                Pattern = @"^projects/[^/]+/locations/global$",
-                            });
-                            RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "filter",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("orderBy", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "orderBy",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "pageSize",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "pageToken",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                        }
-                    }
-
-                    /// <summary>Updates an existing Feature.</summary>
-                    /// <param name="body">The body of the request.</param>
-                    /// <param name="name">
-                    /// The Feature resource name in the format `projects/*/locations/global/features/*`.
-                    /// </param>
-                    public virtual PatchRequest Patch(Google.Apis.GKEHub.v1beta.Data.Feature body, string name)
-                    {
-                        return new PatchRequest(service, body, name);
-                    }
-
-                    /// <summary>Updates an existing Feature.</summary>
-                    public class PatchRequest : GKEHubBaseServiceRequest<Google.Apis.GKEHub.v1beta.Data.Operation>
-                    {
-                        /// <summary>Constructs a new Patch request.</summary>
-                        public PatchRequest(Google.Apis.Services.IClientService service, Google.Apis.GKEHub.v1beta.Data.Feature body, string name) : base(service)
-                        {
-                            Name = name;
-                            Body = body;
-                            InitParameters();
-                        }
-
-                        /// <summary>
-                        /// The Feature resource name in the format `projects/*/locations/global/features/*`.
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
-                        public virtual string Name { get; private set; }
-
-                        /// <summary>
-                        /// Optional. A request ID to identify requests. Specify a unique request ID so that if you must
-                        /// retry your request, the server will know to ignore the request if it has already been
-                        /// completed. The server will guarantee that for at least 60 minutes after the first request.
-                        /// For example, consider a situation where you make an initial request and the request times
-                        /// out. If you make the request again with the same request ID, the server can check if
-                        /// original operation with the same request ID was received, and if so, will ignore the second
-                        /// request. This prevents clients from accidentally creating duplicate commitments. The request
-                        /// ID must be a valid UUID with the exception that zero UUID is not supported
-                        /// (00000000-0000-0000-0000-000000000000).
-                        /// </summary>
-                        [Google.Apis.Util.RequestParameterAttribute("requestId", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual string RequestId { get; set; }
-
-                        /// <summary>Mask of fields to update.</summary>
-                        [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
-                        public virtual object UpdateMask { get; set; }
-
-                        /// <summary>Gets or sets the body of this request.</summary>
-                        Google.Apis.GKEHub.v1beta.Data.Feature Body { get; set; }
-
-                        /// <summary>Returns the body of the request.</summary>
-                        protected override object GetBody() => Body;
-
-                        /// <summary>Gets the method name.</summary>
-                        public override string MethodName => "patch";
-
-                        /// <summary>Gets the HTTP method.</summary>
-                        public override string HttpMethod => "PATCH";
-
-                        /// <summary>Gets the REST path.</summary>
-                        public override string RestPath => "v1beta/{+name}";
-
-                        /// <summary>Initializes Patch parameter list.</summary>
-                        protected override void InitParameters()
-                        {
-                            base.InitParameters();
-                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "name",
-                                IsRequired = true,
-                                ParameterType = "path",
-                                DefaultValue = null,
-                                Pattern = @"^projects/[^/]+/locations/global/features/[^/]+$",
-                            });
-                            RequestParameters.Add("requestId", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "requestId",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                            RequestParameters.Add("updateMask", new Google.Apis.Discovery.Parameter
-                            {
-                                Name = "updateMask",
-                                IsRequired = false,
-                                ParameterType = "query",
-                                DefaultValue = null,
-                                Pattern = null,
-                            });
-                        }
                     }
                 }
             }
@@ -2084,7 +2037,9 @@ namespace Google.Apis.GKEHub.v1beta.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Configuration for a single cluster. Intended to parallel the ConfigManagement CR.</summary>
+    /// <summary>
+    /// **Anthos Config Management**: Configuration for a single cluster. Intended to parallel the ConfigManagement CR.
+    /// </summary>
     public class ConfigManagementMembershipSpec : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Binauthz conifguration for the cluster.</summary>
@@ -2111,7 +2066,7 @@ namespace Google.Apis.GKEHub.v1beta.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>State for Anthos Config Management</summary>
+    /// <summary>**Anthos Config Management**: State for a single cluster.</summary>
     public class ConfigManagementMembershipState : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Binauthz status</summary>
@@ -2278,9 +2233,8 @@ namespace Google.Apis.GKEHub.v1beta.Data
         public virtual string ImportToken { get; set; }
 
         /// <summary>
-        /// Timestamp of when ACM last successfully synced the repo The time format is specified in
-        /// https://golang.org/pkg/time/#Time.String This field is being deprecated. Use last_sync_time instead.
-        /// (b/154053616)
+        /// Deprecated: use last_sync_time instead. Timestamp of when ACM last successfully synced the repo The time
+        /// format is specified in https://golang.org/pkg/time/#Time.String
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lastSync")]
         public virtual string LastSync { get; set; }
@@ -2375,7 +2329,7 @@ namespace Google.Apis.GKEHub.v1beta.Data
         /// <summary>
         /// Optional. Membership-specific configuration for this Feature. If this Feature does not support any
         /// per-Membership configuration, this field may be unused. The keys indicate which Membership the configuration
-        /// is for, in the form: projects/{p}/locations/{l}/memberships/{m} Where {p} is the project, {l} is a valid
+        /// is for, in the form: `projects/{p}/locations/{l}/memberships/{m}` Where {p} is the project, {l} is a valid
         /// location and {m} is a valid Membership in this project at that location. {p} WILL match the Feature's
         /// project. {p} will always be returned as the project number, but the project ID is also accepted during
         /// input. If the same Membership is specified in the map twice (using the project ID form, and the project
@@ -2388,15 +2342,15 @@ namespace Google.Apis.GKEHub.v1beta.Data
         /// <summary>
         /// Output only. Membership-specific Feature status. If this Feature does report any per-Membership status, this
         /// field may be unused. The keys indicate which Membership the state is for, in the form:
-        /// projects/{p}/locations/{l}/memberships/{m} Where {p} is the project number, {l} is a valid location and {m}
-        /// is a valid Membership in this project at that location. {p} MUST match the Feature's project number.
+        /// `projects/{p}/locations/{l}/memberships/{m}` Where {p} is the project number, {l} is a valid location and
+        /// {m} is a valid Membership in this project at that location. {p} MUST match the Feature's project number.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("membershipStates")]
         public virtual System.Collections.Generic.IDictionary<string, MembershipFeatureState> MembershipStates { get; set; }
 
         /// <summary>
         /// Output only. The full, unique name of this Feature resource in the format
-        /// `projects/*/locations/global/features/*`.
+        /// `projects/*/locations/*/features/*`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2599,7 +2553,7 @@ namespace Google.Apis.GKEHub.v1beta.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>Metering per-Membership Feature State.</summary>
+    /// <summary>**Metering**: Per-Membership Feature State.</summary>
     public class MeteringMembershipState : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The time stamp of the most recent measurement of the number of vCPUs in the cluster.</summary>
@@ -2616,9 +2570,15 @@ namespace Google.Apis.GKEHub.v1beta.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>FeatureSpec contains the input for the MultiClusterIngress feature.</summary>
+    /// <summary>**Multi-cluster Ingress**: The configuration for the MultiClusterIngress feature.</summary>
     public class MultiClusterIngressFeatureSpec : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>
+        /// Deprecated: This field will be ignored and should not be set. Customer's billing structure.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("billing")]
+        public virtual string Billing { get; set; }
+
         /// <summary>
         /// Fully-qualified Membership name which hosts the MultiClusterIngress CRD. Example:
         /// `projects/foo-proj/locations/global/memberships/bar`

@@ -313,6 +313,71 @@ namespace Google.Apis.CloudComposer.v1beta1
                     this.service = service;
                 }
 
+                /// <summary>
+                /// Check if an upgrade operation on the environment will succeed. In case of problems detailed info can
+                /// be found in the returned Operation.
+                /// </summary>
+                /// <param name="body">The body of the request.</param>
+                /// <param name="environment">
+                /// The resource name of the environment to check upgrade for, in the form:
+                /// "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+                /// </param>
+                public virtual CheckUpgradeRequest CheckUpgrade(Google.Apis.CloudComposer.v1beta1.Data.CheckUpgradeRequest body, string environment)
+                {
+                    return new CheckUpgradeRequest(service, body, environment);
+                }
+
+                /// <summary>
+                /// Check if an upgrade operation on the environment will succeed. In case of problems detailed info can
+                /// be found in the returned Operation.
+                /// </summary>
+                public class CheckUpgradeRequest : CloudComposerBaseServiceRequest<Google.Apis.CloudComposer.v1beta1.Data.Operation>
+                {
+                    /// <summary>Constructs a new CheckUpgrade request.</summary>
+                    public CheckUpgradeRequest(Google.Apis.Services.IClientService service, Google.Apis.CloudComposer.v1beta1.Data.CheckUpgradeRequest body, string environment) : base(service)
+                    {
+                        Environment = environment;
+                        Body = body;
+                        InitParameters();
+                    }
+
+                    /// <summary>
+                    /// The resource name of the environment to check upgrade for, in the form:
+                    /// "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+                    /// </summary>
+                    [Google.Apis.Util.RequestParameterAttribute("environment", Google.Apis.Util.RequestParameterType.Path)]
+                    public virtual string Environment { get; private set; }
+
+                    /// <summary>Gets or sets the body of this request.</summary>
+                    Google.Apis.CloudComposer.v1beta1.Data.CheckUpgradeRequest Body { get; set; }
+
+                    /// <summary>Returns the body of the request.</summary>
+                    protected override object GetBody() => Body;
+
+                    /// <summary>Gets the method name.</summary>
+                    public override string MethodName => "checkUpgrade";
+
+                    /// <summary>Gets the HTTP method.</summary>
+                    public override string HttpMethod => "POST";
+
+                    /// <summary>Gets the REST path.</summary>
+                    public override string RestPath => "v1beta1/{+environment}:checkUpgrade";
+
+                    /// <summary>Initializes CheckUpgrade parameter list.</summary>
+                    protected override void InitParameters()
+                    {
+                        base.InitParameters();
+                        RequestParameters.Add("environment", new Google.Apis.Discovery.Parameter
+                        {
+                            Name = "environment",
+                            IsRequired = true,
+                            ParameterType = "path",
+                            DefaultValue = null,
+                            Pattern = @"^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+                        });
+                    }
+                }
+
                 /// <summary>Create a new environment.</summary>
                 /// <param name="body">The body of the request.</param>
                 /// <param name="parent">
@@ -595,45 +660,48 @@ namespace Google.Apis.CloudComposer.v1beta1
                     /// to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14,
                     /// the `updateMask` would contain the path "config.softwareConfig.pypiPackages", and the patch
                     /// environment would be the following: { "config":{ "softwareConfig":{ "pypiPackages":{
-                    /// "botocore":"==1.7.14" } } } } *Note:* Only the following fields can be updated: *
-                    /// config.softwareConfig.pypiPackages * Replace all custom custom PyPI packages. If a replacement
+                    /// "botocore":"==1.7.14" } } } } **Note:** Only the following fields can be updated: *
+                    /// `config.softwareConfig.pypiPackages` * Replace all custom custom PyPI packages. If a replacement
                     /// package map is not included in `environment`, all custom PyPI packages are cleared. It is an
                     /// error to provide both this mask and a mask specifying an individual package. *
-                    /// config.softwareConfig.pypiPackages.packagename * Update the custom PyPI package packagename,
+                    /// `config.softwareConfig.pypiPackages.`packagename * Update the custom PyPI package *packagename*,
                     /// preserving other packages. To delete the package, include it in `updateMask`, and omit the
                     /// mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide
-                    /// both a mask of this form and the "config.softwareConfig.pypiPackages" mask. * labels * Replace
+                    /// both a mask of this form and the `config.softwareConfig.pypiPackages` mask. * `labels` * Replace
                     /// all environment labels. If a replacement labels map is not included in `environment`, all labels
                     /// are cleared. It is an error to provide both this mask and a mask specifying one or more
-                    /// individual labels. * labels.labelName * Set the label named labelName, while preserving other
-                    /// labels. To delete the label, include it in `updateMask` and omit its mapping in
-                    /// `environment.labels`. It is an error to provide both a mask of this form and the "labels" mask.
-                    /// * config.nodeCount * Horizontally scale the number of nodes in the environment. An integer
+                    /// individual labels. * `labels.`labelName * Set the label named *labelName*, while preserving
+                    /// other labels. To delete the label, include it in `updateMask` and omit its mapping in
+                    /// `environment.labels`. It is an error to provide both a mask of this form and the `labels` mask.
+                    /// * `config.nodeCount` * Horizontally scale the number of nodes in the environment. An integer
                     /// greater than or equal to 3 must be provided in the `config.nodeCount` field. *
-                    /// config.webServerNetworkAccessControl * Replace the environment's current
-                    /// WebServerNetworkAccessControl. * config.softwareConfig.airflowConfigOverrides * Replace all
+                    /// `config.webServerNetworkAccessControl` * Replace the environment's current
+                    /// WebServerNetworkAccessControl. * `config.softwareConfig.airflowConfigOverrides` * Replace all
                     /// Apache Airflow config overrides. If a replacement config overrides map is not included in
                     /// `environment`, all config overrides are cleared. It is an error to provide both this mask and a
                     /// mask specifying one or more individual config overrides. *
-                    /// config.softwareConfig.airflowConfigOverrides.section- name * Override the Apache Airflow config
-                    /// property name in the section named section, preserving other properties. To delete the property
-                    /// override, include it in `updateMask` and omit its mapping in
+                    /// `config.softwareConfig.airflowConfigOverrides.`section-name * Override the Apache Airflow config
+                    /// property *name* in the section named *section*, preserving other properties. To delete the
+                    /// property override, include it in `updateMask` and omit its mapping in
                     /// `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a
-                    /// mask of this form and the "config.softwareConfig.airflowConfigOverrides" mask. *
-                    /// config.softwareConfig.envVariables * Replace all environment variables. If a replacement
+                    /// mask of this form and the `config.softwareConfig.airflowConfigOverrides` mask. *
+                    /// `config.softwareConfig.envVariables` * Replace all environment variables. If a replacement
                     /// environment variable map is not included in `environment`, all custom environment variables are
                     /// cleared. It is an error to provide both this mask and a mask specifying one or more individual
-                    /// environment variables. * config.softwareConfig.imageVersion * Upgrade the version of the
+                    /// environment variables. * `config.softwareConfig.imageVersion` * Upgrade the version of the
                     /// environment in-place. Refer to `SoftwareConfig.image_version` for information on how to format
                     /// the new image version. Additionally, the new image version cannot effect a version downgrade and
                     /// must match the current image version's Composer major version and Airflow major and minor
-                    /// versions. Consult the Cloud Composer Version List for valid values. *
-                    /// config.databaseConfig.machineType * Cloud SQL machine type used by Airflow database. It has to
-                    /// be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. *
-                    /// config.webServerConfig.machineType * Machine type on which Airflow web server is running. It has
-                    /// to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. *
-                    /// config.maintenanceWindow * Maintenance window during which Cloud Composer components may be
-                    /// under maintenance.
+                    /// versions. Consult the [Cloud Composer Version
+                    /// List](https://cloud.google.com/composer/docs/concepts/versioning/composer-versions) for valid
+                    /// values. * `config.softwareConfig.schedulerCount` * Horizontally scale the number of schedulers
+                    /// in Airflow. A positive integer not greater than the number of nodes must be provided in the
+                    /// `config.softwareConfig.schedulerCount` field. * `config.databaseConfig.machineType` * Cloud SQL
+                    /// machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4,
+                    /// db-n1-standard-8 or db-n1-standard-16. * `config.webServerConfig.machineType` * Machine type on
+                    /// which Airflow web server is running. It has to be one of: composer-n1-webserver-2,
+                    /// composer-n1-webserver-4 or composer-n1-webserver-8. * `config.maintenanceWindow` * Maintenance
+                    /// window during which Cloud Composer components may be under maintenance.
                     /// </summary>
                     [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
                     public virtual object UpdateMask { get; set; }
@@ -1084,6 +1152,60 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Request to check whether image upgrade will succeed.</summary>
+    public class CheckUpgradeRequest : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// The version of the software running in the environment. This encapsulates both the version of Cloud Composer
+        /// functionality and the version of Apache Airflow. It must match the regular expression
+        /// `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-airflow-[0-9]+\.[0-9]+(\.[0-9]+.*)?`. When used as input, the
+        /// server also checks if the provided version is supported and denies the request for an unsupported version.
+        /// The Cloud Composer portion of the version is a [semantic version](https://semver.org) or `latest`. When the
+        /// patch version is omitted, the current Cloud Composer patch version is selected. When `latest` is provided
+        /// instead of an explicit version number, the server replaces `latest` with the current Cloud Composer version
+        /// and stores that version number in the same field. The portion of the image version that follows `airflow-`
+        /// is an official Apache Airflow repository [release
+        /// name](https://github.com/apache/incubator-airflow/releases). See also [Version List]
+        /// (/composer/docs/concepts/versioning/composer-versions).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("imageVersion")]
+        public virtual string ImageVersion { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Message containing information about the result of an upgrade check operation.</summary>
+    public class CheckUpgradeResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. Url for a docker build log of an upgraded image.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("buildLogUri")]
+        public virtual string BuildLogUri { get; set; }
+
+        /// <summary>Output only. Whether build has succeeded or failed on modules conflicts.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("containsPypiModulesConflict")]
+        public virtual string ContainsPypiModulesConflict { get; set; }
+
+        /// <summary>Composer image for which the build was happening.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("imageVersion")]
+        public virtual string ImageVersion { get; set; }
+
+        /// <summary>
+        /// Output only. Extract from a docker image build log containing information about pypi modules conflicts.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pypiConflictBuildLogExtract")]
+        public virtual string PypiConflictBuildLogExtract { get; set; }
+
+        /// <summary>
+        /// Pypi dependencies specified in the environment configuration, at the time when the build was triggered.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pypiDependencies")]
+        public virtual System.Collections.Generic.IDictionary<string, string> PypiDependencies { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>The configuration of Cloud SQL instance that is used by the Apache Airflow software.</summary>
     public class DatabaseConfig : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1139,7 +1261,7 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         public virtual string ETag { get; set; }
     }
 
-    /// <summary>The encryption options for the Composer environment and its dependencies.</summary>
+    /// <summary>The encryption options for the Cloud Composer environment and its dependencies.</summary>
     public class EncryptionConfig : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
@@ -1225,10 +1347,17 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         public virtual DatabaseConfig DatabaseConfig { get; set; }
 
         /// <summary>
-        /// Optional. The encryption options for the Composer environment and its dependencies. Cannot be updated.
+        /// Optional. The encryption options for the Cloud Composer environment and its dependencies. Cannot be updated.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("encryptionConfig")]
         public virtual EncryptionConfig EncryptionConfig { get; set; }
+
+        /// <summary>
+        /// Optional. The size of the Cloud Composer environment. This field is supported for Cloud Composer
+        /// environments in versions composer-2.*.*-airflow-*.*.* and newer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("environmentSize")]
+        public virtual string EnvironmentSize { get; set; }
 
         /// <summary>Output only. The Kubernetes Engine cluster used to run this environment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("gkeCluster")]
@@ -1273,6 +1402,14 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("webServerNetworkAccessControl")]
         public virtual WebServerNetworkAccessControl WebServerNetworkAccessControl { get; set; }
+
+        /// <summary>
+        /// Optional. The workloads configuration settings for the GKE cluster associated with the Cloud Composer
+        /// environment. The GKE cluster runs Airflow scheduler, web server and workers workloads. This field is
+        /// supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workloadsConfig")]
+        public virtual WorkloadsConfig WorkloadsConfig { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -1513,7 +1650,7 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         public virtual System.Collections.Generic.IList<string> OauthScopes { get; set; }
 
         /// <summary>
-        /// Optional. The Google Cloud Platform Service Account to be used by the node VMs. If a service account is not
+        /// Optional. The Google Cloud Platform Service Account to be used by the workloads. If a service account is not
         /// specified, the "default" Compute Engine service account is used. Cannot be updated.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serviceAccount")]
@@ -1651,6 +1788,21 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
     public class PrivateEnvironmentConfig : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
+        /// Optional. The CIDR block from which IP range for Cloud Composer Network in tenant project will be reserved.
+        /// Needs to be disjoint from private_cluster_config.master_ipv4_cidr_block and cloud_sql_ipv4_cidr_block. This
+        /// field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cloudComposerNetworkIpv4CidrBlock")]
+        public virtual string CloudComposerNetworkIpv4CidrBlock { get; set; }
+
+        /// <summary>
+        /// Output only. The IP range reserved for the tenant project's Cloud Composer network. This field is supported
+        /// for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cloudComposerNetworkIpv4ReservedRange")]
+        public virtual string CloudComposerNetworkIpv4ReservedRange { get; set; }
+
+        /// <summary>
         /// Optional. The CIDR block from which IP range in tenant project will be reserved for Cloud SQL. Needs to be
         /// disjoint from web_server_ipv4_cidr_block
         /// </summary>
@@ -1659,7 +1811,7 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
 
         /// <summary>
         /// Optional. If `true`, a Private IP Cloud Composer environment is created. If this field is set to true,
-        /// `IPAllocationPolicy.use_ip_aliases` must be set to true.
+        /// `IPAllocationPolicy.use_ip_aliases` must be set to true .
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enablePrivateEnvironment")]
         public virtual System.Nullable<bool> EnablePrivateEnvironment { get; set; }
@@ -1688,6 +1840,29 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
     /// <summary>Restart Airflow web server.</summary>
     public class RestartWebServerRequest : Google.Apis.Requests.IDirectResponseSchema
     {
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Configuration for resources used by Airflow schedulers.</summary>
+    public class SchedulerResource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Optional. The number of schedulers.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("count")]
+        public virtual System.Nullable<int> Count { get; set; }
+
+        /// <summary>Optional. CPU request and limit for a single Airflow scheduler replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cpu")]
+        public virtual System.Nullable<float> Cpu { get; set; }
+
+        /// <summary>Optional. Memory (GB) request and limit for a single Airflow scheduler replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("memoryGb")]
+        public virtual System.Nullable<float> MemoryGb { get; set; }
+
+        /// <summary>Optional. Storage (GB) request and limit for a single Airflow scheduler replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("storageGb")]
+        public virtual System.Nullable<float> StorageGb { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1752,6 +1927,10 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("pythonVersion")]
         public virtual string PythonVersion { get; set; }
 
+        /// <summary>Optional. The number of schedulers for Airflow.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("schedulerCount")]
+        public virtual System.Nullable<int> SchedulerCount { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1807,6 +1986,74 @@ namespace Google.Apis.CloudComposer.v1beta1.Data
         /// <summary>A collection of allowed IP ranges with descriptions.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("allowedIpRanges")]
         public virtual System.Collections.Generic.IList<AllowedIpRange> AllowedIpRanges { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Configuration for resources used by Airflow web server.</summary>
+    public class WebServerResource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Optional. CPU request and limit for Airflow web server.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cpu")]
+        public virtual System.Nullable<float> Cpu { get; set; }
+
+        /// <summary>Optional. Memory (GB) request and limit for Airflow web server.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("memoryGb")]
+        public virtual System.Nullable<float> MemoryGb { get; set; }
+
+        /// <summary>Optional. Storage (GB) request and limit for Airflow web server.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("storageGb")]
+        public virtual System.Nullable<float> StorageGb { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Configuration for resources used by Airflow workers.</summary>
+    public class WorkerResource : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Optional. CPU request and limit for a single Airflow worker replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cpu")]
+        public virtual System.Nullable<float> Cpu { get; set; }
+
+        /// <summary>Optional. Maximum number of workers for autoscaling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxCount")]
+        public virtual System.Nullable<int> MaxCount { get; set; }
+
+        /// <summary>Optional. Memory (GB) request and limit for a single Airflow worker replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("memoryGb")]
+        public virtual System.Nullable<float> MemoryGb { get; set; }
+
+        /// <summary>Optional. Minimum number of workers for autoscaling.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("minCount")]
+        public virtual System.Nullable<int> MinCount { get; set; }
+
+        /// <summary>Optional. Storage (GB) request and limit for a single Airflow worker replica.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("storageGb")]
+        public virtual System.Nullable<float> StorageGb { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// The Kubernetes workloads configuration for GKE cluster associated with the Cloud Composer environment. Supported
+    /// for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+    /// </summary>
+    public class WorkloadsConfig : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Optional. Resources used by Airflow schedulers.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("scheduler")]
+        public virtual SchedulerResource Scheduler { get; set; }
+
+        /// <summary>Optional. Resources used by Airflow web server.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("webServer")]
+        public virtual WebServerResource WebServer { get; set; }
+
+        /// <summary>Optional. Resources used by Airflow workers.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("worker")]
+        public virtual WorkerResource Worker { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }

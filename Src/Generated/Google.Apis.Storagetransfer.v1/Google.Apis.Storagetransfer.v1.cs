@@ -1048,9 +1048,10 @@ namespace Google.Apis.Storagetransfer.v1.Data
     public class AwsS3Data : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Required. Input only. AWS access key used to sign the API requests to the AWS S3 bucket. Permissions on the
-        /// bucket must be granted to the access ID of the AWS access key. For information on our data retention policy
-        /// for user credentials, see [User credentials](/storage-transfer/docs/data-retention#user-credentials).
+        /// Input only. AWS access key used to sign the API requests to the AWS S3 bucket. Permissions on the bucket
+        /// must be granted to the access ID of the AWS access key. This field is required. For information on our data
+        /// retention policy for user credentials, see [User
+        /// credentials](/storage-transfer/docs/data-retention#user-credentials).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("awsAccessKey")]
         public virtual AwsAccessKey AwsAccessKey { get; set; }
@@ -1068,6 +1069,16 @@ namespace Google.Apis.Storagetransfer.v1.Data
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("path")]
         public virtual string Path { get; set; }
+
+        /// <summary>
+        /// Input only. The Amazon Resource Name (ARN) of the role to support temporary credentials via
+        /// `AssumeRoleWithWebIdentity`. For more information about ARNs, see [IAM
+        /// ARNs](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns). When a
+        /// role ARN is provided, Transfer Service fetches temporary credentials for the session using a
+        /// `AssumeRoleWithWebIdentity` call for the provided role using the GoogleServiceAccount for this project.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("roleArn")]
+        public virtual string RoleArn { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -1116,8 +1127,11 @@ namespace Google.Apis.Storagetransfer.v1.Data
     public class AzureCredentials : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Required. Azure shared access signature. (see [Grant limited access to Azure Storage resources using shared
-        /// access signatures (SAS)](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)).
+        /// Required. Azure shared access signature (SAS). *Note:*Copying data from Azure Data Lake Storage (ADLS) Gen 2
+        /// is in [Preview](/products/#product-launch-stages). During Preview, if you are copying data from ADLS Gen 2,
+        /// you must use an account SAS. For more information about SAS, see [Grant limited access to Azure Storage
+        /// resources using shared access signatures
+        /// (SAS)](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("sasToken")]
         public virtual string SasToken { get; set; }
@@ -1204,7 +1218,7 @@ namespace Google.Apis.Storagetransfer.v1.Data
         public virtual System.Nullable<long> ErrorCount { get; set; }
 
         /// <summary>
-        /// Error samples. At most 5 error log entries will be recorded for a given error code for a single transfer
+        /// Error samples. At most 5 error log entries are recorded for a given error code for a single transfer
         /// operation.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("errorLogEntries")]
@@ -1222,16 +1236,16 @@ namespace Google.Apis.Storagetransfer.v1.Data
     public class GcsData : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Required. Cloud Storage bucket name (see [Bucket Name
-        /// Requirements](https://cloud.google.com/storage/docs/naming#requirements)).
+        /// Required. Cloud Storage bucket name. Must meet [Bucket Name
+        /// Requirements](/storage/docs/naming#requirements).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("bucketName")]
         public virtual string BucketName { get; set; }
 
         /// <summary>
         /// Root path to transfer objects. Must be an empty string or full path name that ends with a '/'. This field is
-        /// treated as an object prefix. As such, it should generally not begin with a '/'. (must meet Object Name
-        /// Requirements](https://cloud.google.com/storage/docs/naming#objectnames)).
+        /// treated as an object prefix. As such, it should generally not begin with a '/'. The root path value must
+        /// meet [Object Name Requirements](/storage/docs/naming#objectnames).
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("path")]
         public virtual string Path { get; set; }
@@ -1247,6 +1261,10 @@ namespace Google.Apis.Storagetransfer.v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("accountEmail")]
         public virtual string AccountEmail { get; set; }
 
+        /// <summary>Unique identifier for the service account.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("subjectId")]
+        public virtual string SubjectId { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -1261,12 +1279,12 @@ namespace Google.Apis.Storagetransfer.v1.Data
     /// URLs](https://cloud.google.com/storage-transfer/docs/create-url-list). When transferring data based on a URL
     /// list, keep the following in mind: * When an object located at `http(s)://hostname:port/` is transferred to a
     /// data sink, the name of the object at the data sink is `/`. * If the specified size of an object does not match
-    /// the actual size of the object fetched, the object will not be transferred. * If the specified MD5 does not match
-    /// the MD5 computed from the transferred bytes, the object transfer will fail. * Ensure that each URL you specify
-    /// is publicly accessible. For example, in Cloud Storage you can [share an object publicly]
-    /// (https://cloud.google.com/storage/docs/cloud-console#_sharingdata) and get a link to it. * Storage Transfer
-    /// Service obeys `robots.txt` rules and requires the source HTTP server to support `Range` requests and to return a
-    /// `Content-Length` header in each response. * ObjectConditions have no effect when filtering objects to transfer.
+    /// the actual size of the object fetched, the object is not transferred. * If the specified MD5 does not match the
+    /// MD5 computed from the transferred bytes, the object transfer fails. * Ensure that each URL you specify is
+    /// publicly accessible. For example, in Cloud Storage you can [share an object publicly]
+    /// (/storage/docs/cloud-console#_sharingdata) and get a link to it. * Storage Transfer Service obeys `robots.txt`
+    /// rules and requires the source HTTP server to support `Range` requests and to return a `Content-Length` header in
+    /// each response. * ObjectConditions have no effect when filtering objects to transfer.
     /// </summary>
     public class HttpData : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1312,11 +1330,11 @@ namespace Google.Apis.Storagetransfer.v1.Data
     }
 
     /// <summary>
-    /// Specification to configure notifications published to Cloud Pub/Sub. Notifications will be published to the
+    /// Specification to configure notifications published to Pub/Sub. Notifications are published to the
     /// customer-provided topic using the following `PubsubMessage.attributes`: * `"eventType"`: one of the EventType
     /// values * `"payloadFormat"`: one of the PayloadFormat values * `"projectId"`: the project_id of the
     /// `TransferOperation` * `"transferJobName"`: the transfer_job_name of the `TransferOperation` *
-    /// `"transferOperationName"`: the name of the `TransferOperation` The `PubsubMessage.data` will contain a
+    /// `"transferOperationName"`: the name of the `TransferOperation` The `PubsubMessage.data` contains a
     /// TransferOperation resource formatted according to the specified `PayloadFormat`.
     /// </summary>
     public class NotificationConfig : Google.Apis.Requests.IDirectResponseSchema
@@ -1332,9 +1350,8 @@ namespace Google.Apis.Storagetransfer.v1.Data
         public virtual string PayloadFormat { get; set; }
 
         /// <summary>
-        /// Required. The `Topic.name` of the Cloud Pub/Sub topic to which to publish notifications. Must be of the
-        /// format: `projects/{project}/topics/{topic}`. Not matching this format will result in an INVALID_ARGUMENT
-        /// error.
+        /// Required. The `Topic.name` of the Pub/Sub topic to which to publish notifications. Must be of the format:
+        /// `projects/{project}/topics/{topic}`. Not matching this format results in an INVALID_ARGUMENT error.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pubsubTopic")]
         public virtual string PubsubTopic { get; set; }
@@ -1344,10 +1361,11 @@ namespace Google.Apis.Storagetransfer.v1.Data
     }
 
     /// <summary>
-    /// Conditions that determine which objects will be transferred. Applies only to Cloud Data Sources such as S3,
-    /// Azure, and Cloud Storage. The "last modification time" refers to the time of the last change to the object's
-    /// content or metadata — specifically, this is the `updated` property of Cloud Storage objects, the `LastModified`
-    /// field of S3 objects, and the `Last-Modified` header of Azure blobs.
+    /// Conditions that determine which objects are transferred. Applies only to Cloud Data Sources such as S3, Azure,
+    /// and Cloud Storage. The "last modification time" refers to the time of the last change to the object's content or
+    /// metadata — specifically, this is the `updated` property of Cloud Storage objects, the `LastModified` field of S3
+    /// objects, and the `Last-Modified` header of Azure blobs. This is not supported for transfers involving
+    /// PosixFilesystem.
     /// </summary>
     public class ObjectConditions : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1388,7 +1406,7 @@ namespace Google.Apis.Storagetransfer.v1.Data
 
         /// <summary>
         /// If specified, only objects with a "last modification time" before this timestamp and objects that don't have
-        /// a "last modification time" will be transferred.
+        /// a "last modification time" are transferred.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lastModifiedBefore")]
         public virtual object LastModifiedBefore { get; set; }
@@ -1512,11 +1530,11 @@ namespace Google.Apis.Storagetransfer.v1.Data
         public virtual object RepeatInterval { get; set; }
 
         /// <summary>
-        /// The last day a transfer runs. Date boundaries are determined relative to UTC time. A job will run once per
-        /// 24 hours within the following guidelines: * If `schedule_end_date` and schedule_start_date are the same and
-        /// in the future relative to UTC, the transfer is executed only one time. * If `schedule_end_date` is later
-        /// than `schedule_start_date` and `schedule_end_date` is in the future relative to UTC, the job will run each
-        /// day at start_time_of_day through `schedule_end_date`.
+        /// The last day a transfer runs. Date boundaries are determined relative to UTC time. A job runs once per 24
+        /// hours within the following guidelines: * If `schedule_end_date` and schedule_start_date are the same and in
+        /// the future relative to UTC, the transfer is executed only one time. * If `schedule_end_date` is later than
+        /// `schedule_start_date` and `schedule_end_date` is in the future relative to UTC, the job runs each day at
+        /// start_time_of_day through `schedule_end_date`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("scheduleEndDate")]
         public virtual Date ScheduleEndDate { get; set; }
@@ -1525,10 +1543,10 @@ namespace Google.Apis.Storagetransfer.v1.Data
         /// Required. The start date of a transfer. Date boundaries are determined relative to UTC time. If
         /// `schedule_start_date` and start_time_of_day are in the past relative to the job's creation time, the
         /// transfer starts the day after you schedule the transfer request. **Note:** When starting jobs at or near
-        /// midnight UTC it is possible that a job will start later than expected. For example, if you send an outbound
+        /// midnight UTC it is possible that a job starts later than expected. For example, if you send an outbound
         /// request on June 1 one millisecond prior to midnight UTC and the Storage Transfer Service server receives the
-        /// request on June 2, then it will create a TransferJob with `schedule_start_date` set to June 2 and a
-        /// `start_time_of_day` set to midnight UTC. The first scheduled TransferOperation will take place on June 3 at
+        /// request on June 2, then it creates a TransferJob with `schedule_start_date` set to June 2 and a
+        /// `start_time_of_day` set to midnight UTC. The first scheduled TransferOperation takes place on June 3 at
         /// midnight UTC.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("scheduleStartDate")]
@@ -1717,25 +1735,30 @@ namespace Google.Apis.Storagetransfer.v1.Data
         public virtual object LastModificationTime { get; set; }
 
         /// <summary>
-        /// The name of the most recently started TransferOperation of this JobConfig. Present if and only if at least
-        /// one TransferOperation has been created for this JobConfig.
+        /// The name of the most recently started TransferOperation of this JobConfig. Present if a TransferOperation
+        /// has been created for this JobConfig.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("latestOperationName")]
         public virtual string LatestOperationName { get; set; }
 
         /// <summary>
         /// A unique name (within the transfer project) assigned when the job is created. If this field is empty in a
-        /// CreateTransferJobRequest, Storage Transfer Service will assign a unique name. Otherwise, the specified name
-        /// is used as the unique name for this job. If the specified name is in use by a job, the creation request
-        /// fails with an ALREADY_EXISTS error. This name must start with `"transferJobs/"` prefix and end with a letter
-        /// or a number, and should be no more than 128 characters. This name must not start with 'transferJobs/OPI'.
-        /// 'transferJobs/OPI' is a reserved prefix. Example: `"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"`
-        /// Invalid job names will fail with an INVALID_ARGUMENT error.
+        /// CreateTransferJobRequest, Storage Transfer Service assigns a unique name. Otherwise, the specified name is
+        /// used as the unique name for this job. If the specified name is in use by a job, the creation request fails
+        /// with an ALREADY_EXISTS error. This name must start with `"transferJobs/"` prefix and end with a letter or a
+        /// number, and should be no more than 128 characters. For transfers involving PosixFilesystem, this name must
+        /// start with 'transferJobs/OPI' specifically. For all other transfer types, this name must not start with
+        /// 'transferJobs/OPI'. 'transferJobs/OPI' is a reserved prefix for PosixFilesystem transfers.
+        /// Non-PosixFilesystem example: `"transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$"` PosixFilesystem example:
+        /// `"transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"` Applications must not rely on the enforcement of naming
+        /// requirements involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
 
-        /// <summary>Notification configuration.</summary>
+        /// <summary>
+        /// Notification configuration. This is not supported for transfers involving PosixFilesystem.
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("notificationConfig")]
         public virtual NotificationConfig NotificationConfig { get; set; }
 
@@ -1744,8 +1767,8 @@ namespace Google.Apis.Storagetransfer.v1.Data
         public virtual string ProjectId { get; set; }
 
         /// <summary>
-        /// Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job will
-        /// never execute a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
+        /// Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job never
+        /// executes a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("schedule")]
         public virtual Schedule Schedule { get; set; }
@@ -1834,7 +1857,7 @@ namespace Google.Apis.Storagetransfer.v1.Data
         /// <summary>
         /// When to overwrite objects that already exist in the sink. The default is that only objects that are
         /// different from the source are ovewritten. If true, all objects in the sink whose name matches an object in
-        /// the source will be overwritten with the source object.
+        /// the source are overwritten with the source object.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("overwriteObjectsAlreadyExistingInSink")]
         public virtual System.Nullable<bool> OverwriteObjectsAlreadyExistingInSink { get; set; }
@@ -1894,7 +1917,7 @@ namespace Google.Apis.Storagetransfer.v1.Data
         /// <summary>
         /// Required. The job to update. `transferJob` is expected to specify only four fields: description,
         /// transfer_spec, notification_config, and status. An `UpdateTransferJobRequest` that specifies other fields
-        /// are rejected with the error INVALID_ARGUMENT. Updating a job satus to DELETED requires
+        /// are rejected with the error INVALID_ARGUMENT. Updating a job status to DELETED requires
         /// `storagetransfer.jobs.delete` permissions.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("transferJob")]

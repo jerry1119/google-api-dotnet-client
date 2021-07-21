@@ -334,6 +334,188 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1
                     public DomainsResource(Google.Apis.Services.IClientService service)
                     {
                         this.service = service;
+                        SqlIntegrations = new SqlIntegrationsResource(service);
+                    }
+
+                    /// <summary>Gets the SqlIntegrations resource.</summary>
+                    public virtual SqlIntegrationsResource SqlIntegrations { get; }
+
+                    /// <summary>The "sqlIntegrations" collection of methods.</summary>
+                    public class SqlIntegrationsResource
+                    {
+                        private const string Resource = "sqlIntegrations";
+
+                        /// <summary>The service which this resource belongs to.</summary>
+                        private readonly Google.Apis.Services.IClientService service;
+
+                        /// <summary>Constructs a new resource.</summary>
+                        public SqlIntegrationsResource(Google.Apis.Services.IClientService service)
+                        {
+                            this.service = service;
+                        }
+
+                        /// <summary>Gets details of a single sqlIntegration.</summary>
+                        /// <param name="name">
+                        /// Required. SQLIntegration resource name using the form:
+                        /// `projects/{project_id}/locations/global/domains/{domain}/sqlIntegrations/{name}`
+                        /// </param>
+                        public virtual GetRequest Get(string name)
+                        {
+                            return new GetRequest(service, name);
+                        }
+
+                        /// <summary>Gets details of a single sqlIntegration.</summary>
+                        public class GetRequest : ManagedServiceforMicrosoftActiveDirectoryConsumerAPIBaseServiceRequest<Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.SqlIntegration>
+                        {
+                            /// <summary>Constructs a new Get request.</summary>
+                            public GetRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                            {
+                                Name = name;
+                                InitParameters();
+                            }
+
+                            /// <summary>
+                            /// Required. SQLIntegration resource name using the form:
+                            /// `projects/{project_id}/locations/global/domains/{domain}/sqlIntegrations/{name}`
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                            public virtual string Name { get; private set; }
+
+                            /// <summary>Gets the method name.</summary>
+                            public override string MethodName => "get";
+
+                            /// <summary>Gets the HTTP method.</summary>
+                            public override string HttpMethod => "GET";
+
+                            /// <summary>Gets the REST path.</summary>
+                            public override string RestPath => "v1/{+name}";
+
+                            /// <summary>Initializes Get parameter list.</summary>
+                            protected override void InitParameters()
+                            {
+                                base.InitParameters();
+                                RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "name",
+                                    IsRequired = true,
+                                    ParameterType = "path",
+                                    DefaultValue = null,
+                                    Pattern = @"^projects/[^/]+/locations/global/domains/[^/]+/sqlIntegrations/[^/]+$",
+                                });
+                            }
+                        }
+
+                        /// <summary>Lists SqlIntegrations in a given domain.</summary>
+                        /// <param name="parent">
+                        /// Required. The resource name of the SqlIntegrations using the form:
+                        /// `projects/{project_id}/locations/global/domains/*`
+                        /// </param>
+                        public virtual ListRequest List(string parent)
+                        {
+                            return new ListRequest(service, parent);
+                        }
+
+                        /// <summary>Lists SqlIntegrations in a given domain.</summary>
+                        public class ListRequest : ManagedServiceforMicrosoftActiveDirectoryConsumerAPIBaseServiceRequest<Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.ListSqlIntegrationsResponse>
+                        {
+                            /// <summary>Constructs a new List request.</summary>
+                            public ListRequest(Google.Apis.Services.IClientService service, string parent) : base(service)
+                            {
+                                Parent = parent;
+                                InitParameters();
+                            }
+
+                            /// <summary>
+                            /// Required. The resource name of the SqlIntegrations using the form:
+                            /// `projects/{project_id}/locations/global/domains/*`
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("parent", Google.Apis.Util.RequestParameterType.Path)]
+                            public virtual string Parent { get; private set; }
+
+                            /// <summary>
+                            /// Optional. Filter specifying constraints of a list operation. For example,
+                            /// `SqlIntegration.name="sql"`.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("filter", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string Filter { get; set; }
+
+                            /// <summary>
+                            /// Optional. Specifies the ordering of results following syntax at
+                            /// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("orderBy", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string OrderBy { get; set; }
+
+                            /// <summary>
+                            /// Optional. The maximum number of items to return. If not specified, a default value of
+                            /// 1000 will be used by the service. Regardless of the page_size value, the response may
+                            /// include a partial list and a caller should only rely on response'ANIZATIONs
+                            /// next_page_token to determine if there are more instances left to be queried.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual System.Nullable<int> PageSize { get; set; }
+
+                            /// <summary>
+                            /// Optional. The next_page_token value returned from a previous List request, if any.
+                            /// </summary>
+                            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+                            public virtual string PageToken { get; set; }
+
+                            /// <summary>Gets the method name.</summary>
+                            public override string MethodName => "list";
+
+                            /// <summary>Gets the HTTP method.</summary>
+                            public override string HttpMethod => "GET";
+
+                            /// <summary>Gets the REST path.</summary>
+                            public override string RestPath => "v1/{+parent}/sqlIntegrations";
+
+                            /// <summary>Initializes List parameter list.</summary>
+                            protected override void InitParameters()
+                            {
+                                base.InitParameters();
+                                RequestParameters.Add("parent", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "parent",
+                                    IsRequired = true,
+                                    ParameterType = "path",
+                                    DefaultValue = null,
+                                    Pattern = @"^projects/[^/]+/locations/global/domains/[^/]+$",
+                                });
+                                RequestParameters.Add("filter", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "filter",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("orderBy", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "orderBy",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("pageSize", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageSize",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                                RequestParameters.Add("pageToken", new Google.Apis.Discovery.Parameter
+                                {
+                                    Name = "pageToken",
+                                    IsRequired = false,
+                                    ParameterType = "query",
+                                    DefaultValue = null,
+                                    Pattern = null,
+                                });
+                            }
+                        }
                     }
 
                     /// <summary>Adds an AD trust to a domain.</summary>
@@ -710,6 +892,57 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1
                         }
                     }
 
+                    /// <summary>Gets the domain ldaps settings.</summary>
+                    /// <param name="name">
+                    /// Required. The domain resource name using the form:
+                    /// `projects/{project_id}/locations/global/domains/{domain_name}`
+                    /// </param>
+                    public virtual GetLdapssettingsRequest GetLdapssettings(string name)
+                    {
+                        return new GetLdapssettingsRequest(service, name);
+                    }
+
+                    /// <summary>Gets the domain ldaps settings.</summary>
+                    public class GetLdapssettingsRequest : ManagedServiceforMicrosoftActiveDirectoryConsumerAPIBaseServiceRequest<Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.LDAPSSettings>
+                    {
+                        /// <summary>Constructs a new GetLdapssettings request.</summary>
+                        public GetLdapssettingsRequest(Google.Apis.Services.IClientService service, string name) : base(service)
+                        {
+                            Name = name;
+                            InitParameters();
+                        }
+
+                        /// <summary>
+                        /// Required. The domain resource name using the form:
+                        /// `projects/{project_id}/locations/global/domains/{domain_name}`
+                        /// </summary>
+                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Name { get; private set; }
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "getLdapssettings";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "GET";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v1/{+name}/ldapssettings";
+
+                        /// <summary>Initializes GetLdapssettings parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "name",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/global/domains/[^/]+$",
+                            });
+                        }
+                    }
+
                     /// <summary>Lists domains in a project.</summary>
                     /// <param name="parent">
                     /// Required. The resource name of the domain location using the form:
@@ -856,7 +1089,7 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1
                         /// <summary>
                         /// Required. Mask of fields to update. At least one path must be supplied in this field. The
                         /// elements of the repeated paths field may only include fields from Domain: * `labels` *
-                        /// `locations` * `authorized_networks`
+                        /// `locations` * `authorized_networks` * `audit_logs_enabled`
                         /// </summary>
                         [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
                         public virtual object UpdateMask { get; set; }
@@ -1147,6 +1380,81 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1
                                 ParameterType = "path",
                                 DefaultValue = null,
                                 Pattern = @"^projects/[^/]+/locations/global/domains/[^/]+$",
+                            });
+                        }
+                    }
+
+                    /// <summary>Patches a single ldaps settings.</summary>
+                    /// <param name="body">The body of the request.</param>
+                    /// <param name="name">
+                    /// The resource name of the LDAPS settings. Uses the form:
+                    /// `projects/{project}/locations/{location}/domains/{domain}`.
+                    /// </param>
+                    public virtual UpdateLdapssettingsRequest UpdateLdapssettings(Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.LDAPSSettings body, string name)
+                    {
+                        return new UpdateLdapssettingsRequest(service, body, name);
+                    }
+
+                    /// <summary>Patches a single ldaps settings.</summary>
+                    public class UpdateLdapssettingsRequest : ManagedServiceforMicrosoftActiveDirectoryConsumerAPIBaseServiceRequest<Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.Operation>
+                    {
+                        /// <summary>Constructs a new UpdateLdapssettings request.</summary>
+                        public UpdateLdapssettingsRequest(Google.Apis.Services.IClientService service, Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.LDAPSSettings body, string name) : base(service)
+                        {
+                            Name = name;
+                            Body = body;
+                            InitParameters();
+                        }
+
+                        /// <summary>
+                        /// The resource name of the LDAPS settings. Uses the form:
+                        /// `projects/{project}/locations/{location}/domains/{domain}`.
+                        /// </summary>
+                        [Google.Apis.Util.RequestParameterAttribute("name", Google.Apis.Util.RequestParameterType.Path)]
+                        public virtual string Name { get; private set; }
+
+                        /// <summary>
+                        /// Required. Mask of fields to update. At least one path must be supplied in this field. For
+                        /// the `FieldMask` definition, see
+                        /// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+                        /// </summary>
+                        [Google.Apis.Util.RequestParameterAttribute("updateMask", Google.Apis.Util.RequestParameterType.Query)]
+                        public virtual object UpdateMask { get; set; }
+
+                        /// <summary>Gets or sets the body of this request.</summary>
+                        Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Data.LDAPSSettings Body { get; set; }
+
+                        /// <summary>Returns the body of the request.</summary>
+                        protected override object GetBody() => Body;
+
+                        /// <summary>Gets the method name.</summary>
+                        public override string MethodName => "updateLdapssettings";
+
+                        /// <summary>Gets the HTTP method.</summary>
+                        public override string HttpMethod => "PATCH";
+
+                        /// <summary>Gets the REST path.</summary>
+                        public override string RestPath => "v1/{+name}/ldapssettings";
+
+                        /// <summary>Initializes UpdateLdapssettings parameter list.</summary>
+                        protected override void InitParameters()
+                        {
+                            base.InitParameters();
+                            RequestParameters.Add("name", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "name",
+                                IsRequired = true,
+                                ParameterType = "path",
+                                DefaultValue = null,
+                                Pattern = @"^projects/[^/]+/locations/global/domains/[^/]+$",
+                            });
+                            RequestParameters.Add("updateMask", new Google.Apis.Discovery.Parameter
+                            {
+                                Name = "updateMask",
+                                IsRequired = false,
+                                ParameterType = "query",
+                                DefaultValue = null,
+                                Pattern = null,
                             });
                         }
                     }
@@ -1580,7 +1888,7 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1
                 public virtual string Filter { get; set; }
 
                 /// <summary>
-                /// The maximum number of results to return. If not set, the service will select a default.
+                /// The maximum number of results to return. If not set, the service selects a default.
                 /// </summary>
                 [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
                 public virtual System.Nullable<int> PageSize { get; set; }
@@ -1709,6 +2017,33 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         public virtual string ETag { get; set; }
     }
 
+    /// <summary>Certificate used to configure LDAPS.</summary>
+    public class Certificate : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>The certificate expire time.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("expireTime")]
+        public virtual object ExpireTime { get; set; }
+
+        /// <summary>The issuer of this certificate.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("issuingCertificate")]
+        public virtual Certificate IssuingCertificate { get; set; }
+
+        /// <summary>The certificate subject.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("subject")]
+        public virtual string Subject { get; set; }
+
+        /// <summary>The additional hostnames for the domain.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("subjectAlternativeName")]
+        public virtual System.Collections.Generic.IList<string> SubjectAlternativeName { get; set; }
+
+        /// <summary>The certificate thumbprint which uniquely identifies the certificate.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("thumbprint")]
+        public virtual string Thumbprint { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
     /// <summary>Time window specified for daily operations.</summary>
     public class DailyCycle : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -1810,6 +2145,13 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("admin")]
         public virtual string Admin { get; set; }
+
+        /// <summary>
+        /// Optional. Configuration for audit logs. True if audit logs are enabled, else false. Default is audit logs
+        /// disabled.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("auditLogsEnabled")]
+        public virtual System.Nullable<bool> AuditLogsEnabled { get; set; }
 
         /// <summary>
         /// Optional. The full names of the Google Compute Engine
@@ -2082,7 +2424,8 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
 
         /// <summary>
         /// Unique name of the resource. It uses the form:
-        /// `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+        /// `projects/{project_id|project_number}/locations/{location_id}/instances/{instance_id}` Note: Either
+        /// project_id or project_number can be used, but keep it consistent with other APIs (e.g. RescheduleUpdate)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         public virtual string Name { get; set; }
@@ -2234,6 +2577,13 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         [Newtonsoft.Json.JsonPropertyAttribute("nodeId")]
         public virtual string NodeId { get; set; }
 
+        /// <summary>
+        /// If present, this will override eligibility for the node coming from instance or exclusions for specified
+        /// SLIs.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
+        public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
+
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
     }
@@ -2338,13 +2688,6 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
     public class GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>
-        /// Optional. Global per-instance SLI eligibility which applies to all defined SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("eligibility")]
-        public virtual GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility Eligibility { get; set; }
-
-        /// <summary>
         /// List of SLO exclusion windows. When multiple entries in the list match (matching the exclusion time-window
         /// against current time point) the exclusion reason used in the first matching entry will be published. It is
         /// not needed to include expired exclusion in this list, as only the currently applicable exclusions are taken
@@ -2364,10 +2707,7 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         [Newtonsoft.Json.JsonPropertyAttribute("nodes")]
         public virtual System.Collections.Generic.IList<GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata> Nodes { get; set; }
 
-        /// <summary>
-        /// Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs. Exactly one of
-        /// 'eligibility' and 'per_sli_eligibility' fields must be used.
-        /// </summary>
+        /// <summary>Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("perSliEligibility")]
         public virtual GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility PerSliEligibility { get; set; }
 
@@ -2377,6 +2717,61 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("tier")]
         public virtual string Tier { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>
+    /// LDAPSSettings represents the ldaps settings for domain resource. LDAP is the Lightweight Directory Access
+    /// Protocol, defined in https://tools.ietf.org/html/rfc4511. The settings object configures LDAP over SSL/TLS,
+    /// whether it is over port 636 or the StartTLS operation. If LDAPSSettings is being changed, it will be placed into
+    /// the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an
+    /// intermediate state.
+    /// </summary>
+    public class LDAPSSettings : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Output only. The certificate used to configure LDAPS. Certificates can be chained with a maximum length of
+        /// 15.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("certificate")]
+        public virtual Certificate Certificate { get; set; }
+
+        /// <summary>Input only. The password used to encrypt the uploaded PFX certificate.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("certificatePassword")]
+        public virtual string CertificatePassword { get; set; }
+
+        /// <summary>
+        /// Input only. The uploaded PKCS12-formatted certificate to configure LDAPS with. It will enable the domain
+        /// controllers in this domain to accept LDAPS connections (either LDAP over SSL/TLS or the StartTLS operation).
+        /// A valid certificate chain must form a valid x.509 certificate chain (or be comprised of a single self-signed
+        /// certificate. It must be encrypted with either: 1) PBES2 + PBKDF2 + AES256 encryption and SHA256 PRF; or 2)
+        /// pbeWithSHA1And3-KeyTripleDES-CBC Private key must be included for the leaf / single self-signed certificate.
+        /// Note: For a fqdn your-example-domain.com, the wildcard fqdn is *.your-example-domain.com. Specifically the
+        /// leaf certificate must have: - Either a blank subject or a subject with CN matching the wildcard fqdn. -
+        /// Exactly two SANs - the fqdn and wildcard fqdn. - Encipherment and digital key signature key usages. - Server
+        /// authentication extended key usage (OID=1.3.6.1.5.5.7.3.1) - Private key must be in one of the following
+        /// formats: RSA, ECDSA, ED25519. - Private key must have appropriate key length: 2048 for RSA, 256 for ECDSA -
+        /// Signature algorithm of the leaf certificate cannot be MD2, MD5 or SHA1.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("certificatePfx")]
+        public virtual string CertificatePfx { get; set; }
+
+        /// <summary>
+        /// The resource name of the LDAPS settings. Uses the form:
+        /// `projects/{project}/locations/{location}/domains/{domain}`.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>Output only. The current state of this LDAPS settings.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("state")]
+        public virtual string State { get; set; }
+
+        /// <summary>Output only. Last update time.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
+        public virtual object UpdateTime { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2428,6 +2823,27 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         /// <summary>A list of operations that matches the specified filter in the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("operations")]
         public virtual System.Collections.Generic.IList<Operation> Operations { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>ListSqlIntegrationsResponse is the response message for ListSqlIntegrations method.</summary>
+    public class ListSqlIntegrationsResponse : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>
+        /// Token to retrieve the next page of results, or empty if there are no more results in the list.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; }
+
+        /// <summary>A list of SQLIntegrations of a domain.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("sqlIntegrations")]
+        public virtual System.Collections.Generic.IList<SqlIntegration> SqlIntegrations { get; set; }
+
+        /// <summary>A list of locations that could not be reached.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("unreachable")]
+        public virtual System.Collections.Generic.IList<string> Unreachable { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -2573,35 +2989,35 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
     /// <summary>Represents the metadata of the long-running operation.</summary>
     public class OperationMetadata : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>[Output only] API version used to start the operation.</summary>
+        /// <summary>Output only. API version used to start the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("apiVersion")]
         public virtual string ApiVersion { get; set; }
 
         /// <summary>
-        /// [Output only] Identifies whether the user has requested cancellation of the operation. Operations that have
+        /// Output only. Identifies whether the user has requested cancellation of the operation. Operations that have
         /// successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to
         /// `Code.CANCELLED`.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("cancelRequested")]
         public virtual System.Nullable<bool> CancelRequested { get; set; }
 
-        /// <summary>[Output only] The time the operation was created.</summary>
+        /// <summary>Output only. The time the operation was created.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
         public virtual object CreateTime { get; set; }
 
-        /// <summary>[Output only] The time the operation finished running.</summary>
+        /// <summary>Output only. The time the operation finished running.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("endTime")]
         public virtual object EndTime { get; set; }
 
-        /// <summary>[Output only] Human-readable status of the operation, if any.</summary>
+        /// <summary>Output only. Human-readable status of the operation, if any.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("statusDetail")]
         public virtual string StatusDetail { get; set; }
 
-        /// <summary>[Output only] Server-defined resource path for the target of the operation.</summary>
+        /// <summary>Output only. Server-defined resource path for the target of the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target")]
         public virtual string Target { get; set; }
 
-        /// <summary>[Output only] Name of the verb executed by the operation.</summary>
+        /// <summary>Output only. Name of the verb executed by the operation.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("verb")]
         public virtual string Verb { get; set; }
 
@@ -2735,6 +3151,36 @@ namespace Google.Apis.ManagedServiceforMicrosoftActiveDirectoryConsumerAPI.v1.Da
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("policy")]
         public virtual Policy Policy { get; set; }
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }
+
+    /// <summary>Represents the SQL instance integrated with Managed AD.</summary>
+    public class SqlIntegration : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Output only. The time the SQL integration was created.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("createTime")]
+        public virtual object CreateTime { get; set; }
+
+        /// <summary>
+        /// The unique name of the SQL integration in the form of
+        /// `projects/{project_id}/locations/global/domains/{domain_name}/sqlIntegrations/{sql_integration}`
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; }
+
+        /// <summary>The full resource name of an integrated SQL instance</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("sqlInstance")]
+        public virtual string SqlInstance { get; set; }
+
+        /// <summary>Output only. The current state of the SQL integration.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("state")]
+        public virtual string State { get; set; }
+
+        /// <summary>Output only. The time the SQL integration was updated.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
+        public virtual object UpdateTime { get; set; }
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
